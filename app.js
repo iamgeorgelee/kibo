@@ -3,33 +3,35 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes');
+var express = require('express'),
+    routes = require('./routes'),
+    bodyParser = require('body-parser'),
+    connect = require('connect');
+  
+var app = express();
 
-var app = module.exports = express.createServer();
-
-// Configuration
-
-app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'ejs');
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
-});
-
-app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-});
-
-app.configure('production', function(){
-  app.use(express.errorHandler());
-});
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.use(bodyParser());
+app.use(connect.methodOverride());
+app.use(express.static(__dirname + '/public'));
 
 // Routes
 
 app.get('/', routes.index);
 
-app.listen(3000);
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+
+var env = process.env.NODE_ENV || 'development';
+if ('development' == env) {
+   app.use(connect.errorHandler({ dumpExceptions: true, showStack: true }));
+}
+
+if ('production' == env) {
+   app.use(connect.errorHandler());
+}
+
+
+
+
+app.listen(process.env.PORT);
+console.log("Express server listening on port %d in %s mode", process.env.PORT, app.settings.env);
