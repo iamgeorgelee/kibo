@@ -1,68 +1,50 @@
+//This is the application entry point
 
-/**
- * Module dependencies.
- */
-var express = require('express'),
-    bodyParser = require('body-parser'),
-    connect = require('connect'),
-    flash = require('connect-flash');
-
-//Create Server
+//Module dependencies.
+var express    = require('express');
+var bodyParser = require('body-parser');
+var connect    = require('connect');
+var flash      = require('connect-flash');
+var logger     = require('morgan');
+var passport   = require('passport');
+var port       = process.env.PORT || 8080;
 var app = express();
 
-//Configuration
+// ========================================
+// Configuration
+// ========================================
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser());
-app.use(flash());
+app.use(logger('dev'));
 app.use(connect.methodOverride());
 app.use(connect.cookieParser());
-app.use(connect.session({
-        secret: 'keyboard cat',
-        cookie: { maxAge: 60000 }
-    })
-);
-app.use(function(req, res, next){
-    var err = req.flash('error');
+app.use(connect.session({ secret: 'kibokibokibo' }));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
-    if(err.length)
-        res.locals.error = err;
-    else
-        res.locals.error = null;
+// var test = require('./models/user.js');
+// pass passport for configuration
+require('./config/passport')(passport);
 
-    next();
-  });
+// ========================================
+// Routes for our API
+// ========================================
 
-/**
- * Router Settings
- */
-
-//Root
+// HOME PAGE
 app.route('/')
-	.get(function(req, res) {
-		res.render('index', { title: 'Home'});
-	});
+    .get(function(req, res) {
+        res.render('index', { message: req.flash('loginMessage'), user : req.session.user});
+    });
+// User Routes. e.g. login, signup
+require('./routes/UserRoutes.js')(app, passport);
 
-//Entry point is where the user do login, logout and register
-var entryPoint = require('./routes/entry_point');
-var reg = entryPoint.registration();
-app.use('/reg', reg);
-var login = entryPoint.login();
-app.use('/login', login);
-var logout = entryPoint.logout();
-app.use('/logout', logout);
-
-//Move out if expand leter on
-app.route('/user/:user')
-	.get(function(req, res) {
-		// do stuff
-	});
-
-/**
- * Mode
- */
+// ========================================
+// Mode Selection
+// ========================================
 var env = process.env.NODE_ENV || 'development';
 if ('development' == env) {
    app.use(connect.errorHandler({ dumpExceptions: true, showStack: true }));
@@ -72,9 +54,10 @@ if ('production' == env) {
    app.use(connect.errorHandler());
 }
 
-/**
- * Listened Port and feedback print to console
- */
-app.listen(process.env.PORT);
+// ========================================
+// Listened Port and feedback print to console
+// ========================================
+app.listen(port);
 console.log("Express server listening on port %d in %s mode", process.env.PORT, app.settings.env);
 console.log("Host IP is %s", process.env.IP);
+console.log("Server Up!");
