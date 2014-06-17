@@ -5,6 +5,7 @@ var express    = require('express');
 var bodyParser = require('body-parser');
 var connect    = require('connect');
 var flash      = require('connect-flash');
+var session    = require('express-session');
 var logger     = require('morgan');
 var passport   = require('passport');
 var port       = process.env.PORT || 8080;
@@ -17,18 +18,20 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser());
+
 app.use(logger('dev'));
 app.use(connect.methodOverride());
 app.use(connect.cookieParser());
-app.use(connect.session({ secret: 'kibokibokibo' }));
+app.use(bodyParser());
+app.use(session({ secret: 'kibokibokibo' }));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 // var test = require('./models/user.js');
 // pass passport for configuration
-require('./config/passport')(passport);
+require('./config/user')(passport);
 
 // ========================================
 // Routes for our API
@@ -37,7 +40,7 @@ require('./config/passport')(passport);
 // HOME PAGE
 app.route('/')
     .get(function(req, res) {
-        res.render('index', { message: req.flash('loginMessage'), user : req.session.user});
+        res.render('index', { message: req.flash('loginMessage'), isAuthenticated: req.isAuthenticated(), user : req.user});
     });
 // User Routes. e.g. login, signup
 require('./routes/UserRoutes.js')(app, passport);

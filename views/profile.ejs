@@ -9,25 +9,36 @@
         <!-- LOCAL INFORMATION -->
 		<div class="col-sm-6">
 			<div class="well">
-				<h3><span class="fa fa-user"></span> Local</h3>
-					<p>
-					    <% if (user) { %>
+				<h3><i class="fa fa-user"></i> Local</h3>
+				    <% if (user.username) { %>
+					    <p>
     						<strong>id</strong>: <%= user._id.$oid %><br>
-    						<strong>email</strong>: <%= user.email %><br>
+    						<strong>username</strong>: <%= user.username %><br>
     						<strong>password</strong>: <%= user.password %>
-    					<% } %>
-					</p>
+				        </p>
+				        <a href="/unlink/local" class="btn btn-default">Unlink</a>
+				    <% } else { %>
+    				    <a href="/connect/local" class="btn btn-default">Connect Local</a>
+    				<% } %>
+
 			</div>
 		</div>
 		<!-- FACEBOOK INFORMATION -->
 		<div class="col-sm-6">
 			<div class="well">
 				<h3 class="text-primary"><i class="fa fa-facebook"></i> Facebook</h3>
-
-					<p>
-					<!--facebook...id.....token.....email..name-->
-                        PROFILE PAGE!!!
-					</p>
+				    <!-- check if the user has this token (is the user authenticated with this social account) -->
+				    <% if (user.hasOwnProperty('facebook')) { %>
+					    <p>
+    					    <strong>id</strong>: <%= user.facebook.id %><br>
+    						<strong>token</strong>: <%= user.facebook.token %><br>
+    						<strong>email</strong>: <%= user.email %><br>
+    						<strong>name</strong>: <%= user.name %>
+					    </p>
+    					<a href="/unlink/facebook" class="btn btn-primary">Unlink</a>
+    				<% } else { %>
+    					<a href="/connect/facebook" class="btn btn-primary">Connect Facebook</a>
+    				<% } %>
 
 			</div>
 		</div>

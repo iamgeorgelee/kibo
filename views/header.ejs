@@ -41,12 +41,16 @@
                         <a href="/profile">Profile</a>
                     </li>
                     <li>
-                        <% if (user) { %>
-                            <p class="navbar-text">Welcome! <%= user.name %></p>
+                        <% if (isAuthenticated) { %>
+                            <% if (user.hasOwnProperty('name')) { %>
+                                <p class="navbar-text">Welcome! <%= user.name %></p>
+                            <% } else if(user.hasOwnProperty('username')) {%>
+                                <p class="navbar-text">Welcome! <%= user.username %></p>
+                            <% } %>
                         <% } %>
                     </li>
                 </ul>
-                <% if (user) { %>
+                <% if (isAuthenticated) { %>
                     <div class="nav navbar-nav navbar-right">
                         <a href="/logout" class="btn btn-primary" role="button" style="margin-top: 8px;">Logout</a>
                     </div>

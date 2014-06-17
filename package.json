@@ -12,6 +12,7 @@
         "passport-local" : "~0.1.6",
         "passport-facebook" : "~1.0.2",
         "bcrypt-nodejs" : "latest",
-        "morgan": "~1.0.0"
+        "morgan": "~1.0.0",
+        "express-session": "latest"
   }
 }
