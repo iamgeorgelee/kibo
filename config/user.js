@@ -186,6 +186,8 @@ module.exports = function(passport) {
             // allows us to pass in the req from our route (lets us check if a user is logged in or not)
             passReqToCallback : true
         }
+    } else{
+        return new Error("hostname"); 
     }
     //Production needed (later)
     
