@@ -162,7 +162,10 @@ module.exports = function(passport) {
     // FACEBOOK ================================================================
     // =========================================================================
     
-    //Detemine the app is deployed and running on c9 or heroku (develop/staging) 
+    //Detemine the app is deployed and running on c9 or heroku (develop/staging)
+    // devlop host machine: ex-c9-node20.prod.rhcloud.com
+    // staging host machine: us-east-1-a.route.herokuapp.com
+    //Note, this is the place where the app runs and is not related to domain name
     var hostname = os.hostname();
     var fbStrategyAuthConfig;
     if(hostname.indexOf("c9") > -1){ //develop
@@ -174,7 +177,7 @@ module.exports = function(passport) {
             // allows us to pass in the req from our route (lets us check if a user is logged in or not)
             passReqToCallback : true
         }
-    } else if(hostname.indexOf("kibo-service-s") > -1){ //staging
+    } else if(hostname.indexOf("heroku") > -1){ //staging
         fbStrategyAuthConfig = {
     		// pull in our app id and secret from our auth.js file
             clientID        : configAuth.staging.facebookAuth.clientID,
