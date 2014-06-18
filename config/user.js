@@ -177,7 +177,7 @@ module.exports = function(passport) {
             // allows us to pass in the req from our route (lets us check if a user is logged in or not)
             passReqToCallback : true
         }
-    } else if(hostname.indexOf("heroku") > -1){ //staging
+    } else{ //staging
         fbStrategyAuthConfig = {
     		// pull in our app id and secret from our auth.js file
             clientID        : configAuth.staging.facebookAuth.clientID,
@@ -186,9 +186,7 @@ module.exports = function(passport) {
             // allows us to pass in the req from our route (lets us check if a user is logged in or not)
             passReqToCallback : true
         }
-    } else{
-        return new Error("hostname"); 
-    }
+    } 
     //Production needed (later)
     
     passport.use(new FacebookStrategy(fbStrategyAuthConfig,
