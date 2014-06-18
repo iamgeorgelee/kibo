@@ -5,6 +5,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var bcrypt   = require('bcrypt-nodejs');
 var apiKey = 'necMvEqo9wdApurqW9z5c-80Jz04T_uX';
 var configAuth = require('./auth');
+var os = require("os");
 
 var performrequest = require('../models/performRequest');
 var Users;
@@ -160,15 +161,32 @@ module.exports = function(passport) {
 	// =========================================================================
     // FACEBOOK ================================================================
     // =========================================================================
-    passport.use(new FacebookStrategy({
-
-		// pull in our app id and secret from our auth.js file
-        clientID        : configAuth.facebookAuth.clientID,
-        clientSecret    : configAuth.facebookAuth.clientSecret,
-        callbackURL     : configAuth.facebookAuth.callbackURL,
-        // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-        passReqToCallback : true
-    },
+    
+    //Detemine the app is deployed and running on c9 or heroku (develop/staging) 
+    var hostname = os.hostname();
+    var fbStrategyAuthConfig;
+    if(hostname.indexOf("c9") > -1){ //develop
+        fbStrategyAuthConfig = {
+    		// pull in our app id and secret from our auth.js file
+            clientID        : configAuth.develop.facebookAuth.clientID,
+            clientSecret    : configAuth.develop.facebookAuth.clientSecret,
+            callbackURL     : configAuth.develop.facebookAuth.callbackURL,
+            // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+            passReqToCallback : true
+        }
+    } else if(hostname.indexOf("kibo-service-s") > -1){ //staging
+        fbStrategyAuthConfig = {
+    		// pull in our app id and secret from our auth.js file
+            clientID        : configAuth.staging.facebookAuth.clientID,
+            clientSecret    : configAuth.staging.facebookAuth.clientSecret,
+            callbackURL     : configAuth.staging.facebookAuth.callbackURL,
+            // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+            passReqToCallback : true
+        }
+    }
+    //Production needed (later)
+    
+    passport.use(new FacebookStrategy(fbStrategyAuthConfig,
 
     // facebook will send back the token and profile
     function(req, token, refreshToken, profile, done) {
