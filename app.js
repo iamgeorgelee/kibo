@@ -1,14 +1,17 @@
-//This is the application entry point
+/**
+ * @module Node.js
+ */
 
+//This is the application entry point
 //Module dependencies.
-var express    = require('express');
+var express = require('express');
 var bodyParser = require('body-parser');
-var connect    = require('connect');
-var flash      = require('connect-flash');
-var session    = require('express-session');
-var logger     = require('morgan');
-var passport   = require('passport');
-var port       = process.env.PORT || 8080;
+var connect = require('connect');
+var flash = require('connect-flash');
+var session = require('express-session');
+var logger = require('morgan');
+var passport = require('passport');
+var port = process.env.PORT || 8080;
 var app = express();
 
 // ========================================
@@ -23,15 +26,17 @@ app.use(logger('dev'));
 app.use(connect.methodOverride());
 app.use(connect.cookieParser());
 app.use(bodyParser());
-app.use(session({ secret: 'kibokibokibo' }));
+app.use(session({
+	secret: 'kibokibokibo'
+}));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-// var test = require('./models/user.js');
 // pass passport for configuration
-require('./config/user')(passport);
+require('./models/user')(passport);
+
+require('./models/FBgraph');
 
 // ========================================
 // Routes for our API
@@ -39,9 +44,13 @@ require('./config/user')(passport);
 
 // HOME PAGE
 app.route('/')
-    .get(function(req, res) {
-        res.render('index', { message: req.flash('loginMessage'), isAuthenticated: req.isAuthenticated(), user : req.user});
-    });
+	.get(function (req, res) {
+		res.render('index', {
+			message: req.flash('loginMessage'),
+			isAuthenticated: req.isAuthenticated(),
+			user: req.user
+		});
+	});
 // User Routes. e.g. login, signup
 require('./routes/UserRoutes.js')(app, passport);
 
@@ -49,12 +58,15 @@ require('./routes/UserRoutes.js')(app, passport);
 // Mode Selection
 // ========================================
 var env = process.env.NODE_ENV || 'development';
-if ('development' == env) {
-   app.use(connect.errorHandler({ dumpExceptions: true, showStack: true }));
+if ('development' === env) {
+	app.use(connect.errorHandler({
+		dumpExceptions: true,
+		showStack: true
+	}));
 }
 
-if ('production' == env) {
-   app.use(connect.errorHandler());
+if ('production' === env) {
+	app.use(connect.errorHandler());
 }
 
 // ========================================

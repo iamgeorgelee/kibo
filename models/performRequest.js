@@ -3,18 +3,18 @@ var https = require('https');
 
 var host = 'api.mongolab.com';
 
-exports.performRequest = function(endpoint, method, data, success){
+exports.performRequest = function(endpoint, method, data, success) {
 
-    var dataString = JSON.stringify(data);
-    var headers = {};
+    var dataString = JSON.stringify(data),
+        headers = {};
 
-    if (method == 'GET') {
+    if (method === 'GET') {
         endpoint += '?' + querystring.stringify(data);
     }
     else {
         headers = {
-          'Content-Type': 'application/json',
-          'Content-Length': dataString.length
+            'Content-Type': 'application/json',
+            'Content-Length': dataString.length
         };
     }
 
