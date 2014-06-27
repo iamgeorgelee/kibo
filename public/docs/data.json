@@ -1,11 +1,13 @@
 {
     "project": {
-        "name": "Documenting Node.js with YUIDoc",
-        "version": "~0.3.50"
+        "name": "application-name",
+        "description": "",
+        "version": "0.0.1",
+        "url": ""
     },
     "files": {
-        "/home/ubuntu/workspace/routes/UserRoutes.js": {
-            "name": "/home/ubuntu/workspace/routes/UserRoutes.js",
+        "routes/UserRoutes.js": {
+            "name": "routes/UserRoutes.js",
             "modules": {},
             "classes": {
                 "Controller": 1
@@ -13,8 +15,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "/home/ubuntu/workspace/app.js": {
-            "name": "/home/ubuntu/workspace/app.js",
+        "app.js": {
+            "name": "app.js",
             "modules": {
                 "Node.js": 1
             },
@@ -33,7 +35,7 @@
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "/home/ubuntu/workspace/routes/UserRoutes.js",
+            "file": "routes/UserRoutes.js",
             "line": 1
         }
     },
@@ -47,14 +49,14 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "Node.js",
-            "file": "/home/ubuntu/workspace/routes/UserRoutes.js",
+            "file": "routes/UserRoutes.js",
             "line": 1,
             "is_constructor": 1
         }
     },
     "classitems": [
         {
-            "file": "/home/ubuntu/workspace/routes/UserRoutes.js",
+            "file": "routes/UserRoutes.js",
             "line": 72,
             "description": "Clearly a stupid way and obviously there will be a problem when web page user and mobile user do facebook auth the same time.\nSince we dont really need to care about web page right now, temporary ignore it. Need to fix later.",
             "itemtype": "attribute",
@@ -62,7 +64,7 @@
             "class": "Controller"
         },
         {
-            "file": "/home/ubuntu/workspace/routes/UserRoutes.js",
+            "file": "routes/UserRoutes.js",
             "line": 114,
             "description": "Needs to verify later, since the callback changed due to support API.",
             "itemtype": "attribute",
@@ -70,8 +72,8 @@
             "class": "Controller"
         },
         {
-            "file": "/home/ubuntu/workspace/routes/UserRoutes.js",
-            "line": 147,
+            "file": "routes/UserRoutes.js",
+            "line": 143,
             "description": "Perform sign up for local account",
             "itemtype": "method",
             "name": "localSignup",
@@ -94,8 +96,8 @@
             "class": "Controller"
         },
         {
-            "file": "/home/ubuntu/workspace/routes/UserRoutes.js",
-            "line": 177,
+            "file": "routes/UserRoutes.js",
+            "line": 173,
             "description": "Perform login for local account",
             "itemtype": "method",
             "name": "localLogin",
@@ -118,8 +120,8 @@
             "class": "Controller"
         },
         {
-            "file": "/home/ubuntu/workspace/routes/UserRoutes.js",
-            "line": 207,
+            "file": "routes/UserRoutes.js",
+            "line": 203,
             "description": "Perform facebook account authentication.\nScope defines what kind of data you want user to authorize you.\nAfter perform facebook account authentication, facebook will render to callback location.",
             "itemtype": "method",
             "name": "FBAuth",
@@ -130,8 +132,8 @@
             "class": "Controller"
         },
         {
-            "file": "/home/ubuntu/workspace/routes/UserRoutes.js",
-            "line": 228,
+            "file": "routes/UserRoutes.js",
+            "line": 224,
             "description": "After perform facebook account authentication, facebook will render back to this location.\nThis is for facebook itself.",
             "itemtype": "method",
             "name": "FBAuth/Callback",
@@ -144,8 +146,8 @@
             "class": "Controller"
         },
         {
-            "file": "/home/ubuntu/workspace/routes/UserRoutes.js",
-            "line": 265,
+            "file": "routes/UserRoutes.js",
+            "line": 261,
             "description": "Get facebook friends who also authorize this app.\nNeeds to pass facebook token",
             "itemtype": "method",
             "name": "getFriends",

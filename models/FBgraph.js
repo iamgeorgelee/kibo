@@ -12,7 +12,7 @@ var options = {
 
 exports.setToken = function (token) {
 	graph.setAccessToken(token);
-}
+};
 
 exports.getFriends = function (token, callback) {
 	graph
@@ -21,4 +21,4 @@ exports.getFriends = function (token, callback) {
 		.get("me?fields=friends", function (err, res) {
 			callback(res.friends);
 		});
-}
+};

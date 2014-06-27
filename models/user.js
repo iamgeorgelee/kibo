@@ -58,7 +58,7 @@ module.exports = function(passport) {
     },
 
     function(req, username, password, done) {
-
+        var user;
         // asynchronous
         // User.findOne wont fire unless data is sent back
         process.nextTick(function() {
@@ -67,7 +67,7 @@ module.exports = function(passport) {
 
                 // find a user whose username is the same as the forms username
                 // we are checking to see if the user trying to login already exists
-                var user = Users.filter(function(iterateUser) {
+                user = Users.filter(function(iterateUser) {
                     return iterateUser.username === username;
                 })[0];
 
@@ -101,7 +101,7 @@ module.exports = function(passport) {
                 }
             }
             else {
-                var user = req.user;
+                user = req.user;
 
                 // user.username = username;
                 // user.password = generateHash(password);
@@ -174,7 +174,7 @@ module.exports = function(passport) {
     //Note, this is the place where the app runs and is not related to domain name
     var hostname = os.hostname();
     var fbStrategyAuthConfig;
-    if (hostname.indexOf("c9") > -1) { //develop
+    // if (hostname.indexOf("c9") > -1) { //develop
         fbStrategyAuthConfig = {
             // pull in our app id and secret from our auth.js file
             clientID: configAuth.develop.facebookAuth.clientID,
@@ -185,18 +185,18 @@ module.exports = function(passport) {
             // allows us to pass in the req from our route (lets us check if a user is logged in or not)
             passReqToCallback: true
 
-        }
-    }
-    else { //staging
-        fbStrategyAuthConfig = {
-            // pull in our app id and secret from our auth.js file
-            clientID: configAuth.staging.facebookAuth.clientID,
-            clientSecret: configAuth.staging.facebookAuth.clientSecret,
-            callbackURL: configAuth.staging.facebookAuth.callbackURL,
-            // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-            passReqToCallback: true
-        }
-    }
+        };
+    // }
+    // else { //staging
+    //     fbStrategyAuthConfig = {
+    //         // pull in our app id and secret from our auth.js file
+    //         clientID: configAuth.staging.facebookAuth.clientID,
+    //         clientSecret: configAuth.staging.facebookAuth.clientSecret,
+    //         callbackURL: configAuth.staging.facebookAuth.callbackURL,
+    //         // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+    //         passReqToCallback: true
+    //     }
+    // }
     //Production needed (later)
 
     passport.use(new FacebookStrategy(fbStrategyAuthConfig,
@@ -205,6 +205,8 @@ module.exports = function(passport) {
     function(req, token, refreshToken, profile, done) {
         // asynchronous
         process.nextTick(function() {
+            var user;
+            
             //set facebook token to graph
             graph.setToken(token);
 
@@ -213,7 +215,7 @@ module.exports = function(passport) {
                 // find the user in the database based on their facebook id
                 // User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
 
-                var user = Users.filter(function(iterateUser) {
+                user = Users.filter(function(iterateUser) {
                     //user dont have any facebook field yet
                     if (iterateUser.hasOwnProperty('facebook')) return iterateUser.facebook.id == profile.id;
                 })[0];
@@ -252,7 +254,7 @@ module.exports = function(passport) {
             }
             else {
                 // user already exists and is logged in, we have to link accounts
-                var user = req.user; // pull the user out of the session
+                user = req.user; // pull the user out of the session
 
                 // // update the current users facebook credentials
                 performrequest.performRequest('/api/1/databases/kibo/collections/User/' + user._id.$oid + '?apiKey=' + apiKey, 'PUT', {
@@ -298,7 +300,7 @@ module.exports = function(passport) {
 
             res.redirect('/profile');
         });
-    }
+    };
 
     passport.unlinkFacebook = function(req, res) {
         var user = req.user;
@@ -315,5 +317,5 @@ module.exports = function(passport) {
 
             res.redirect('/profile');
         });
-    }
+    };
 };

@@ -1,9 +1,0 @@
-{
-    "name": "Documenting Node.js with YUIDoc",
-    "version": "~0.3.50",
-    "options": {
-        "linkNatives": "true",
-        "outdir": "./public/docs",
-        "paths": "."
-    }
-}
