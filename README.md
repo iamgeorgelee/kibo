@@ -22,19 +22,28 @@ Currently we do:
 ###Before Push
 * Use Beautifier. Cloud9 Edit -> Code Formatting
 * Comment with YUIDoc syntaxs.
-...[YUIDoc Syntax](http://yui.github.io/yuidoc/syntax/index.html)
-...[More explaination about YUIDoc](http://code.tutsplus.com/tutorials/documenting-javascript-with-yuidoc--net-25324)
+
+[YUIDoc Syntax](http://yui.github.io/yuidoc/syntax/index.html)
+
+[More explaination about YUIDoc](http://code.tutsplus.com/tutorials/documenting-javascript-with-yuidoc--net-25324)
 
 
-##Road To Being Robust - What we need to do in future
+##TODO
 
-###Mocha - Unit Test
+###Higher Priority
+
+###Lower Priority
+
+####Mocha - Unit Test
+
 [Grunt Mocha Plugin](https://github.com/pghalliday/grunt-mocha-test)
+
 [User Mocha to so test with your RestAPI](http://thewayofcode.wordpress.com/2013/04/21/how-to-build-and-test-rest-api-with-nodejs-express-mocha/)
 
-###Security Scan - Dynamic Code Analysis(Fuzz in run time), Static Code Analysis(Scan code for security vulnerability)
+####Security Scan
+Dynamic Code Analysis(Fuzz in run time), Static Code Analysis(Scan code for security vulnerability)
 
-###SSL
+####SSL
 Heroku by default is without SSL
 
 
@@ -44,4 +53,4 @@ Heroku by default is without SSL
 * When deploy to Heroku, needs to change Facebook authentication callback to fit Heroku domain name. Use 'environment' to choose.
  
 
-###[CheatSheet for writing README.md](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+[CheatSheet for writing README.md](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
