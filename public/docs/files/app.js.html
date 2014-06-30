@@ -124,25 +124,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // pass passport for configuration
-require(&#x27;./models/user&#x27;)(passport);
-
-require(&#x27;./models/FBgraph&#x27;);
+require(&#x27;./config/passport&#x27;)(passport);
 
 // ========================================
 // Routes for our API
 // ========================================
-
-// HOME PAGE
-app.route(&#x27;/&#x27;)
-	.get(function (req, res) {
-		res.render(&#x27;index&#x27;, {
-			message: req.flash(&#x27;loginMessage&#x27;),
-			isAuthenticated: req.isAuthenticated(),
-			user: req.user
-		});
-	});
 // User Routes. e.g. login, signup
-require(&#x27;./routes/UserRoutes.js&#x27;)(app, passport);
+require(&#x27;./routes/users.js&#x27;)(app, passport);
 
 // ========================================
 // Mode Selection

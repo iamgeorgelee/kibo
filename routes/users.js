@@ -3,22 +3,23 @@
  * @constructor
  */
 
-var graph = require('../models/FBgraph');
-
-// to make sure a user is logged in
-function isLoggedIn(req, res, next) {
-    // if user is authenticated in the session, carry on
-    if (req.isAuthenticated()) return next();
-
-    // if they aren't redirect them to the home page
-    res.redirect('/');
-}
+// User routes use users controller
+var users = require('../controllers/users');
 
 module.exports = function(app, passport) {
     // =======================================
     // ==== Routes below is for web pages ====
     // =======================================
 
+    // HOME PAGE
+    app.route('/')
+    	.get(function (req, res) {
+    		res.render('index', {
+    			message: req.flash('loginMessage'),
+    			isAuthenticated: req.isAuthenticated(),
+    			user: req.user
+    		});
+    	});
     // route for login
     app.route('/login')
         .post(passport.authenticate('local-login', {
@@ -35,7 +36,8 @@ module.exports = function(app, passport) {
                 user: req.user, // take user from session for view purpose
                 isAuthenticated: req.isAuthenticated()
             });
-        }).post(passport.authenticate('local-signup', {
+        })
+        .post(passport.authenticate('local-signup', {
             successRedirect: '/profile',
             failureRedirect: '/signup',
             failureFlash: true // allow flash messages
@@ -45,7 +47,7 @@ module.exports = function(app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.route('/profile')
-        .get(isLoggedIn, function(req, res) {
+        .get(users.isLoggedIn, function(req, res) {
             res.render('profile', {
                 user: req.user, // take user from session for view purpose
                 isAuthenticated: req.isAuthenticated()
@@ -135,7 +137,7 @@ module.exports = function(app, passport) {
         .get(function(req, res) {
             passport.unlinkFacebook(req, res);
         });
-    
+
     // ====================================
     // ==== Start from here is the API ====
     // ====================================
@@ -150,24 +152,7 @@ module.exports = function(app, passport) {
      */
     app.route('/api/localSignup')
         .post(function(req, res, next) {
-            passport.authenticate('local-signup', {
-                failureFlash: true
-            }, function(err, user, info) { // optional 'info' argument, containing additional details provided by the strategy's verify callback.
-                if (err) {
-                    return next(err);
-                }
-                if (!user) {
-                    return res.send({
-                        success: false,
-                        message: req.flash('signupMessage')
-                    });
-                }
-                return res.send({
-                    success: true,
-                    message: 'authentication succeeded',
-                    user: user
-                });
-            })(req, res, next);
+            users.localSignup(passport, req, res, next);
         });
 
     /**
@@ -180,24 +165,7 @@ module.exports = function(app, passport) {
      */
     app.route('/api/localLogin')
         .post(function(req, res, next) {
-            passport.authenticate('local-login', {
-                failureFlash: true
-            }, function(err, user, info) {
-                if (err) {
-                    return next(err);
-                }
-                if (!user) {
-                    return res.send({
-                        success: false,
-                        message: req.flash('loginMessage')
-                    });
-                }
-                return res.send({
-                    success: true,
-                    message: 'login succeeded',
-                    user: user
-                });
-            })(req, res, next);
+            users.localLogin(passport, req, res, next);
         });
 
     /**
@@ -208,17 +176,11 @@ module.exports = function(app, passport) {
      * @method FBAuth
      * @return {JSON} user data
      */
-    app.route('/api/FBAuth')
+    app.route('/api/fbAuth')
         .get(function(req, res, next) {
             fromFBApi = true; // to check where the facebook auth request from
 
-            passport.authenticate('facebook', {
-                scope: 'email, user_likes, user_friends, read_friendlists'
-            }, function(err, user, info) {
-                if (err) {
-                    return next(err);
-                }
-            })(req, res, next);
+            users.fbAuth(passport, req, res, next);
         });
 
     /**
@@ -229,26 +191,10 @@ module.exports = function(app, passport) {
      * @private
      * @return {JSON} user data
      */
-    app.route('/api/FBAuth/callback')
+    app.route('/api/fbAuth/callback')
         .get(function(req, res, next) {
             if (fromFBApi === true) {
-                passport.authenticate('facebook', function(err, user, info) {
-                    if (err) {
-                        return next(err); // will generate a 500 error
-                    }
-
-                    if (!user) {
-                        return res.send({
-                            success: false,
-                            message: 'login fail'
-                        });
-                    }
-                    return res.send({
-                        success: true,
-                        message: 'login succeeded',
-                        user: user
-                    });
-                })(req, res, next);
+                users.fbAuthCallback(passport, req, res, next);
             }
             else {
                 passport.authenticate('facebook', {
@@ -268,7 +214,7 @@ module.exports = function(app, passport) {
      */
     app.route('/api/getFriends')
         .get(function(req, res) {
-            graph.getFriends(req.query.token, function(data) {
+            users.getFriends(req.query.token, function(data) {
                 return res.send(data);
             });
         });

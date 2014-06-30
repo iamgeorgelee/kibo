@@ -1,9 +1,8 @@
 var querystring = require('querystring');
 var https = require('https');
+var dbConfig = require('../config/db.js');
 
-var host = 'api.mongolab.com';
-
-exports.performRequest = function(endpoint, method, data, success) {
+module.exports = function(endpoint, method, data, success) {
 
     var dataString = JSON.stringify(data),
         headers = {};
@@ -20,7 +19,7 @@ exports.performRequest = function(endpoint, method, data, success) {
 
     // options
     var options = {
-        host: host,
+        host: dbConfig.host,
         path: endpoint,
         method: method,
         headers: headers

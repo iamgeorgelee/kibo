@@ -6,8 +6,8 @@
         "url": ""
     },
     "files": {
-        "routes/UserRoutes.js": {
-            "name": "routes/UserRoutes.js",
+        "routes/users.js": {
+            "name": "routes/users.js",
             "modules": {},
             "classes": {
                 "Controller": 1
@@ -35,7 +35,7 @@
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "routes/UserRoutes.js",
+            "file": "routes/users.js",
             "line": 1
         }
     },
@@ -49,31 +49,31 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "Node.js",
-            "file": "routes/UserRoutes.js",
+            "file": "routes/users.js",
             "line": 1,
             "is_constructor": 1
         }
     },
     "classitems": [
         {
-            "file": "routes/UserRoutes.js",
-            "line": 72,
+            "file": "routes/users.js",
+            "line": 74,
             "description": "Clearly a stupid way and obviously there will be a problem when web page user and mobile user do facebook auth the same time.\nSince we dont really need to care about web page right now, temporary ignore it. Need to fix later.",
             "itemtype": "attribute",
             "name": "",
             "class": "Controller"
         },
         {
-            "file": "routes/UserRoutes.js",
-            "line": 114,
+            "file": "routes/users.js",
+            "line": 116,
             "description": "Needs to verify later, since the callback changed due to support API.",
             "itemtype": "attribute",
             "name": "",
             "class": "Controller"
         },
         {
-            "file": "routes/UserRoutes.js",
-            "line": 143,
+            "file": "routes/users.js",
+            "line": 145,
             "description": "Perform sign up for local account",
             "itemtype": "method",
             "name": "localSignup",
@@ -96,8 +96,8 @@
             "class": "Controller"
         },
         {
-            "file": "routes/UserRoutes.js",
-            "line": 173,
+            "file": "routes/users.js",
+            "line": 158,
             "description": "Perform login for local account",
             "itemtype": "method",
             "name": "localLogin",
@@ -120,8 +120,8 @@
             "class": "Controller"
         },
         {
-            "file": "routes/UserRoutes.js",
-            "line": 203,
+            "file": "routes/users.js",
+            "line": 171,
             "description": "Perform facebook account authentication.\nScope defines what kind of data you want user to authorize you.\nAfter perform facebook account authentication, facebook will render to callback location.",
             "itemtype": "method",
             "name": "FBAuth",
@@ -132,8 +132,8 @@
             "class": "Controller"
         },
         {
-            "file": "routes/UserRoutes.js",
-            "line": 224,
+            "file": "routes/users.js",
+            "line": 186,
             "description": "After perform facebook account authentication, facebook will render back to this location.\nThis is for facebook itself.",
             "itemtype": "method",
             "name": "FBAuth/Callback",
@@ -146,8 +146,8 @@
             "class": "Controller"
         },
         {
-            "file": "routes/UserRoutes.js",
-            "line": 261,
+            "file": "routes/users.js",
+            "line": 207,
             "description": "Get facebook friends who also authorize this app.\nNeeds to pass facebook token",
             "itemtype": "method",
             "name": "getFriends",

@@ -17,8 +17,6 @@ Currently we do:
 * yuidoc - Generate documents. Can access from **https://HOST/docs**
 * nodemon - Run **node app.js**
 
-###File Structure
-
 ###Before Push
 * Use Beautifier. Cloud9 Edit -> Code Formatting
 * Comment with YUIDoc syntaxs.
@@ -32,18 +30,23 @@ Currently we do:
 
 ###Higher Priority
 
+*Friends List [7/20]
+*Able to create user defined event: choose restaurant from recommendation, pick friends, send notification, user receive invite and accept/reject. No voting. [7/20]
+*middle check point + voting [8/3]
+
+
 ###Lower Priority
 
-####Mocha - Unit Test
+*Mocha - Unit Test
 
 [Grunt Mocha Plugin](https://github.com/pghalliday/grunt-mocha-test)
 
 [User Mocha to so test with your RestAPI](http://thewayofcode.wordpress.com/2013/04/21/how-to-build-and-test-rest-api-with-nodejs-express-mocha/)
 
-####Security Scan
+*Security Scan
 Dynamic Code Analysis(Fuzz in run time), Static Code Analysis(Scan code for security vulnerability)
 
-####SSL
+*SSL
 Heroku by default is without SSL
 
 
@@ -52,5 +55,6 @@ Heroku by default is without SSL
 * Needs to set develop version and production version. **NODE_ENV = develop**
 * When deploy to Heroku, needs to change Facebook authentication callback to fit Heroku domain name. Use 'environment' to choose.
  
+
 
 [CheatSheet for writing README.md](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
