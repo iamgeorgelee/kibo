@@ -52,8 +52,6 @@ Heroku by default is without SSL
 
 ##Known Issue
 * [Web Page] [Ignore for now] When the User Collection is totally empty, link to Facebook work correctly in DB but may not display in EJS.
-* There is really no difference on development version and production version now. **NODE_ENV = develop**
-* When deploy to Heroku, needs to change Facebook authentication callback to fit Heroku domain name. Use 'environment' to choose.
 
 
 

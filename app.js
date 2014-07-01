@@ -33,8 +33,7 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// pass passport for configuration
-require('./config/passport')(passport);
+
 
 // ================
 // ==== ROUTES ====
@@ -46,15 +45,29 @@ require('./routes/users.js')(app, passport);
 // ========================
 // ==== MODE SELECTION ====
 // ========================
+var config;
 var env = process.env.NODE_ENV || 'development';
 if ('development' === env) {
+	config = require('./config/env/development.js');
+	// pass passport for configuration
+	require('./config/passport')(passport, config);
+
 	app.use(connect.errorHandler({
 		dumpExceptions: true,
 		showStack: true
 	}));
-}
+} else if ('staging' === env) {
+	config = require('./config/env/staging.js');
+	require('./config/passport')(passport, config);
 
-if ('production' === env) {
+	app.use(connect.errorHandler({
+		dumpExceptions: true,
+		showStack: true
+	}));
+} else { //production mode
+	config = require('./config/env/production.js');
+	require('./config/passport')(passport, config);
+
 	app.use(connect.errorHandler());
 }
 

@@ -2,17 +2,6 @@
 
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
-
-var config;
-if (process.env.NODE_ENV === undefined) { // if mode not set, give 'development'
-    process.env.NODE_ENV = 'development';
-}
-if (process.env.NODE_ENV === 'development') { // determine which mode it is in now
-    config = require('./env/development.js');
-} else {
-    config = require('./env/production.js');
-}
-
 var User = require('../models/user.js');
 var db = require('../controllers/db.js');
 var Users; // store current user list
@@ -22,7 +11,7 @@ db.getCollection('User', function (data) {
     Users = data;
 });
 
-module.exports = function (passport) {
+module.exports = function (passport, config) {
     // used to serialize the user for the session
     passport.serializeUser(function (user, done) {
         done(null, user._id);
