@@ -1,9 +1,8 @@
+// do http requests
 var querystring = require('querystring');
 var https = require('https');
-var dbConfig = require('../config/db.js');
 
-module.exports = function(endpoint, method, data, success) {
-
+module.exports = function(host, endpoint, method, data, success) {
     var dataString = JSON.stringify(data),
         headers = {};
 
@@ -19,7 +18,7 @@ module.exports = function(endpoint, method, data, success) {
 
     // options
     var options = {
-        host: dbConfig.host,
+        host: host,
         path: endpoint,
         method: method,
         headers: headers
@@ -30,7 +29,6 @@ module.exports = function(endpoint, method, data, success) {
         var responseString = '';
 
         res.setEncoding('utf-8');
-        // console.log("statusCode: ", res.statusCode);
 
         res.on('data', function(data) {
             responseString += data;

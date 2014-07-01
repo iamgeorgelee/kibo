@@ -1,15 +1,16 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
-        "Controller"
+        "UserRoutes",
+        "dbController"
     ],
     "modules": [
-        "Node.js"
+        "Kibo"
     ],
     "allModules": [
         {
-            "displayName": "Node.js",
-            "name": "Node.js"
+            "displayName": "Kibo",
+            "name": "Kibo"
         }
     ]
 } };

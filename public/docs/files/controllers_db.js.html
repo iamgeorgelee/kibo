@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>app.js - application-name</title>
+    <title>controllers/db.js - application-name</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -86,74 +86,78 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: app.js</h1>
+                        <h1 class="file-heading">File: controllers/db.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- * @module Kibo
+ * MongoLab API
+ *
+ * @class dbController
+ * @constructor
  */
 
-//This is the application entry point
-//Module dependencies.
-var express = require(&#x27;express&#x27;);
-var bodyParser = require(&#x27;body-parser&#x27;);
-var connect = require(&#x27;connect&#x27;);
-var flash = require(&#x27;connect-flash&#x27;);
-var session = require(&#x27;express-session&#x27;);
-var logger = require(&#x27;morgan&#x27;);
-var passport = require(&#x27;passport&#x27;);
-var port = process.env.PORT || 8080;
-var app = express();
+var dbConfig = require(&#x27;../config/db.js&#x27;);
+var performrequest = require(&#x27;../controllers/performRequest&#x27;);
 
-// =======================
-// ==== CONFIGURATION ====
-// =======================
-app.set(&#x27;views&#x27;, __dirname + &#x27;/views&#x27;);
-app.set(&#x27;view engine&#x27;, &#x27;ejs&#x27;);
+/**
+ * Get coolection by collection name
+ *
+ * @method getCollection
+ * @param {String} collectionName
+ * @return {JSON} userList
+ */
+exports.getCollection = function (collectionName, callback) {
+    performrequest(dbConfig.host, &#x27;/api/1/databases/kibo/collections/&#x27; + collectionName, &#x27;GET&#x27;, {
+        apiKey: dbConfig.apiKey
+    }, function (data) {
+        callback(data);
+    });
+};
 
-app.use(express.static(__dirname + &#x27;/public&#x27;));
+/**
+ * Get document by document name
+ *
+ * @method getDocument
+ * @param {String} collectionName
+ * @param {String} documentName
+ * @return {JSON} user
+ */
+exports.getDocument = function (collectionName, documentName, callback) {
+    performrequest(dbConfig.host, &#x27;/api/1/databases/kibo/collections/&#x27; + collectionName + &#x27;/&#x27; + documentName, &#x27;GET&#x27;, {
+        apiKey: dbConfig.apiKey
+    }, function (data) {
+        callback(data);
+    });
+};
 
-app.use(logger(&#x27;dev&#x27;));
-app.use(connect.methodOverride());
-app.use(connect.cookieParser());
-app.use(bodyParser());
-app.use(session({
-	secret: &#x27;kibokibokibo&#x27;
-}));
-app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
+/**
+ * Create user
+ *
+ * @method createUser
+ * @param {Object} input
+ * @return {JSON} user
+ */
+exports.createUser = function (input, callback) {
+    performrequest(dbConfig.host, &#x27;/api/1/databases/kibo/collections/User?apiKey=&#x27; + dbConfig.apiKey, &#x27;POST&#x27;, input, function (data) {
+        callback(data);
+    });
+};
 
-// pass passport for configuration
-require(&#x27;./config/passport&#x27;)(passport);
+/**
+ * Update user
+ *
+ * @method updateUser
+ * @param {String} userId
+ * @param {Object} input
+ * @return {JSON} user
+ */
+exports.updateUser = function (userId, input, callback) {
+    performrequest(dbConfig.host, &#x27;/api/1/databases/kibo/collections/User/&#x27; + userId + &#x27;?apiKey=&#x27; + dbConfig.apiKey, &#x27;PUT&#x27;, input, function (data) {
+        callback(data);
+    });
+};
 
-// ================
-// ==== ROUTES ====
-// ================
-
-// User Routes e.g. login, signup
-require(&#x27;./routes/users.js&#x27;)(app, passport);
-
-// ========================
-// ==== MODE SELECTION ====
-// ========================
-var env = process.env.NODE_ENV || &#x27;development&#x27;;
-if (&#x27;development&#x27; === env) {
-	app.use(connect.errorHandler({
-		dumpExceptions: true,
-		showStack: true
-	}));
-}
-
-if (&#x27;production&#x27; === env) {
-	app.use(connect.errorHandler());
-}
-
-app.listen(port);
-console.log(&quot;Express server listening on port %d in %s mode&quot;, process.env.PORT, app.settings.env);
-console.log(&quot;Host IP is %s&quot;, process.env.IP);
-console.log(&quot;Server Up!&quot;);
     </pre>
 </div>
 

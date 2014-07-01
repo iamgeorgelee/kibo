@@ -1,5 +1,7 @@
 /**
- * @class Controller
+ * User API
+ *
+ * @class UserRoutes
  * @constructor
  */
 

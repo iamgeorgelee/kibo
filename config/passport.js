@@ -1,7 +1,7 @@
-// load all the things we need
+// Passport is a node module doing local and facebook authentication
+
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
-var User = require('../models/user.js');
 
 var config;
 if (process.env.NODE_ENV === undefined) { // if mode not set, give 'development'
@@ -9,15 +9,15 @@ if (process.env.NODE_ENV === undefined) { // if mode not set, give 'development'
 }
 if (process.env.NODE_ENV === 'development') { // determine which mode it is in now
     config = require('./env/development.js');
-}
-else {
+} else {
     config = require('./env/production.js');
 }
 
-var users = require('../controllers/users.js');
+var User = require('../models/user.js');
 var db = require('../controllers/db.js');
-var Users;
+var Users; // store current user list
 
+//Get initial list of user
 db.getCollection('User', function (data) {
     Users = data;
 });
@@ -30,48 +30,42 @@ module.exports = function (passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function (id, done) {
+        // get specific user by id
         db.getDocument('User', id.$oid, function (data) {
             done(null, data);
         });
     });
 
-    // =========================================================================
-    // LOCAL SIGNUP ============================================================
-    // =========================================================================
-    // we are using named strategies since we have one for login and one for signup
-    // by default, if there was no name, it would just be called 'local'
+    // =====================
+    // ==== LOCAL AUTH  ====
+    // =====================
 
+    // do local sign-up
     passport.use('local-signup', new LocalStrategy({
-        // by default, local strategy uses username and password, we will override with email
         usernameField: 'username',
         passwordField: 'password',
         passReqToCallback: true // allows us to pass back the entire request to the callback
-    },
-
-    function (req, username, password, done) {
+    }, function (req, username, password, done) { // callback with username and password from our form or from API
         var user;
-        // asynchronous
-        // User.findOne wont fire unless data is sent back
+
+        // asynchronous, wont fire unless data is sent back
         process.nextTick(function () {
 
             if (!req.user) {
-
                 // find a user whose username is the same as the forms username
                 // we are checking to see if the user trying to login already exists
                 user = Users.filter(function (iterateUser) {
                     return iterateUser.username === username;
                 })[0];
 
-                // check to see if theres already a user with that email
+                // check to see if theres already a user with that username
                 if (user) {
                     return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
-                }
-                else {
-                    // if there is no user with that email
-                    // create the user
+                } else {
+                    // if there is no user with that username create the user
                     db.createUser({
                         username: username,
-                        password: User.generateHash(password)
+                        password: User.generateHash(password) // hash the password before store to db
                     }, function (data) {
                         //refresh user list
                         db.getCollection('User', function (data) {
@@ -81,10 +75,11 @@ module.exports = function (passport) {
                         return done(null, data);
                     });
                 }
-            }
-            else {
-                user = req.user;
+            } else {
+                // user already exists and is logged in, we have to link accounts
+                user = req.user; // pull the user out of the session
 
+                // update user with his local login credential
                 db.updateUser(user._id.$oid, {
                     "$set": {
                         username: username,
@@ -102,87 +97,63 @@ module.exports = function (passport) {
         });
     }));
 
-    // =========================================================================
-    // LOCAL LOGIN =============================================================
-    // =========================================================================
-    // we are using named strategies since we have one for login and one for signup
-    // by default, if there was no name, it would just be called 'local'
-
+    // do local login
     passport.use('local-login', new LocalStrategy({
-        // by default, local strategy uses username and password, we will override with email
         usernameField: 'username',
         passwordField: 'password',
         passReqToCallback: true // allows us to pass back the entire request to the callback
-    },
-
-    function (req, username, password, done) { // callback with username and password from our form
-
-        // find a user whose email is the same as the forms email
+    }, function (req, username, password, done) { // callback with username and password from our form or from API
         // we are checking to see if the user trying to login already exists
-
         var user = Users.filter(function (iterateUser) {
             return iterateUser.username === username;
         })[0];
 
         // if no user is found, return the message
-        if (!user) return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+        if (!user) return done(null, false, req.flash('loginMessage', 'No user found.'));
 
         // if the user is found but the password is wrong
-        if (!User.validPassword(password, user.password)) return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+        if (!User.validPassword(password, user.password)) return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
 
-        // all is well, return successful user
         return done(null, user);
     }));
 
-    // =========================================================================
-    // FACEBOOK ================================================================
-    // =========================================================================
+    // ========================
+    // ==== FACEBOOK AUTH  ====
+    // ========================
 
+    // pull in our app id and secret from our env config file
     var fbStrategyAuthConfig = {
-        // pull in our app id and secret from our auth.js file
         clientID: config.facebookAuth.clientID,
         clientSecret: config.facebookAuth.clientSecret,
         callbackURL: config.facebookAuth.callbackURL,
-        profileFields: ['email', 'picture', 'name'],
-        // profileURL : 'https://graph.facebook.com/me?fields=id,name,email,friends,likes',
-        // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-        passReqToCallback: true
+        profileFields: ['email', 'picture', 'name'], // specify what kind of fields to return
+        passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
     };
 
-    passport.use(new FacebookStrategy(fbStrategyAuthConfig,
-
-    // facebook will send back the token and profile
-    function (req, token, refreshToken, profile, done) {
-        // asynchronous
+    // do authentication and facebook will send back the token and profile
+    passport.use(new FacebookStrategy(fbStrategyAuthConfig, function (req, token, refreshToken, profile, done) {
         process.nextTick(function () {
             var user;
 
-            //set facebook token to graph
-            users.setToken(token);
-
             // check if the user is already logged in
             if (!req.user) {
-                // find the user in the database based on their facebook id
-                // User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
-
+                // find the user based on their facebook id
                 user = Users.filter(function (iterateUser) {
-                    //user dont have any facebook field yet
-                    if (iterateUser.hasOwnProperty('facebook')) return iterateUser.facebook.id == profile.id;
+                    if (iterateUser.hasOwnProperty('facebook')) {
+                        return iterateUser.facebook.id == profile.id;
+                    }
                 })[0];
 
                 // if the user is found, then log them in
                 if (user) {
-
-                    return done(null, user); // user found, return that user
-                }
-                else {
-                    //             // if there is no user found with that facebook id, create them
-                    // set all of the facebook information in our user model
+                    return done(null, user);
+                } else {
+                    // if there is no user found with that facebook id, create them
                     db.createUser({
                         facebook: {
                             id: profile.id,
                             token: token,
-                            profilePic: profile.photos[0].value
+                            profilePic: profile.photos[0].value // profile picture link
                         },
                         name: profile.name.givenName + ' ' + profile.name.familyName,
                         email: profile.emails[0].value
@@ -195,12 +166,11 @@ module.exports = function (passport) {
                         return done(null, data);
                     });
                 }
-            }
-            else {
+            } else {
                 // user already exists and is logged in, we have to link accounts
                 user = req.user; // pull the user out of the session
 
-                // // update the current users facebook credentials
+                // update the current users facebook credentials
                 db.updateUser(user._id.$oid, {
                     "$set": {
                         name: profile.name.givenName + ' ' + profile.name.familyName,
@@ -222,9 +192,13 @@ module.exports = function (passport) {
             }
         });
     }));
-    // for social accounts, just remove the token
-    // for local account, remove email and password
-    // user account will stay active in case they want to reconnect in the future
+
+    // =================
+    // ==== UNLINK  ====
+    // =================
+
+    // if both accounts unlink (delete user), user will stay active in case they want to reconnect in the future
+    // data other than login credentials will remain in db, not doing DELETE
     passport.unlinkLocal = function (req, res) {
         var user = req.user;
 
@@ -241,7 +215,6 @@ module.exports = function (passport) {
 
             res.redirect('/profile');
         });
-
     };
 
     passport.unlinkFacebook = function (req, res) {
@@ -256,7 +229,6 @@ module.exports = function (passport) {
             db.getCollection('User', function (data) {
                 Users = data;
             });
-
             res.redirect('/profile');
         });
     };

@@ -1,5 +1,6 @@
+// graph is a facebook SDK
 var graph = require('fbgraph');
-
+// options needed for SDK
 var options = {
 	timeout: 3000,
 	pool: {
@@ -19,10 +20,7 @@ exports.isLoggedIn = function (req, res, next) {
     res.redirect('/');
 };
 
-exports.setToken = function (token) {
-	graph.setAccessToken(token);
-};
-
+// get facebook friend who aso authorize this app
 exports.getFriends = function (token, callback) {
 	graph
 		.setOptions(options)

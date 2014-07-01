@@ -1,5 +1,5 @@
 /**
- * @module Node.js
+ * @module Kibo
  */
 
 //This is the application entry point
@@ -14,9 +14,9 @@ var passport = require('passport');
 var port = process.env.PORT || 8080;
 var app = express();
 
-// ========================================
-// Configuration
-// ========================================
+// =======================
+// ==== CONFIGURATION ====
+// =======================
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
@@ -36,15 +36,16 @@ app.use(passport.session());
 // pass passport for configuration
 require('./config/passport')(passport);
 
-// ========================================
-// Routes for our API
-// ========================================
-// User Routes. e.g. login, signup
+// ================
+// ==== ROUTES ====
+// ================
+
+// User Routes e.g. login, signup
 require('./routes/users.js')(app, passport);
 
-// ========================================
-// Mode Selection
-// ========================================
+// ========================
+// ==== MODE SELECTION ====
+// ========================
 var env = process.env.NODE_ENV || 'development';
 if ('development' === env) {
 	app.use(connect.errorHandler({
@@ -57,9 +58,6 @@ if ('production' === env) {
 	app.use(connect.errorHandler());
 }
 
-// ========================================
-// Listened Port and feedback print to console
-// ========================================
 app.listen(port);
 console.log("Express server listening on port %d in %s mode", process.env.PORT, app.settings.env);
 console.log("Host IP is %s", process.env.IP);
