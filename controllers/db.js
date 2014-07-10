@@ -60,15 +60,11 @@ exports.createUser = function (input, callback) {
  * @param {String} userId
  * @param {Object} input
  * @return {JSON} user
- */
-
- /* Example of input
- {
-    "$set": {
-        username: username,
-        password: User.generateHash(password)
-    }
-}
+ * @example Example of input
+ *  {"$set": {
+ *       username: username,
+ *       password: User.generateHash(password)
+ *  }}
  */
 exports.updateUser = function (userId, input, callback) {
     performrequest(dbConfig.host, '/api/1/databases/kibo/collections/User/' + userId + '?apiKey=' + dbConfig.apiKey, 'PUT', input, function (data) {

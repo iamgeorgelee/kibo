@@ -164,6 +164,9 @@
                 "description": "user",
                 "type": "JSON"
             },
+            "example": [
+                " Example of input\n {\"$set\": {\n      username: username,\n      password: User.generateHash(password)\n }}"
+            ],
             "class": "dbController"
         },
         {
@@ -185,18 +188,18 @@
         {
             "file": "routes/users.js",
             "line": 147,
-            "description": "Perform sign up for local account",
+            "description": "[POST]\n\nPerform sign up for local account",
             "itemtype": "method",
             "name": "localSignup",
             "params": [
                 {
                     "name": "username",
-                    "description": "",
+                    "description": "(in header)",
                     "type": "String"
                 },
                 {
                     "name": "password",
-                    "description": "",
+                    "description": "(in header)",
                     "type": "String"
                 }
             ],
@@ -204,23 +207,26 @@
                 "description": "user data",
                 "type": "JSON"
             },
+            "example": [
+                " /api/localSignup"
+            ],
             "class": "UserRoutes"
         },
         {
             "file": "routes/users.js",
-            "line": 160,
-            "description": "Perform login for local account",
+            "line": 163,
+            "description": "[POST]\n\nPerform login for local account",
             "itemtype": "method",
             "name": "localLogin",
             "params": [
                 {
                     "name": "username",
-                    "description": "",
+                    "description": "(in header)",
                     "type": "String"
                 },
                 {
                     "name": "password",
-                    "description": "",
+                    "description": "(in header)",
                     "type": "String"
                 }
             ],
@@ -228,23 +234,29 @@
                 "description": "user data",
                 "type": "JSON"
             },
+            "example": [
+                " /api/localLogin"
+            ],
             "class": "UserRoutes"
         },
         {
             "file": "routes/users.js",
-            "line": 173,
-            "description": "Perform facebook account authentication.\nScope defines what kind of data you want user to authorize you.\nAfter perform facebook account authentication, facebook will render to callback location.",
+            "line": 179,
+            "description": "[GET]\n\nPerform facebook account authentication.\nScope defines what kind of data you want user to authorize you.\nAfter perform facebook account authentication, facebook will render to callback location.",
             "itemtype": "method",
             "name": "fbAuth",
             "return": {
                 "description": "user data",
                 "type": "JSON"
             },
+            "example": [
+                " /api/fbAuth"
+            ],
             "class": "UserRoutes"
         },
         {
             "file": "routes/users.js",
-            "line": 188,
+            "line": 197,
             "description": "After perform facebook account authentication, facebook will render back to this location.\nThis is for facebook itself.",
             "itemtype": "method",
             "name": "fbAuth/Callback",
@@ -258,14 +270,14 @@
         },
         {
             "file": "routes/users.js",
-            "line": 209,
-            "description": "Get facebook friends who also authorize this app.",
+            "line": 218,
+            "description": "[GET]\n\nGet facebook friends who also authorize this app.",
             "itemtype": "method",
             "name": "getFbFriends",
             "params": [
                 {
                     "name": "userId",
-                    "description": "",
+                    "description": "(in url)",
                     "type": "String"
                 }
             ],
@@ -273,18 +285,21 @@
                 "description": "facebook friends",
                 "type": "JSON"
             },
+            "example": [
+                " /api/user/:userId/getFbFriends"
+            ],
             "class": "UserRoutes"
         },
         {
             "file": "routes/users.js",
-            "line": 223,
-            "description": "Get friend list",
+            "line": 235,
+            "description": "[GET]\n\nGet friend list",
             "itemtype": "method",
             "name": "getFriendList",
             "params": [
                 {
                     "name": "userId",
-                    "description": "",
+                    "description": "(in url)",
                     "type": "String"
                 }
             ],
@@ -292,23 +307,26 @@
                 "description": "List of friends",
                 "type": "JSON"
             },
+            "example": [
+                " /api/user/:userId/getFriendList"
+            ],
             "class": "UserRoutes"
         },
         {
             "file": "routes/users.js",
-            "line": 237,
-            "description": "Add friend\n(should add send friend request later on)",
+            "line": 252,
+            "description": "[POST]\n\nAdd friend\n(should add send friend request later on)",
             "itemtype": "method",
             "name": "addFriend",
             "params": [
                 {
                     "name": "userId",
-                    "description": "",
+                    "description": "User who wants to add friend (in url)",
                     "type": "String"
                 },
                 {
                     "name": "friendId",
-                    "description": "",
+                    "description": "Friend to add (in header)",
                     "type": "String"
                 }
             ],
@@ -316,6 +334,9 @@
                 "description": "user data",
                 "type": "JSON"
             },
+            "example": [
+                " /api/user/:userId/addFriend"
+            ],
             "class": "UserRoutes"
         }
     ],

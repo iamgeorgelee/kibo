@@ -145,12 +145,15 @@ module.exports = function(app, passport) {
     // ====================================
 
     /**
+     * [POST]
+     *
      * Perform sign up for local account
      *
      * @method localSignup
-     * @param {String} username
-     * @param {String} password
+     * @param {String} username (in header)
+     * @param {String} password (in header)
      * @return {JSON} user data
+     * @example /api/localSignup
      */
     app.route('/api/localSignup')
         .post(function(req, res, next) {
@@ -158,12 +161,15 @@ module.exports = function(app, passport) {
         });
 
     /**
+     * [POST]
+     *
      * Perform login for local account
      *
      * @method localLogin
-     * @param {String} username
-     * @param {String} password
+     * @param {String} username (in header)
+     * @param {String} password (in header)
      * @return {JSON} user data
+     * @example /api/localLogin
      */
     app.route('/api/localLogin')
         .post(function(req, res, next) {
@@ -171,12 +177,15 @@ module.exports = function(app, passport) {
         });
 
     /**
+     * [GET]
+     *
      * Perform facebook account authentication.
      * Scope defines what kind of data you want user to authorize you.
      * After perform facebook account authentication, facebook will render to callback location.
      *
      * @method fbAuth
      * @return {JSON} user data
+     * @example /api/fbAuth
      */
     app.route('/api/fbAuth')
         .get(function(req, res, next) {
@@ -207,11 +216,14 @@ module.exports = function(app, passport) {
         });
 
     /**
+     * [GET]
+     *
      * Get facebook friends who also authorize this app.
      *
      * @method getFbFriends
-     * @param {String} userId
+     * @param {String} userId (in url)
      * @return {JSON} facebook friends
+     * @example /api/user/:userId/getFbFriends
      */
     app.route('/api/user/:userId/getFbFriends')
         .get(function(req, res) {
@@ -221,11 +233,14 @@ module.exports = function(app, passport) {
         });
 
     /**
+     * [GET]
+     *
      * Get friend list
      *
      * @method getFriendList
-     * @param {String} userId
+     * @param {String} userId (in url)
      * @return {JSON} List of friends
+     * @example /api/user/:userId/getFriendList
      */
     app.route('/api/user/:userId/getFriendList')
         .get(function(req, res) {
@@ -235,13 +250,16 @@ module.exports = function(app, passport) {
         });
 
     /**
+     * [POST]
+     *
      * Add friend
      * (should add send friend request later on)
      *
      * @method addFriend
-     * @param {String} userId
-     * @param {String} friendId
+     * @param {String} userId User who wants to add friend (in url)
+     * @param {String} friendId Friend to add (in header)
      * @return {JSON} user data
+     * @example /api/user/:userId/addFriend
      */
     app.route('/api/user/:userId/addFriend')
         .post(function(req, res) {
