@@ -1,6 +1,6 @@
 {
     "project": {
-        "name": "application-name",
+        "name": "kibo",
         "description": "",
         "version": "0.0.1",
         "url": ""
@@ -102,7 +102,7 @@
         {
             "file": "controllers/db.js",
             "line": 26,
-            "description": "Get document by document name",
+            "description": "Get document by document name\ne.g. Get User by userid",
             "itemtype": "method",
             "name": "getDocument",
             "params": [
@@ -125,7 +125,7 @@
         },
         {
             "file": "controllers/db.js",
-            "line": 42,
+            "line": 43,
             "description": "Create user",
             "itemtype": "method",
             "name": "createUser",
@@ -144,7 +144,7 @@
         },
         {
             "file": "controllers/db.js",
-            "line": 55,
+            "line": 56,
             "description": "Update user",
             "itemtype": "method",
             "name": "updateUser",
@@ -235,7 +235,7 @@
             "line": 173,
             "description": "Perform facebook account authentication.\nScope defines what kind of data you want user to authorize you.\nAfter perform facebook account authentication, facebook will render to callback location.",
             "itemtype": "method",
-            "name": "FBAuth",
+            "name": "fbAuth",
             "return": {
                 "description": "user data",
                 "type": "JSON"
@@ -247,7 +247,7 @@
             "line": 188,
             "description": "After perform facebook account authentication, facebook will render back to this location.\nThis is for facebook itself.",
             "itemtype": "method",
-            "name": "FBAuth/Callback",
+            "name": "fbAuth/Callback",
             "access": "private",
             "tagname": "",
             "return": {
@@ -259,18 +259,61 @@
         {
             "file": "routes/users.js",
             "line": 209,
-            "description": "Get facebook friends who also authorize this app.\nNeeds to pass facebook token",
+            "description": "Get facebook friends who also authorize this app.",
             "itemtype": "method",
-            "name": "getFriends",
+            "name": "getFbFriends",
             "params": [
                 {
-                    "name": "token",
+                    "name": "userId",
                     "description": "",
                     "type": "String"
                 }
             ],
             "return": {
                 "description": "facebook friends",
+                "type": "JSON"
+            },
+            "class": "UserRoutes"
+        },
+        {
+            "file": "routes/users.js",
+            "line": 223,
+            "description": "Get friend list",
+            "itemtype": "method",
+            "name": "getFriendList",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "List of friends",
+                "type": "JSON"
+            },
+            "class": "UserRoutes"
+        },
+        {
+            "file": "routes/users.js",
+            "line": 237,
+            "description": "Add friend\n(should add send friend request later on)",
+            "itemtype": "method",
+            "name": "addFriend",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "friendId",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "user data",
                 "type": "JSON"
             },
             "class": "UserRoutes"

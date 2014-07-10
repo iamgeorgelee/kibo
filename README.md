@@ -4,6 +4,20 @@
 ##Getting Start
 
 
+###Locations
+* [Production Version](http://kibo.herokuapp.com/)
+Ignore the landing page. Web version will no longer be updated.
+* [API Doc](http://kibo.herokuapp.com/docs)
+
+
+###API Call Example
+http://[Host]/api/[method]
+```
+http://kibo.herokuapp.com/api/localLogin
+```
+Send with username and password
+
+
 ###How To Run
 Simply just type this in command line:
 ```
@@ -30,7 +44,8 @@ Currently we do:
 
 ###Higher Priority
 
-* Friends List [7/20]
+* Get Friend List [Done]
+* Add Friend [Done]
 * Able to create user defined event: choose restaurant from recommendation, pick friends, send notification, user receive invite and accept/reject. No voting. [7/20]
 * middle check point + voting [8/3]
 

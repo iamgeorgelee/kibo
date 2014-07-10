@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>UserRoutes - application-name</title>
+    <title>UserRoutes - kibo</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -15,7 +15,7 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="../assets/css/logo.png" title="application-name"></h1>
+                <h1><img src="../assets/css/logo.png" title="kibo"></h1>
             
         </div>
         <div class="yui3-u-1-4 version">
@@ -198,21 +198,35 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_FBAuth">FBAuth</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method private">
-                                <a href="#method_FBAuth/Callback">FBAuth/Callback</a>
+                                <a href="#method_addFriend">addFriend</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_getFriends">getFriends</a>
+                                <a href="#method_fbAuth">fbAuth</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_fbAuth/Callback">fbAuth/Callback</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getFbFriends">getFbFriends</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getFriendList">getFriendList</a>
 
                                 
                                 
@@ -264,8 +278,136 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_FBAuth" class="method item">
-    <h3 class="name"><code>FBAuth</code></h3>
+                    <div id="method_addFriend" class="method item">
+    <h3 class="name"><code>addFriend</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>userId</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>friendId</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">JSON</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/routes_users.js.html#l237"><code>routes&#x2F;users.js:237</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Add friend
+(should add send friend request later on)</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">userId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">friendId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">JSON</span>:
+                    
+                    <p>user data</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_fbAuth" class="method item">
+    <h3 class="name"><code>fbAuth</code></h3>
 
     
         <span class="paren">()</span>
@@ -339,8 +481,8 @@ After perform facebook account authentication, facebook will render to callback 
 </div>
 
                 
-                    <div id="method_FBAuth/Callback" class="method item private">
-    <h3 class="name"><code>FBAuth/Callback</code></h3>
+                    <div id="method_fbAuth/Callback" class="method item private">
+    <h3 class="name"><code>fbAuth/Callback</code></h3>
 
     
         <span class="paren">()</span>
@@ -415,8 +557,8 @@ This is for facebook itself.</p>
 </div>
 
                 
-                    <div id="method_getFriends" class="method item">
-    <h3 class="name"><code>getFriends</code></h3>
+                    <div id="method_getFbFriends" class="method item">
+    <h3 class="name"><code>getFbFriends</code></h3>
 
     
         <div class="args">
@@ -424,7 +566,7 @@ This is for facebook itself.</p>
             
                 <li class="arg">
                     
-                        <code>token</code>
+                        <code>userId</code>
                     
                 </li>
             
@@ -472,8 +614,7 @@ This is for facebook itself.</p>
     </div>
 
     <div class="description">
-        <p>Get facebook friends who also authorize this app.
-Needs to pass facebook token</p>
+        <p>Get facebook friends who also authorize this app.</p>
 
     </div>
 
@@ -485,7 +626,7 @@ Needs to pass facebook token</p>
             
                 <li class="param">
                     
-                        <code class="param-name">token</code>
+                        <code class="param-name">userId</code>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
                     
 
@@ -512,6 +653,112 @@ Needs to pass facebook token</p>
                         <span class="type">JSON</span>:
                     
                     <p>facebook friends</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+                    <div id="method_getFriendList" class="method item">
+    <h3 class="name"><code>getFriendList</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>userId</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">JSON</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/routes_users.js.html#l223"><code>routes&#x2F;users.js:223</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Get friend list</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">userId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">JSON</span>:
+                    
+                    <p>List of friends</p>
 
                 
             </div>

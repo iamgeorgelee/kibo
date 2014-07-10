@@ -175,7 +175,7 @@ module.exports = function(app, passport) {
      * Scope defines what kind of data you want user to authorize you.
      * After perform facebook account authentication, facebook will render to callback location.
      *
-     * @method FBAuth
+     * @method fbAuth
      * @return {JSON} user data
      */
     app.route('/api/fbAuth')
@@ -189,7 +189,7 @@ module.exports = function(app, passport) {
      * After perform facebook account authentication, facebook will render back to this location.
      * This is for facebook itself.
      *
-     * @method FBAuth/Callback
+     * @method fbAuth/Callback
      * @private
      * @return {JSON} user data
      */
@@ -208,15 +208,44 @@ module.exports = function(app, passport) {
 
     /**
      * Get facebook friends who also authorize this app.
-     * Needs to pass facebook token
      *
-     * @method getFriends
-     * @param {String} token
+     * @method getFbFriends
+     * @param {String} userId
      * @return {JSON} facebook friends
      */
-    app.route('/api/getFriends')
+    app.route('/api/user/:userId/getFbFriends')
         .get(function(req, res) {
-            users.getFriends(req.query.token, function(data) {
+            users.getFbFriends(req.params.userId, function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * Get friend list
+     *
+     * @method getFriendList
+     * @param {String} userId
+     * @return {JSON} List of friends
+     */
+    app.route('/api/user/:userId/getFriendList')
+        .get(function(req, res) {
+            users.getFriendList(req.params.userId, function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * Add friend
+     * (should add send friend request later on)
+     *
+     * @method addFriend
+     * @param {String} userId
+     * @param {String} friendId
+     * @return {JSON} user data
+     */
+    app.route('/api/user/:userId/addFriend')
+        .post(function(req, res) {
+            users.addFriend(req.params.userId, req.param('friendId'), function(data) {
                 return res.send(data);
             });
         });

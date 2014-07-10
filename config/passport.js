@@ -54,6 +54,7 @@ module.exports = function (passport, config) {
                     // if there is no user with that username create the user
                     db.createUser({
                         username: username,
+                        name: username, //Account display name
                         password: User.generateHash(password) // hash the password before store to db
                     }, function (data) {
                         //refresh user list

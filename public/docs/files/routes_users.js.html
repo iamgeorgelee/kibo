@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>routes/users.js - application-name</title>
+    <title>routes/users.js - kibo</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -15,7 +15,7 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="../assets/css/logo.png" title="application-name"></h1>
+                <h1><img src="../assets/css/logo.png" title="kibo"></h1>
             
         </div>
         <div class="yui3-u-1-4 version">
@@ -267,7 +267,7 @@ module.exports = function(app, passport) {
      * Scope defines what kind of data you want user to authorize you.
      * After perform facebook account authentication, facebook will render to callback location.
      *
-     * @method FBAuth
+     * @method fbAuth
      * @return {JSON} user data
      */
     app.route(&#x27;/api/fbAuth&#x27;)
@@ -281,7 +281,7 @@ module.exports = function(app, passport) {
      * After perform facebook account authentication, facebook will render back to this location.
      * This is for facebook itself.
      *
-     * @method FBAuth/Callback
+     * @method fbAuth/Callback
      * @private
      * @return {JSON} user data
      */
@@ -300,15 +300,44 @@ module.exports = function(app, passport) {
 
     /**
      * Get facebook friends who also authorize this app.
-     * Needs to pass facebook token
      *
-     * @method getFriends
-     * @param {String} token
+     * @method getFbFriends
+     * @param {String} userId
      * @return {JSON} facebook friends
      */
-    app.route(&#x27;/api/getFriends&#x27;)
+    app.route(&#x27;/api/user/:userId/getFbFriends&#x27;)
         .get(function(req, res) {
-            users.getFriends(req.query.token, function(data) {
+            users.getFbFriends(req.params.userId, function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * Get friend list
+     *
+     * @method getFriendList
+     * @param {String} userId
+     * @return {JSON} List of friends
+     */
+    app.route(&#x27;/api/user/:userId/getFriendList&#x27;)
+        .get(function(req, res) {
+            users.getFriendList(req.params.userId, function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * Add friend
+     * (should add send friend request later on)
+     *
+     * @method addFriend
+     * @param {String} userId
+     * @param {String} friendId
+     * @return {JSON} user data
+     */
+    app.route(&#x27;/api/user/:userId/addFriend&#x27;)
+        .post(function(req, res) {
+            users.addFriend(req.params.userId, req.param(&#x27;friendId&#x27;), function(data) {
                 return res.send(data);
             });
         });
