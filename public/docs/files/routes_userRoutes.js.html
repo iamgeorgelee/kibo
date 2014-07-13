@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>routes/users.js - kibo</title>
+    <title>routes/userRoutes.js - kibo</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -86,7 +86,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: routes/users.js</h1>
+                        <h1 class="file-heading">File: routes/userRoutes.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -98,7 +98,7 @@
  */
 
 // User routes use users controller
-var users = require(&#x27;../controllers/users&#x27;);
+var userController = require(&#x27;../controllers/userController&#x27;);
 
 module.exports = function(app, passport) {
     // =======================================
@@ -141,7 +141,7 @@ module.exports = function(app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.route(&#x27;/profile&#x27;)
-        .get(users.isLoggedIn, function(req, res) {
+        .get(userController.isLoggedIn, function(req, res) {
             res.render(&#x27;profile&#x27;, {
                 user: req.user, // take user from session for view purpose
                 isAuthenticated: req.isAuthenticated()
@@ -249,7 +249,7 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/localSignup&#x27;)
         .post(function(req, res, next) {
-            users.localSignup(passport, req, res, next);
+            userController.localSignup(passport, req, res, next);
         });
 
     /**
@@ -265,7 +265,7 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/localLogin&#x27;)
         .post(function(req, res, next) {
-            users.localLogin(passport, req, res, next);
+            userController.localLogin(passport, req, res, next);
         });
 
     /**
@@ -283,7 +283,7 @@ module.exports = function(app, passport) {
         .get(function(req, res, next) {
             fromFBApi = true; // to check where the facebook auth request from
 
-            users.fbAuth(passport, req, res, next);
+            userController.fbAuth(passport, req, res, next);
         });
 
     /**
@@ -297,7 +297,7 @@ module.exports = function(app, passport) {
     app.route(&#x27;/api/fbAuth/callback&#x27;)
         .get(function(req, res, next) {
             if (fromFBApi === true) {
-                users.fbAuthCallback(passport, req, res, next);
+                userController.fbAuthCallback(passport, req, res, next);
             }
             else {
                 passport.authenticate(&#x27;facebook&#x27;, {
@@ -305,6 +305,22 @@ module.exports = function(app, passport) {
                     failureRedirect: &#x27;/&#x27;
                 })(req, res, next);
             }
+        });
+
+    /**
+     * [GET]
+     *
+     * Get app user list
+     *
+     * @method getUsers
+     * @return {JSON} app user list
+     * @example /api/getUsers
+     */
+    app.route(&#x27;/api/getUsers&#x27;)
+        .get(function(req, res) {
+            userController.getUsers(function(data) {
+                return res.send(data);
+            });
         });
 
     /**
@@ -319,7 +335,7 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/user/:userId&#x27;)
         .get(function(req, res) {
-            users.getUserById(req.params.userId, function(data) {
+            userController.getUserById(req.params.userId, function(data) {
                 return res.send(data);
             });
         });
@@ -336,7 +352,7 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/user/:userId/getFbFriends&#x27;)
         .get(function(req, res) {
-            users.getFbFriends(req.params.userId, function(data) {
+            userController.getFbFriends(req.params.userId, function(data) {
                 return res.send(data);
             });
         });
@@ -353,7 +369,7 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/user/:userId/getFriendList&#x27;)
         .get(function(req, res) {
-            users.getFriendList(req.params.userId, function(data) {
+            userController.getFriendList(req.params.userId, function(data) {
                 return res.send(data);
             });
         });
@@ -372,10 +388,47 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/user/:userId/addFriend&#x27;)
         .post(function(req, res) {
-            users.addFriend(req.params.userId, req.param(&#x27;friendId&#x27;), function(data) {
+            userController.addFriend(req.params.userId, req.param(&#x27;friendId&#x27;), function(data) {
                 return res.send(data);
             });
         });
+
+    /**
+     * [POST]
+     *
+     * Unfriend
+     *
+     * @method unfriend
+     * @param {String} userId User who wants to unfriend (in url)
+     * @param {String} friendId Friend to remove (in header)
+     * @return {JSON} user data
+     * @example /api/user/:userId/addFriend
+     */
+    app.route(&#x27;/api/user/:userId/unfriend&#x27;)
+        .post(function(req, res) {
+            userController.unfriend(req.params.userId, req.param(&#x27;friendId&#x27;), function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [GET]
+     *
+     * Get a list of friend who is not your app friend, so can add them as friend later
+     *
+     * @method getFriendCandidate
+     * @param {String} userId
+     * @return {JSON} List of friend to add
+     * @example /api/user/:userId/getFriendCandidate
+     */
+    app.route(&#x27;/api/user/:userId/getFriendCandidate&#x27;)
+        .get(function(req, res) {
+            userController.getFriendCandidate(req.params.userId, function(data) {
+                return res.send(data);
+            });
+        });
+
+
 };
     </pre>
 </div>

@@ -6,8 +6,8 @@
         "url": ""
     },
     "files": {
-        "models/db.js": {
-            "name": "models/db.js",
+        "routes/dbRoutes.js": {
+            "name": "routes/dbRoutes.js",
             "modules": {},
             "classes": {
                 "dbController": 1
@@ -15,8 +15,8 @@
             "fors": {},
             "namespaces": {}
         },
-        "routes/users.js": {
-            "name": "routes/users.js",
+        "routes/userRoutes.js": {
+            "name": "routes/userRoutes.js",
             "modules": {},
             "classes": {
                 "UserRoutes": 1
@@ -45,7 +45,7 @@
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "routes/users.js",
+            "file": "routes/userRoutes.js",
             "line": 1
         }
     },
@@ -59,7 +59,7 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "Kibo",
-            "file": "models/db.js",
+            "file": "routes/dbRoutes.js",
             "line": 1,
             "description": "MongoLab API",
             "is_constructor": 1
@@ -73,7 +73,7 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "Kibo",
-            "file": "routes/users.js",
+            "file": "routes/userRoutes.js",
             "line": 1,
             "description": "User API",
             "is_constructor": 1
@@ -81,9 +81,9 @@
     },
     "classitems": [
         {
-            "file": "models/db.js",
+            "file": "routes/dbRoutes.js",
             "line": 12,
-            "description": "Get coolection by collection name",
+            "description": "Get collection by collection name",
             "itemtype": "method",
             "name": "getCollection",
             "params": [
@@ -100,7 +100,7 @@
             "class": "dbController"
         },
         {
-            "file": "models/db.js",
+            "file": "routes/dbRoutes.js",
             "line": 27,
             "description": "Get document by document name\ne.g. Get User by userid",
             "itemtype": "method",
@@ -124,7 +124,7 @@
             "class": "dbController"
         },
         {
-            "file": "models/db.js",
+            "file": "routes/dbRoutes.js",
             "line": 44,
             "description": "Create user",
             "itemtype": "method",
@@ -143,7 +143,7 @@
             "class": "dbController"
         },
         {
-            "file": "models/db.js",
+            "file": "routes/dbRoutes.js",
             "line": 57,
             "description": "Update user",
             "itemtype": "method",
@@ -170,7 +170,7 @@
             "class": "dbController"
         },
         {
-            "file": "routes/users.js",
+            "file": "routes/userRoutes.js",
             "line": 76,
             "description": "Clearly a stupid way and obviously there will be a problem when web page user and mobile user do facebook auth the same time.\nSince we dont really need to care about web page right now, temporary ignore it. Need to fix later.",
             "itemtype": "attribute",
@@ -178,7 +178,7 @@
             "class": "UserRoutes"
         },
         {
-            "file": "routes/users.js",
+            "file": "routes/userRoutes.js",
             "line": 118,
             "description": "Needs to verify later, since the callback changed due to support API.",
             "itemtype": "attribute",
@@ -186,7 +186,7 @@
             "class": "UserRoutes"
         },
         {
-            "file": "routes/users.js",
+            "file": "routes/userRoutes.js",
             "line": 147,
             "description": "[POST]\n\nPerform sign up for local account",
             "itemtype": "method",
@@ -213,7 +213,7 @@
             "class": "UserRoutes"
         },
         {
-            "file": "routes/users.js",
+            "file": "routes/userRoutes.js",
             "line": 163,
             "description": "[POST]\n\nPerform login for local account",
             "itemtype": "method",
@@ -240,7 +240,7 @@
             "class": "UserRoutes"
         },
         {
-            "file": "routes/users.js",
+            "file": "routes/userRoutes.js",
             "line": 179,
             "description": "[GET]\n\nPerform facebook account authentication.\nScope defines what kind of data you want user to authorize you.\nAfter perform facebook account authentication, facebook will render to callback location.",
             "itemtype": "method",
@@ -255,7 +255,7 @@
             "class": "UserRoutes"
         },
         {
-            "file": "routes/users.js",
+            "file": "routes/userRoutes.js",
             "line": 197,
             "description": "After perform facebook account authentication, facebook will render back to this location.\nThis is for facebook itself.",
             "itemtype": "method",
@@ -269,8 +269,23 @@
             "class": "UserRoutes"
         },
         {
-            "file": "routes/users.js",
+            "file": "routes/userRoutes.js",
             "line": 218,
+            "description": "[GET]\n\nGet app user list",
+            "itemtype": "method",
+            "name": "getUsers",
+            "return": {
+                "description": "app user list",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/getUsers"
+            ],
+            "class": "UserRoutes"
+        },
+        {
+            "file": "routes/userRoutes.js",
+            "line": 234,
             "description": "[GET]\n\nGet user by id",
             "itemtype": "method",
             "name": "getUserById",
@@ -291,8 +306,8 @@
             "class": "UserRoutes"
         },
         {
-            "file": "routes/users.js",
-            "line": 235,
+            "file": "routes/userRoutes.js",
+            "line": 251,
             "description": "[GET]\n\nGet facebook friends who also authorize this app.",
             "itemtype": "method",
             "name": "getFbFriends",
@@ -313,8 +328,8 @@
             "class": "UserRoutes"
         },
         {
-            "file": "routes/users.js",
-            "line": 252,
+            "file": "routes/userRoutes.js",
+            "line": 268,
             "description": "[GET]\n\nGet friend list",
             "itemtype": "method",
             "name": "getFriendList",
@@ -335,8 +350,8 @@
             "class": "UserRoutes"
         },
         {
-            "file": "routes/users.js",
-            "line": 269,
+            "file": "routes/userRoutes.js",
+            "line": 285,
             "description": "[POST]\n\nAdd friend\n(should add send friend request later on)",
             "itemtype": "method",
             "name": "addFriend",
@@ -358,6 +373,55 @@
             },
             "example": [
                 " /api/user/:userId/addFriend"
+            ],
+            "class": "UserRoutes"
+        },
+        {
+            "file": "routes/userRoutes.js",
+            "line": 304,
+            "description": "[POST]\n\nUnfriend",
+            "itemtype": "method",
+            "name": "unfriend",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "User who wants to unfriend (in url)",
+                    "type": "String"
+                },
+                {
+                    "name": "friendId",
+                    "description": "Friend to remove (in header)",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "user data",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/user/:userId/addFriend"
+            ],
+            "class": "UserRoutes"
+        },
+        {
+            "file": "routes/userRoutes.js",
+            "line": 322,
+            "description": "[GET]\n\nGet a list of friend who is not your app friend, so can add them as friend later",
+            "itemtype": "method",
+            "name": "getFriendCandidate",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "List of friend to add",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/user/:userId/getFriendCandidate"
             ],
             "class": "UserRoutes"
         }
