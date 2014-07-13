@@ -40,7 +40,7 @@ app.use(passport.session());
 // ================
 
 // User Routes e.g. login, signup
-require('./routes/users.js')(app, passport);
+require('./routes/userRoutes.js')(app, passport);
 
 // ========================
 // ==== MODE SELECTION ====

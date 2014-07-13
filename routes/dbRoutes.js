@@ -10,7 +10,7 @@ var querystring = require('querystring');
 var https = require('https');
 
 /**
- * Get coolection by collection name
+ * Get collection by collection name
  *
  * @method getCollection
  * @param {String} collectionName

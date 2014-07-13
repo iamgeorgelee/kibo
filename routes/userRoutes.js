@@ -6,7 +6,7 @@
  */
 
 // User routes use users controller
-var users = require('../controllers/users');
+var userController = require('../controllers/userController');
 
 module.exports = function(app, passport) {
     // =======================================
@@ -49,7 +49,7 @@ module.exports = function(app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.route('/profile')
-        .get(users.isLoggedIn, function(req, res) {
+        .get(userController.isLoggedIn, function(req, res) {
             res.render('profile', {
                 user: req.user, // take user from session for view purpose
                 isAuthenticated: req.isAuthenticated()
@@ -157,7 +157,7 @@ module.exports = function(app, passport) {
      */
     app.route('/api/localSignup')
         .post(function(req, res, next) {
-            users.localSignup(passport, req, res, next);
+            userController.localSignup(passport, req, res, next);
         });
 
     /**
@@ -173,7 +173,7 @@ module.exports = function(app, passport) {
      */
     app.route('/api/localLogin')
         .post(function(req, res, next) {
-            users.localLogin(passport, req, res, next);
+            userController.localLogin(passport, req, res, next);
         });
 
     /**
@@ -191,7 +191,7 @@ module.exports = function(app, passport) {
         .get(function(req, res, next) {
             fromFBApi = true; // to check where the facebook auth request from
 
-            users.fbAuth(passport, req, res, next);
+            userController.fbAuth(passport, req, res, next);
         });
 
     /**
@@ -205,7 +205,7 @@ module.exports = function(app, passport) {
     app.route('/api/fbAuth/callback')
         .get(function(req, res, next) {
             if (fromFBApi === true) {
-                users.fbAuthCallback(passport, req, res, next);
+                userController.fbAuthCallback(passport, req, res, next);
             }
             else {
                 passport.authenticate('facebook', {
@@ -213,6 +213,22 @@ module.exports = function(app, passport) {
                     failureRedirect: '/'
                 })(req, res, next);
             }
+        });
+
+    /**
+     * [GET]
+     *
+     * Get app user list
+     *
+     * @method getUsers
+     * @return {JSON} app user list
+     * @example /api/getUsers
+     */
+    app.route('/api/getUsers')
+        .get(function(req, res) {
+            userController.getUsers(function(data) {
+                return res.send(data);
+            });
         });
 
     /**
@@ -227,7 +243,7 @@ module.exports = function(app, passport) {
      */
     app.route('/api/user/:userId')
         .get(function(req, res) {
-            users.getUserById(req.params.userId, function(data) {
+            userController.getUserById(req.params.userId, function(data) {
                 return res.send(data);
             });
         });
@@ -244,7 +260,7 @@ module.exports = function(app, passport) {
      */
     app.route('/api/user/:userId/getFbFriends')
         .get(function(req, res) {
-            users.getFbFriends(req.params.userId, function(data) {
+            userController.getFbFriends(req.params.userId, function(data) {
                 return res.send(data);
             });
         });
@@ -261,7 +277,7 @@ module.exports = function(app, passport) {
      */
     app.route('/api/user/:userId/getFriendList')
         .get(function(req, res) {
-            users.getFriendList(req.params.userId, function(data) {
+            userController.getFriendList(req.params.userId, function(data) {
                 return res.send(data);
             });
         });
@@ -280,8 +296,45 @@ module.exports = function(app, passport) {
      */
     app.route('/api/user/:userId/addFriend')
         .post(function(req, res) {
-            users.addFriend(req.params.userId, req.param('friendId'), function(data) {
+            userController.addFriend(req.params.userId, req.param('friendId'), function(data) {
                 return res.send(data);
             });
         });
+
+    /**
+     * [POST]
+     *
+     * Unfriend
+     *
+     * @method unfriend
+     * @param {String} userId User who wants to unfriend (in url)
+     * @param {String} friendId Friend to remove (in header)
+     * @return {JSON} user data
+     * @example /api/user/:userId/addFriend
+     */
+    app.route('/api/user/:userId/unfriend')
+        .post(function(req, res) {
+            userController.unfriend(req.params.userId, req.param('friendId'), function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [GET]
+     *
+     * Get a list of friend who is not your app friend, so can add them as friend later
+     *
+     * @method getFriendCandidate
+     * @param {String} userId
+     * @return {JSON} List of friend to add
+     * @example /api/user/:userId/getFriendCandidate
+     */
+    app.route('/api/user/:userId/getFriendCandidate')
+        .get(function(req, res) {
+            userController.getFriendCandidate(req.params.userId, function(data) {
+                return res.send(data);
+            });
+        });
+
+
 };

@@ -44,8 +44,8 @@ Currently we do:
 
 ###Higher Priority
 
-* Get Friend List [Done]
-* Add Friend [Done]
+* Unfriend
+* Friend request notification
 * Able to create user defined event: choose restaurant from recommendation, pick friends, send notification, user receive invite and accept/reject. No voting. [7/20]
 * middle check point + voting [8/3]
 
@@ -56,7 +56,7 @@ Currently we do:
 
 [Grunt Mocha Plugin](https://github.com/pghalliday/grunt-mocha-test)
 
-[User Mocha to so test with your RestAPI](http://thewayofcode.wordpress.com/2013/04/21/how-to-build-and-test-rest-api-with-nodejs-express-mocha/)
+[User Mocha to test your RestAPI](http://thewayofcode.wordpress.com/2013/04/21/how-to-build-and-test-rest-api-with-nodejs-express-mocha/)
 
 * Security Scan
 Dynamic Code Analysis(Fuzz in run time), Static Code Analysis(Scan code for security vulnerability)
