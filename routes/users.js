@@ -218,6 +218,23 @@ module.exports = function(app, passport) {
     /**
      * [GET]
      *
+     * Get user by id
+     *
+     * @method getUserById
+     * @param {String} userId (in url)
+     * @return {JSON} user data
+     * @example /api/user/:userId
+     */
+    app.route('/api/user/:userId')
+        .get(function(req, res) {
+            users.getUserById(req.params.userId, function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [GET]
+     *
      * Get facebook friends who also authorize this app.
      *
      * @method getFbFriends

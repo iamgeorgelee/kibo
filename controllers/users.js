@@ -1,4 +1,3 @@
-var async = require('async');
 // graph is a facebook SDK
 var graph = require('fbgraph');
 // options needed for SDK
@@ -11,7 +10,8 @@ var options = {
 		connection: "keep-alive"
 	}
 };
-var db = require('./db.js');
+var db = require('../models/db.js');
+var user = require('../models/user.js');
 
 // to make sure a user is logged in
 exports.isLoggedIn = function (req, res, next) {
@@ -26,11 +26,11 @@ exports.isLoggedIn = function (req, res, next) {
 exports.getFbFriends = function (userId, callback) {
     db.getDocument('User', userId, function(data){
         graph
-    		.setOptions(options)
-    		.setAccessToken(data.facebook.token)
-    		.get("me?fields=friends", function (err, res) {
-    			callback(res.friends);
-    		});
+            .setOptions(options)
+            .setAccessToken(data.facebook.token)
+            .get("me?fields=friends", function (err, res) {
+                callback(res.friends);
+            });
     });
 };
 
@@ -106,11 +106,30 @@ exports.fbAuthCallback = function (passport, req, res, next) {
     })(req, res, next);
 };
 
+exports.getUserById = function (userId, callback) {
+    db.getDocument('User', userId, function(data){
+        if (data.message === 'Document not found') {
+            callback({
+                success: false,
+                message: 'No such user'
+            });
+        } else{
+            callback(data);
+        }
+    });
+};
 
 //needs to rewrite with async
 exports.getFriendList = function (userId, callback) {
     db.getDocument('User', userId, function(data){
-        callback(data.friends);
+        if (data.message === 'Document not found') {
+            callback({
+                success: false,
+                message: 'No such user'
+            });
+        } else{
+            callback(data.friends);
+        }
     });
 };
 exports.addFriend = function (userId, friendId, callback) {
@@ -122,62 +141,8 @@ exports.addFriend = function (userId, friendId, callback) {
                 message: 'No such user'
             });
         } else {
-            db.getDocument('User', userId, function (userData) {
-                var userNewFriendList, friendNewFriendList, newUserData;
-                //var newFriendData;
-
-                //check does the user already has 'friends' property if no, create one
-                if (userData.hasOwnProperty('friends')) {
-                    userNewFriendList = userData.friends;
-                } else {
-                    userNewFriendList = [];
-                }
-                userNewFriendList.push({
-                    "id": friendId,
-                    "name": friendData.name
-                });
-
-                //check does the friend already has 'friends' property if no, create one
-                if (friendData.hasOwnProperty('friends')) {
-                    friendNewFriendList = friendData.friends;
-                } else {
-                    friendNewFriendList = [];
-                }
-                friendNewFriendList.push({
-                    "id": userId,
-                    "name": userData.name
-                });
-
-                async.parallel([
-                    function (callback) {
-                    //update requester friendlist
-                    db.updateUser(userId, {
-                        "$set": {
-                            friends: userNewFriendList
-                        }
-                    }, function (data) {
-                        newUserData = data;
-                        callback();
-                    });
-                },
-                    function (callback) {
-                    //update requestee friendlist
-                    db.updateUser(friendId, {
-                        "$set": {
-                            friends: friendNewFriendList
-                        }
-                    }, function (data) {
-                        // newFriendData = data;
-                        callback();
-                    });
-                }
-                ], function (err) {
-                    if (err) {
-                        throw err; //Or pass it on to an outer callback, log it or whatever suits your needs
-                    }
-                    //Both are saved now
-                    callback(newUserData);
-                });
+            user.addFriend(userId, friendId, friendData, function(data){
+                callback(data);
             });
         }
     });

@@ -3,7 +3,7 @@
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var User = require('../models/user.js');
-var db = require('../controllers/db.js');
+var db = require('../models/db.js');
 var Users; // store current user list
 
 //Get initial list of user
