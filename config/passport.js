@@ -130,7 +130,7 @@ module.exports = function (passport, config) {
                 // find the user based on their facebook id
                 user = Users.filter(function (iterateUser) {
                     if (iterateUser.hasOwnProperty('facebook')) {
-                        return iterateUser.facebook.id == profile.id;
+                        return iterateUser.facebook.id === profile.id;
                     }
                 })[0];
 

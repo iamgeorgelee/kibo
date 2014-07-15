@@ -18,21 +18,21 @@ http://kibo.herokuapp.com/api/localLogin
 Send with username and password
 
 
-###How To Run
+###Before Build
+Please remember to lint your code and build documentation.
 Simply just type this in command line:
 ```
 grunt
 ```
 
-###Grunt
+####Grunt
 Grunt is a multi-tasker, it can do multi tasks in just one command. Tasks are all describe in **Gruntfile.js**
 Currently we do:
 * jshint - Check styling and basic errors
 * yuidoc - Generate documents. Can access from **https://HOST/docs**
-* nodemon - Run **node app.js**
 
 ###Before Push
-* Use Beautifier. Cloud9 Edit -> Code Formatting
+* Use JS Beautifier
 * Comment with YUIDoc syntaxs.
 
 [YUIDoc Syntax](http://yui.github.io/yuidoc/syntax/index.html)
@@ -44,10 +44,13 @@ Currently we do:
 
 ###Higher Priority
 
-* Unfriend
-* Friend request notification
+* User Preference
+* Friend request
+* Restaurant - Send event location and participant id, return list of restaurants
 * Able to create user defined event: choose restaurant from recommendation, pick friends, send notification, user receive invite and accept/reject. No voting. [7/20]
 * middle check point + voting [8/3]
+* Move facebook App secret to DB
+* [bug] Not handling facebook paging
 
 
 ###Lower Priority
@@ -63,6 +66,8 @@ Dynamic Code Analysis(Fuzz in run time), Static Code Analysis(Scan code for secu
 
 * SSL
 Heroku by default is without SSL
+
+* Uglify
 
 
 ##Known Issue

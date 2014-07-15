@@ -150,8 +150,8 @@ module.exports = function(app, passport) {
      * Perform sign up for local account
      *
      * @method localSignup
-     * @param {String} username (in header)
-     * @param {String} password (in header)
+     * @param {String} username (in request content)
+     * @param {String} password (in request content)
      * @return {JSON} user data
      * @example /api/localSignup
      */
@@ -166,8 +166,8 @@ module.exports = function(app, passport) {
      * Perform login for local account
      *
      * @method localLogin
-     * @param {String} username (in header)
-     * @param {String} password (in header)
+     * @param {String} username (in request content)
+     * @param {String} password (in request content)
      * @return {JSON} user data
      * @example /api/localLogin
      */
@@ -237,7 +237,7 @@ module.exports = function(app, passport) {
      * Get user by id
      *
      * @method getUserById
-     * @param {String} userId (in url)
+     * @param {String} userId
      * @return {JSON} user data
      * @example /api/user/:userId
      */
@@ -254,7 +254,7 @@ module.exports = function(app, passport) {
      * Get facebook friends who also authorize this app.
      *
      * @method getFbFriends
-     * @param {String} userId (in url)
+     * @param {String} userId
      * @return {JSON} facebook friends
      * @example /api/user/:userId/getFbFriends
      */
@@ -271,7 +271,7 @@ module.exports = function(app, passport) {
      * Get friend list
      *
      * @method getFriendList
-     * @param {String} userId (in url)
+     * @param {String} userId
      * @return {JSON} List of friends
      * @example /api/user/:userId/getFriendList
      */
@@ -289,8 +289,8 @@ module.exports = function(app, passport) {
      * (should add send friend request later on)
      *
      * @method addFriend
-     * @param {String} userId User who wants to add friend (in url)
-     * @param {String} friendId Friend to add (in header)
+     * @param {String} userId User who wants to add friend
+     * @param {String} friendId Friend to add (in request content)
      * @return {JSON} user data
      * @example /api/user/:userId/addFriend
      */
@@ -307,10 +307,10 @@ module.exports = function(app, passport) {
      * Unfriend
      *
      * @method unfriend
-     * @param {String} userId User who wants to unfriend (in url)
-     * @param {String} friendId Friend to remove (in header)
+     * @param {String} userId User who wants to unfriend
+     * @param {String} friendId Friend to remove (in request content)
      * @return {JSON} user data
-     * @example /api/user/:userId/addFriend
+     * @example /api/user/:userId/unfriend
      */
     app.route('/api/user/:userId/unfriend')
         .post(function(req, res) {
@@ -322,11 +322,12 @@ module.exports = function(app, passport) {
     /**
      * [GET]
      *
-     * Get a list of friend who is not your app friend, so can add them as friend later
+     * Get a list of app user you can add them as friend
+     * When this is useful? User wants to add friend via 'Search by name'
      *
      * @method getFriendCandidate
      * @param {String} userId
-     * @return {JSON} List of friend to add
+     * @return {JSON} List of app user to add
      * @example /api/user/:userId/getFriendCandidate
      */
     app.route('/api/user/:userId/getFriendCandidate')
@@ -336,5 +337,68 @@ module.exports = function(app, passport) {
             });
         });
 
+    /**
+     * [GET]
+     *
+     * Get a list of app user who is your facebook friend but not your friend in this app
+     * When this is useful? User wants to add friend via 'Find friends from facebook'
+     *
+     * @method getFbFriendCandidate
+     * @param {String} userId
+     * @return {JSON} List of app user to add
+     * @example /api/user/:userId/getFbFriendCandidate
+     */
+    app.route('/api/user/:userId/getFbFriendCandidate')
+        .get(function(req, res) {
+            userController.getFbFriendCandidate(req.params.userId, function(data) {
+                return res.send(data);
+            });
+        });
+
+
+
+    /**
+     * [POST]
+     *
+     * Send a friend request
+     *
+     * @method addFriendReq
+     * @param {String} userId
+     * @param {String} toFriendId (in request content)
+     * @return {JSON} Success
+     */
+    app.route('/api/user/:userId/addFriendReq')
+        .post(function(req, res) {
+            userController.addFriendReq(req.params.userId, req.param('toFriendId'), function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * getFriendReq
+     *
+     * @param userid
+     */
+
+    /**
+     * reviewFriendReq
+     *
+     * @param userId
+     * @param toFriendId
+     */
+
+    /**
+     * approveFriendReq
+     *
+     * @param userId
+     * @param toFriendId
+     */
+
+    /**
+     * denyFriendReq
+     *
+     * @param userId
+     * @param toFriendId
+     */
 
 };

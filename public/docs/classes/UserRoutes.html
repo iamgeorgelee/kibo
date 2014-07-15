@@ -205,6 +205,13 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_addFriendReq">addFriendReq</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_fbAuth">fbAuth</a>
 
                                 
@@ -213,6 +220,13 @@
                         
                             <li class="index-item method private">
                                 <a href="#method_fbAuth/Callback">fbAuth/Callback</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_getFbFriendCandidate">getFbFriendCandidate</a>
 
                                 
                                 
@@ -390,7 +404,7 @@
                     
 
                     <div class="param-description">
-                        <p>User who wants to add friend (in url)</p>
+                        <p>User who wants to add friend</p>
 
                     </div>
 
@@ -406,7 +420,7 @@
                     
 
                     <div class="param-description">
-                        <p>Friend to add (in header)</p>
+                        <p>Friend to add (in request content)</p>
 
                     </div>
 
@@ -442,6 +456,135 @@
 
             </div>
         </div>
+    
+</div>
+
+                
+                    <div id="method_addFriendReq" class="method item">
+    <h3 class="name"><code>addFriendReq</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>userId</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>toFriendId</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">JSON</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/routes_userRoutes.js.html#l360"><code>routes&#x2F;userRoutes.js:360</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>[POST]</p>
+<p>Send a friend request</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">userId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">toFriendId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>(in request content)</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">JSON</span>:
+                    
+                    <p>Success</p>
+
+                
+            </div>
+        </div>
+    
+
     
 </div>
 
@@ -607,6 +750,123 @@ This is for facebook itself.</p>
 </div>
 
                 
+                    <div id="method_getFbFriendCandidate" class="method item">
+    <h3 class="name"><code>getFbFriendCandidate</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>userId</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">JSON</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/routes_userRoutes.js.html#l340"><code>routes&#x2F;userRoutes.js:340</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>[GET]</p>
+<p>Get a list of app user who is your facebook friend but not your friend in this app
+When this is useful? User wants to add friend via &#39;Find friends from facebook&#39;</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">userId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">JSON</span>:
+                    
+                    <p>List of app user to add</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <p> /api/user/:userId/getFbFriendCandidate</p>
+
+            </div>
+        </div>
+    
+</div>
+
+                
                     <div id="method_getFbFriends" class="method item">
     <h3 class="name"><code>getFbFriends</code></h3>
 
@@ -684,8 +944,7 @@ This is for facebook itself.</p>
                     
 
                     <div class="param-description">
-                        <p>(in url)</p>
-
+                         
                     </div>
 
                     
@@ -782,7 +1041,8 @@ This is for facebook itself.</p>
 
     <div class="description">
         <p>[GET]</p>
-<p>Get a list of friend who is not your app friend, so can add them as friend later</p>
+<p>Get a list of app user you can add them as friend
+When this is useful? User wants to add friend via &#39;Search by name&#39;</p>
 
     </div>
 
@@ -820,7 +1080,7 @@ This is for facebook itself.</p>
                     
                         <span class="type">JSON</span>:
                     
-                    <p>List of friend to add</p>
+                    <p>List of app user to add</p>
 
                 
             </div>
@@ -917,8 +1177,7 @@ This is for facebook itself.</p>
                     
 
                     <div class="param-description">
-                        <p>(in url)</p>
-
+                         
                     </div>
 
                     
@@ -1034,8 +1293,7 @@ This is for facebook itself.</p>
                     
 
                     <div class="param-description">
-                        <p>(in url)</p>
-
+                         
                     </div>
 
                     
@@ -1240,7 +1498,7 @@ This is for facebook itself.</p>
                     
 
                     <div class="param-description">
-                        <p>(in header)</p>
+                        <p>(in request content)</p>
 
                     </div>
 
@@ -1256,7 +1514,7 @@ This is for facebook itself.</p>
                     
 
                     <div class="param-description">
-                        <p>(in header)</p>
+                        <p>(in request content)</p>
 
                     </div>
 
@@ -1379,7 +1637,7 @@ This is for facebook itself.</p>
                     
 
                     <div class="param-description">
-                        <p>(in header)</p>
+                        <p>(in request content)</p>
 
                     </div>
 
@@ -1395,7 +1653,7 @@ This is for facebook itself.</p>
                     
 
                     <div class="param-description">
-                        <p>(in header)</p>
+                        <p>(in request content)</p>
 
                     </div>
 
@@ -1518,7 +1776,7 @@ This is for facebook itself.</p>
                     
 
                     <div class="param-description">
-                        <p>User who wants to unfriend (in url)</p>
+                        <p>User who wants to unfriend</p>
 
                     </div>
 
@@ -1534,7 +1792,7 @@ This is for facebook itself.</p>
                     
 
                     <div class="param-description">
-                        <p>Friend to remove (in header)</p>
+                        <p>Friend to remove (in request content)</p>
 
                     </div>
 
@@ -1566,7 +1824,7 @@ This is for facebook itself.</p>
             <h4>Example:</h4>
 
             <div class="example-content">
-                <p> /api/user/:userId/addFriend</p>
+                <p> /api/user/:userId/unfriend</p>
 
             </div>
         </div>

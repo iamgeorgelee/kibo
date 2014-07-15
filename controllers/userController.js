@@ -1,6 +1,4 @@
-var db = require('../routes/dbRoutes.js');
 var user = require('../models/user.js');
-var async = require('async');
 
 // to make sure a user is logged in
 exports.isLoggedIn = function (req, res, next) {
@@ -122,6 +120,18 @@ exports.unfriend = function (userId, friendId, callback) {
 
 exports.getFriendCandidate = function (userId, callback) {
     user.getFriendCandidate(userId, function(data){
+        callback(data);
+    });
+};
+
+exports.getFbFriendCandidate = function (userId, callback) {
+    user.getFbFriendCandidate(userId, function(data){
+        callback(data);
+    });
+};
+
+exports.addFriendReq = function (userId, toFriendId, callback) {
+    user.addFriendReq(userId, toFriendId, function(data){
         callback(data);
     });
 };
