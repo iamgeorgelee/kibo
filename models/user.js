@@ -132,6 +132,20 @@ exports.addFriend = function (userId, friendId, callback) {
                 function(callback){
                     //check does the user already has 'friends' property if no, create one
                     if (userData.hasOwnProperty('friends')) {
+                        //check are they already friends, Only check user
+                        var isfriends = false;
+                        for (var prop in userData.friends) {
+                            if(userData.friends[prop].id === friendId){
+                                isfriends = true;
+                                break;
+                            }
+                        }
+                        if(isfriends){
+                            callback({
+                                success: false,
+                                message: 'They are already friends'
+                            });
+                        }
                         userNewFriendList = userData.friends;
                     } else {
                         userNewFriendList = [];
@@ -421,6 +435,20 @@ exports.addFriendReq = function(userId, toFriendId, callback){
         },
         function(callback){
             if (toFriendData.hasOwnProperty('friendReq')) {
+                //check is the same friend request already exist
+                var requestExist = false;
+                for (var prop in toFriendData.friendReq) {
+                    if(toFriendData.friendReq[prop].id === userId){
+                        requestExist = true;
+                        break;
+                    }
+                }
+                if(requestExist){
+                    callback({
+                        success: false,
+                        message: 'Such friend request already exist'
+                    });
+                }
                 newFriendReqList = toFriendData.friendReq;
             }else{
                 newFriendReqList = [];
