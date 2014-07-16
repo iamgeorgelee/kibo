@@ -135,3 +135,15 @@ exports.addFriendReq = function (userId, toFriendId, callback) {
         callback(data);
     });
 };
+
+exports.getFriendReq = function (userId, callback) {
+    user.getFriendReq(userId, function(data){
+        callback(data);
+    });
+};
+
+exports.reviewFriendReq = function (userId, approve, reviewId, callback) {
+    user.reviewFriendReq(userId, approve, reviewId, function(data){
+        callback(data);
+    });
+};
