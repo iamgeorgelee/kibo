@@ -451,3 +451,95 @@ exports.addFriendReq = function(userId, toFriendId, callback){
         }
     });
 };
+
+exports.getFriendReq = function (userId, callback) {
+    isUserIdValid(userId, function(data){
+        if(!data.success){
+            callback(data);
+        } else{
+            if (data.userData.hasOwnProperty('friendReq')) {
+                callback(data.userData.friendReq);
+            } else {
+                callback({
+                    success: false,
+                    message: 'No friend Requests'
+                });
+            }
+        }
+    });
+};
+
+exports.reviewFriendReq = function (userId, approve, reviewId, callback) {
+    var userData, reviewFriendData, newFriendReqList;
+
+    async.series([
+        function(callback){
+            async.parallel([
+                function (callback) {
+                   isUserIdValid(userId, function(data){
+                        if(!data.success){
+                            callback(data);
+                        } else{
+                            userData = data.userData;
+                            callback();
+                        }
+                    });
+                },
+                function (callback) {
+                    isUserIdValid(reviewId, function(data){
+                        if(!data.success){
+                            callback(data);
+                        } else{
+                            reviewFriendData = data.userData;
+                            callback();
+                        }
+                    });
+                }
+            ], callback);
+        },
+        function(callback){
+            newFriendReqList = userData.friendReq;
+            var finishDelete = false;
+            for (var prop in newFriendReqList) {
+                if(newFriendReqList[prop].id === reviewId){
+                    newFriendReqList.splice(prop, 1); //do delete
+                    finishDelete = true;
+                }
+            }
+            if(!finishDelete){
+                callback({
+                    success: false,
+                    message: 'No such review ID in user friend requests'
+                });
+            }
+            callback();
+        },
+        function(callback){
+            db.updateUser(userId, {
+                "$set": {
+                    friendReq: newFriendReqList
+                }
+            }, function (data) {
+                callback();
+            });
+        },
+        function(callback){
+            if(approve){
+                user.addFriend(userId, reviewId, function(data){
+                    if(isSuccess(data)){
+                        callback();
+                    }else{
+                        callback(data);
+                    }
+                });
+            }
+            //if not approved do nothing
+        }
+    ], function(err) {
+        if (err) {
+            callback(err);
+        } else{
+            callback({success:true});
+        }
+    });
+};

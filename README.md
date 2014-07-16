@@ -44,12 +44,13 @@ Currently we do:
 
 ###Higher Priority
 
+* async.series should rewrite with async.waterfall
 * User Preference
-* Friend request
 * Restaurant - Send event location and participant id, return list of restaurants
 * Able to create user defined event: choose restaurant from recommendation, pick friends, send notification, user receive invite and accept/reject. No voting. [7/20]
 * middle check point + voting [8/3]
 * Move facebook App secret to DB
+* [bug] User friend list allow duplicate friend
 * [bug] Not handling facebook paging
 
 

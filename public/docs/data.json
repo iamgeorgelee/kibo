@@ -469,85 +469,65 @@
                 "description": "Success",
                 "type": "JSON"
             },
-            "class": "UserRoutes"
-        },
-        {
-            "file": "routes/userRoutes.js",
-            "line": 377,
-            "description": "getFriendReq",
-            "params": [
-                {
-                    "name": "userid",
-                    "description": ""
-                }
+            "example": [
+                " /api/user/:userId/addFriendReq"
             ],
             "class": "UserRoutes"
         },
         {
             "file": "routes/userRoutes.js",
-            "line": 383,
-            "description": "reviewFriendReq",
+            "line": 378,
+            "description": "[GET]\n\nGet friend requests",
+            "itemtype": "method",
+            "name": "getFriendReq",
             "params": [
                 {
                     "name": "userId",
-                    "description": ""
-                },
-                {
-                    "name": "toFriendId",
-                    "description": ""
+                    "description": "",
+                    "type": "String"
                 }
+            ],
+            "return": {
+                "description": "List of friend requests",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/user/:userId/getFriendReq"
             ],
             "class": "UserRoutes"
         },
         {
             "file": "routes/userRoutes.js",
-            "line": 390,
-            "description": "approveFriendReq",
+            "line": 395,
+            "description": "[GET]\n\nReview friend request, also need to tell approve or deny\nFirst will remove the entry in friendReq and if it's approved it will do add friend",
+            "itemtype": "method",
+            "name": "reviewFriendReq",
             "params": [
                 {
                     "name": "userId",
-                    "description": ""
+                    "description": "",
+                    "type": "String"
                 },
                 {
-                    "name": "toFriendId",
-                    "description": ""
+                    "name": "approve",
+                    "description": "(in request content)",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "reviewId",
+                    "description": "(in request content)",
+                    "type": "String"
                 }
             ],
-            "class": "UserRoutes"
-        },
-        {
-            "file": "routes/userRoutes.js",
-            "line": 397,
-            "description": "denyFriendReq",
-            "params": [
-                {
-                    "name": "userId",
-                    "description": ""
-                },
-                {
-                    "name": "toFriendId",
-                    "description": ""
-                }
+            "return": {
+                "description": "Success",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/user/:userId/reviewFriendReq"
             ],
             "class": "UserRoutes"
         }
     ],
-    "warnings": [
-        {
-            "message": "Missing item type\ngetFriendReq",
-            "line": " routes/userRoutes.js:377"
-        },
-        {
-            "message": "Missing item type\nreviewFriendReq",
-            "line": " routes/userRoutes.js:383"
-        },
-        {
-            "message": "Missing item type\napproveFriendReq",
-            "line": " routes/userRoutes.js:390"
-        },
-        {
-            "message": "Missing item type\ndenyFriendReq",
-            "line": " routes/userRoutes.js:397"
-        }
-    ]
+    "warnings": []
 }

@@ -366,6 +366,7 @@ module.exports = function(app, passport) {
      * @param {String} userId
      * @param {String} toFriendId (in request content)
      * @return {JSON} Success
+     * @example /api/user/:userId/addFriendReq
      */
     app.route('/api/user/:userId/addFriendReq')
         .post(function(req, res) {
@@ -375,30 +376,39 @@ module.exports = function(app, passport) {
         });
 
     /**
-     * getFriendReq
+     * [GET]
      *
-     * @param userid
+     * Get friend requests
+     *
+     * @method getFriendReq
+     * @param {String} userId
+     * @return {JSON} List of friend requests
+     * @example /api/user/:userId/getFriendReq
      */
+    app.route('/api/user/:userId/getFriendReq')
+        .get(function(req, res) {
+            userController.getFriendReq(req.params.userId, function(data) {
+                return res.send(data);
+            });
+        });
 
     /**
-     * reviewFriendReq
+     * [GET]
      *
-     * @param userId
-     * @param toFriendId
-     */
-
-    /**
-     * approveFriendReq
+     * Review friend request, also need to tell approve or deny
+     * First will remove the entry in friendReq and if it's approved it will do add friend
      *
-     * @param userId
-     * @param toFriendId
+     * @method reviewFriendReq
+     * @param {String} userId
+     * @param {Boolean} approve (in request content)
+     * @param {String} reviewId (in request content)
+     * @return {JSON} Success
+     * @example /api/user/:userId/reviewFriendReq
      */
-
-    /**
-     * denyFriendReq
-     *
-     * @param userId
-     * @param toFriendId
-     */
-
+    app.route('/api/user/:userId/reviewFriendReq')
+        .post(function(req, res) {
+            userController.reviewFriendReq(req.params.userId, req.param('approve'), req.param('reviewId'), function(data) {
+                return res.send(data);
+            });
+        });
 };
