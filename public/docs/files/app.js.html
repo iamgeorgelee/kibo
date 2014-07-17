@@ -148,14 +148,6 @@ if (&#x27;development&#x27; === env) {
 		dumpExceptions: true,
 		showStack: true
 	}));
-} else if (&#x27;staging&#x27; === env) {
-	config = require(&#x27;./config/env/staging.js&#x27;);
-	require(&#x27;./config/passport&#x27;)(passport, config);
-
-	app.use(connect.errorHandler({
-		dumpExceptions: true,
-		showStack: true
-	}));
 } else { //production mode
 	config = require(&#x27;./config/env/production.js&#x27;);
 	require(&#x27;./config/passport&#x27;)(passport, config);
@@ -165,7 +157,6 @@ if (&#x27;development&#x27; === env) {
 
 app.listen(port);
 console.log(&quot;Express server listening on port %d in %s mode&quot;, process.env.PORT, app.settings.env);
-console.log(&quot;Host IP is %s&quot;, process.env.IP);
 console.log(&quot;Server Up!&quot;);
     </pre>
 </div>

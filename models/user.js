@@ -13,6 +13,29 @@ var options = { // options needed for SDK
     }
 };
 
+function isSuccess(data) {
+    if (data.hasOwnProperty('success')) {
+        if (data.success === false) {
+            return false;
+        }
+    } else {
+        return true;
+    }
+}
+
+//Check is userId in DB, if yes, also return user data
+function isUserIdValid(userId, callback) {
+    var response;
+    db.getDocument('User', userId, function (data) {
+        if (data.message === 'Document not found') {
+            response = {success:false, message: 'No such user'};
+        } else {
+            response = {success:true, userData:data};
+        }
+        callback(response);
+    });
+}
+
 // generating a hash
 exports.generateHash = function (userPassword) {
     return bcrypt.hashSync(userPassword, bcrypt.genSaltSync(8), null);
@@ -25,16 +48,10 @@ exports.validPassword = function (password, userPassword) {
 
 exports.getUsers = function (callback) {
     db.getCollection('User', function (data) {
-        callback(data);
-    });
-};
-
-exports.getUserById = function (userId, callback) {
-    db.getDocument('User', userId, function (data) {
-        if (data.message === 'Document not found') {
+        if (data.message === 'Collection not found') {
             callback({
                 success: false,
-                message: 'No such user'
+                message: 'Cannot get User collection'
             });
         } else {
             callback(data);
@@ -42,86 +59,119 @@ exports.getUserById = function (userId, callback) {
     });
 };
 
+exports.getUserById = function (userId, callback) {
+    isUserIdValid(userId, function(data){
+        if(!data.success){
+            callback(data);
+        } else{
+            callback(data.userData);
+        }
+    });
+};
+
 exports.getFbFriends = function (userId, callback) {
-    db.getDocument('User', userId, function (data) {
-        graph.setOptions(options).setAccessToken(data.facebook.token).get("me?fields=friends", function (err, res) {
-            callback(res.friends);
-        });
+    isUserIdValid(userId, function(data){
+        if(!data.success){
+            callback(data);
+        } else{
+            graph.setOptions(options).setAccessToken(data.userData.facebook.token).get("me?fields=friends", function (err, res) {
+                callback(res.friends);
+            });
+        }
     });
 };
 
 exports.getFriendList = function (userId, callback) {
-    db.getDocument('User', userId, function (data) {
-        if (data.message === 'Document not found') {
-            callback({
-                success: false,
-                message: 'No such user'
-            });
-        } else {
-            if (data.hasOwnProperty('friends')) {
-                callback(data.friends);
+    isUserIdValid(userId, function(data){
+        if(!data.success){
+            callback(data);
+        } else{
+            if (data.userData.hasOwnProperty('friends')) {
+                callback(data.userData.friends);
             } else {
                 callback({
                     success: false,
                     message: 'No friend'
                 });
             }
-
         }
     });
 };
 
 exports.addFriend = function (userId, friendId, callback) {
-    var newUserData, friendData, userNewFriendList, friendNewFriendList;
+    var newUserData, userData, friendData, userNewFriendList, friendNewFriendList;
 
     async.series([
-        //check is the friendId valid, is there really such user?
+        //check is the userId and friendId valid, is there really such user?
         function (callback) {
-            db.getDocument('User', friendId, function (data) {
-                if (data.message === 'Document not found') {
-                    callback({
-                        success: false,
-                        message: 'No such user'
+            async.parallel([
+                function (callback) {
+                   isUserIdValid(userId, function(data){
+                        if(!data.success){
+                            callback(data);
+                        } else{
+                            userData = data.userData;
+                            callback();
+                        }
                     });
-                } else {
-                    friendData = data;
-                    callback();
+                },
+                function (callback) {
+                    isUserIdValid(friendId, function(data){
+                        if(!data.success){
+                            callback(data);
+                        } else{
+                            friendData = data.userData;
+                            callback();
+                        }
+                    });
                 }
-            });
+            ], callback);
         },
         function (callback) {
-            db.getDocument('User', userId, function (userData) {
-                async.parallel([
-                    function(callback){
-                        //check does the user already has 'friends' property if no, create one
-                        if (userData.hasOwnProperty('friends')) {
-                            userNewFriendList = userData.friends;
-                        } else {
-                            userNewFriendList = [];
+            async.parallel([
+                function(callback){
+                    //check does the user already has 'friends' property if no, create one
+                    if (userData.hasOwnProperty('friends')) {
+                        //check are they already friends, Only check user
+                        var isfriends = false;
+                        for (var prop in userData.friends) {
+                            if(userData.friends[prop].id === friendId){
+                                isfriends = true;
+                                break;
+                            }
                         }
-                        userNewFriendList.push({
-                            "id": friendId,
-                            "name": friendData.name
-                        });
-
-                        callback();
-                    },
-                    function(callback){
-                        //check does the friend already has 'friends' property if no, create one
-                        if (friendData.hasOwnProperty('friends')) {
-                            friendNewFriendList = friendData.friends;
-                        } else {
-                            friendNewFriendList = [];
+                        if(isfriends){
+                            callback({
+                                success: false,
+                                message: 'They are already friends'
+                            });
                         }
-                        friendNewFriendList.push({
-                            "id": userId,
-                            "name": userData.name
-                        });
-
-                        callback();
+                        userNewFriendList = userData.friends;
+                    } else {
+                        userNewFriendList = [];
                     }
-                ], callback);
-            });
+                    userNewFriendList.push({
+                        "id": friendId,
+                        "name": friendData.name
+                    });
+
+                    callback();
+                },
+                function(callback){
+                    //check does the friend already has 'friends' property if no, create one
+                    if (friendData.hasOwnProperty('friends')) {
+                        friendNewFriendList = friendData.friends;
+                    } else {
+                        friendNewFriendList = [];
+                    }
+                    friendNewFriendList.push({
+                        "id": userId,
+                        "name": userData.name
+                    });
+
+                    callback();
+                }
+            ], callback);
         },
         function (callback) {
             async.parallel([
@@ -148,75 +198,85 @@ exports.addFriend = function (userId, friendId, callback) {
                 }
             ], callback);
         }
-    ], function (err) { //This function gets called after the two tasks have called their "task callbacks"
+    ], function (err) {
         if (err) {
             callback(err);
+        } else{
+            callback(newUserData);
         }
-        callback(newUserData);
     });
 };
 
 exports.unfriend = function (userId, friendId, callback) {
-    var newUserData, friendData, userNewFriendList, friendNewFriendList;
+    var newUserData, userData, friendData, userNewFriendList, friendNewFriendList;
 
     async.series([
-        //check is the friendId valid, is there really such user?
+        //check is the userId and friendId valid, is there really such user?
         function (callback) {
-            db.getDocument('User', friendId, function (data) {
-                if (data.message === 'Document not found') {
-                    callback({
-                        success: false,
-                        message: 'No such user'
+            async.parallel([
+                function (callback) {
+                   isUserIdValid(userId, function(data){
+                        if(!data.success){
+                            callback(data);
+                        } else{
+                            userData = data.userData;
+                            callback();
+                        }
                     });
-                } else {
-                    friendData = data;
-                    callback();
+                },
+                function (callback) {
+                    isUserIdValid(friendId, function(data){
+                        if(!data.success){
+                            callback(data);
+                        } else{
+                            friendData = data.userData;
+                            callback();
+                        }
+                    });
                 }
-            });
+            ], callback);
         },
         function (callback) {
-            db.getDocument('User', userId, function (userData) {
-                async.parallel([
-                    function(callback){
-                        //check does the user already has 'friends' property if no, create one
-                        if (!userData.hasOwnProperty('friends')) {
-                            callback({
-                                success: false,
-                                message: 'No friend'
-                            });
-                        } else {
-                            userNewFriendList = userData.friends;
-                            for (var prop in userNewFriendList) {
-                                if(userNewFriendList[prop].id === friendId){
-                                    // delete userNewFriendList[prop];
-                                    userNewFriendList.splice(prop, 1);
-                                }
+            async.parallel([
+                function(callback){
+                    //check does the user already has 'friends' property if no
+                    if (!userData.hasOwnProperty('friends')) {
+                        callback({
+                            success: false,
+                            message: 'No friend'
+                        });
+                    } else {
+                        userNewFriendList = userData.friends;
+                        for (var prop in userNewFriendList) {
+                            if(userNewFriendList[prop].id === friendId){
+                                // delete userNewFriendList[prop];
+                                userNewFriendList.splice(prop, 1);
                             }
                         }
-
-                        callback();
-                    },
-                    function(callback){
-                        //check does the user already has 'friends' property if no, create one
-                        if (!friendData.hasOwnProperty('friends')) {
-                            callback({
-                                success: false,
-                                message: 'No friend'
-                            });
-                        } else {
-                            friendNewFriendList = friendData.friends;
-                            for (var prop in friendNewFriendList) {
-                                if(friendNewFriendList[prop].id === userId){
-                                    // delete friendNewFriendList[prop];
-                                    friendNewFriendList.splice(prop, 1);
-                                }
-                            }
-                        }
-
-                        callback();
                     }
-                ], callback);
-            });
+
+                    callback();
+                },
+                function(callback){
+                    //check does the user already has 'friends' property if no, create one
+                    if (!friendData.hasOwnProperty('friends')) {
+                        callback({
+                            success: false,
+                            message: 'No friend'
+                        });
+                    } else {
+                        friendNewFriendList = friendData.friends;
+                        for (var prop in friendNewFriendList) {
+                            if(friendNewFriendList[prop].id === userId){
+                                // delete friendNewFriendList[prop];
+                                friendNewFriendList.splice(prop, 1);
+                            }
+                        }
+                    }
+
+                    callback();
+                }
+            ], callback);
         },
         function (callback) {
             async.parallel([
@@ -243,11 +303,12 @@ exports.unfriend = function (userId, friendId, callback) {
                 }
             ], callback);
         }
-    ], function (err) { //This function gets called after the two tasks have called their "task callbacks"
+    ], function (err) {
         if (err) {
             callback(err);
+        } else{
+            callback(newUserData);
         }
-        callback(newUserData);
     });
 };
 
@@ -255,19 +316,26 @@ exports.getFriendCandidate = function (userId, callback) {
     var userFriendList, userList, friendCandidateList = [];
 
     async.series([
-        //check is the friendId valid, is there really such user?
         function (callback) {
             async.parallel([
                 function (callback) {
                     user.getFriendList(userId, function (data) {
-                        userFriendList = data;
-                        callback();
+                        if(!isSuccess(data)){
+                            callback(data);
+                        } else{
+                            userFriendList = data;
+                            callback();
+                        }
                     });
                 },
                 function (callback) {
                     user.getUsers(function (data) {
-                        userList = data;
-                        callback();
+                        if(!isSuccess(data)){
+                            callback(data);
+                        } else{
+                            userList = data;
+                            callback();
+                        }
                     });
                 }
             ], callback);
@@ -288,10 +356,218 @@ exports.getFriendCandidate = function (userId, callback) {
             });
             callback();
         }
-    ], function (err) { //This function gets called after the two tasks have called their "task callbacks"
+    ], function (err) {
         if (err) {
             callback(err);
+        } else{
+            callback(friendCandidateList);
         }
-        callback(friendCandidateList);
+    });
+};
+
+exports.getFbFriendCandidate = function (userId, callback) {
+    var friendCandidateList = [], fbFriends, appFriends;
+
+    async.parallel([
+        function (callback) {
+            user.getFriendCandidate(userId, function (data) {
+                if(!isSuccess(data)){
+                    callback(data);
+                } else{
+                    appFriends = data;
+                    callback();
+                }
+            });
+        },
+        function (callback) {
+            user.getFbFriends(userId, function (data) {
+                if(!isSuccess(data)){
+                    callback(data);
+                } else{
+                    fbFriends = data;
+                    callback();
+                }
+            });
+        }
+    ], function (err) {
+        if (err) {
+            callback(err);
+        } else{
+            for (var fbProp in fbFriends.data) {
+                for (var prop in appFriends) {
+                    if (fbFriends.data[fbProp].name === appFriends[prop].name) {
+                        friendCandidateList.push(appFriends[prop]);
+                    }
+                }
+            }
+            callback(friendCandidateList);
+        }
+    });
+};
+
+exports.addFriendReq = function(userId, toFriendId, callback){
+    var userData, toFriendData, newFriendReqList;
+
+    async.series([
+        function(callback){
+            async.parallel([
+                function (callback) {
+                   isUserIdValid(userId, function(data){
+                        if(!data.success){
+                            callback(data);
+                        } else{
+                            userData = data.userData;
+                            callback();
+                        }
+                    });
+                },
+                function (callback) {
+                    isUserIdValid(toFriendId, function(data){
+                        if(!data.success){
+                            callback(data);
+                        } else{
+                            toFriendData = data.userData;
+                            callback();
+                        }
+                    });
+                }
+            ], callback);
+        },
+        function(callback){
+            if (toFriendData.hasOwnProperty('friendReq')) {
+                //check is the same friend request already exist
+                var requestExist = false;
+                for (var prop in toFriendData.friendReq) {
+                    if(toFriendData.friendReq[prop].id === userId){
+                        requestExist = true;
+                        break;
+                    }
+                }
+                if(requestExist){
+                    callback({
+                        success: false,
+                        message: 'Such friend request already exist'
+                    });
+                }
+                newFriendReqList = toFriendData.friendReq;
+            }else{
+                newFriendReqList = [];
+            }
+
+            newFriendReqList.push({
+                "id": userId,
+                "name": userData.name
+            });
+
+            callback();
+        },
+        function(callback){
+            //Add user info to friend data
+            db.updateUser(toFriendId, {
+                "$set": {
+                    friendReq: newFriendReqList
+                }
+            }, function (data) {
+                callback();
+            });
+        }
+    ], function(err) {
+        if (err) {
+            callback(err);
+        } else{
+            callback({success:true});
+        }
+    });
+};
+
+exports.getFriendReq = function (userId, callback) {
+    isUserIdValid(userId, function(data){
+        if(!data.success){
+            callback(data);
+        } else{
+            if (data.userData.hasOwnProperty('friendReq')) {
+                callback(data.userData.friendReq);
+            } else {
+                callback({
+                    success: false,
+                    message: 'No friend Requests'
+                });
+            }
+        }
+    });
+};
+
+exports.reviewFriendReq = function (userId, approve, reviewId, callback) {
+    var userData, reviewFriendData, newFriendReqList;
+
+    async.series([
+        function(callback){
+            async.parallel([
+                function (callback) {
+                   isUserIdValid(userId, function(data){
+                        if(!data.success){
+                            callback(data);
+                        } else{
+                            userData = data.userData;
+                            callback();
+                        }
+                    });
+                },
+                function (callback) {
+                    isUserIdValid(reviewId, function(data){
+                        if(!data.success){
+                            callback(data);
+                        } else{
+                            reviewFriendData = data.userData;
+                            callback();
+                        }
+                    });
+                }
+            ], callback);
+        },
+        function(callback){
+            newFriendReqList = userData.friendReq;
+            var finishDelete = false;
+            for (var prop in newFriendReqList) {
+                if(newFriendReqList[prop].id === reviewId){
+                    newFriendReqList.splice(prop, 1); //do delete
+                    finishDelete = true;
+                }
+            }
+            if(!finishDelete){
+                callback({
+                    success: false,
+                    message: 'No such review ID in user friend requests'
+                });
+            }
+            callback();
+        },
+        function(callback){
+            db.updateUser(userId, {
+                "$set": {
+                    friendReq: newFriendReqList
+                }
+            }, function (data) {
+                callback();
+            });
+        },
+        function(callback){
+            if(approve){
+                user.addFriend(userId, reviewId, function(data){
+                    if(isSuccess(data)){
+                        callback();
+                    }else{
+                        callback(data);
+                    }
+                });
+            }
+            //if not approved do nothing
+        }
+    ], function(err) {
+        if (err) {
+            callback(err);
+        } else{
+            callback({success:true});
+        }
     });
 };

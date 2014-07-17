@@ -82,7 +82,7 @@
     "classitems": [
         {
             "file": "routes/dbRoutes.js",
-            "line": 12,
+            "line": 57,
             "description": "Get collection by collection name",
             "itemtype": "method",
             "name": "getCollection",
@@ -101,7 +101,7 @@
         },
         {
             "file": "routes/dbRoutes.js",
-            "line": 27,
+            "line": 72,
             "description": "Get document by document name\ne.g. Get User by userid",
             "itemtype": "method",
             "name": "getDocument",
@@ -125,7 +125,7 @@
         },
         {
             "file": "routes/dbRoutes.js",
-            "line": 44,
+            "line": 89,
             "description": "Create user",
             "itemtype": "method",
             "name": "createUser",
@@ -144,7 +144,7 @@
         },
         {
             "file": "routes/dbRoutes.js",
-            "line": 57,
+            "line": 102,
             "description": "Update user",
             "itemtype": "method",
             "name": "updateUser",
@@ -194,12 +194,12 @@
             "params": [
                 {
                     "name": "username",
-                    "description": "(in header)",
+                    "description": "(in request content)",
                     "type": "String"
                 },
                 {
                     "name": "password",
-                    "description": "(in header)",
+                    "description": "(in request content)",
                     "type": "String"
                 }
             ],
@@ -221,12 +221,12 @@
             "params": [
                 {
                     "name": "username",
-                    "description": "(in header)",
+                    "description": "(in request content)",
                     "type": "String"
                 },
                 {
                     "name": "password",
-                    "description": "(in header)",
+                    "description": "(in request content)",
                     "type": "String"
                 }
             ],
@@ -292,7 +292,7 @@
             "params": [
                 {
                     "name": "userId",
-                    "description": "(in url)",
+                    "description": "",
                     "type": "String"
                 }
             ],
@@ -314,7 +314,7 @@
             "params": [
                 {
                     "name": "userId",
-                    "description": "(in url)",
+                    "description": "",
                     "type": "String"
                 }
             ],
@@ -336,7 +336,7 @@
             "params": [
                 {
                     "name": "userId",
-                    "description": "(in url)",
+                    "description": "",
                     "type": "String"
                 }
             ],
@@ -358,12 +358,12 @@
             "params": [
                 {
                     "name": "userId",
-                    "description": "User who wants to add friend (in url)",
+                    "description": "User who wants to add friend",
                     "type": "String"
                 },
                 {
                     "name": "friendId",
-                    "description": "Friend to add (in header)",
+                    "description": "Friend to add (in request content)",
                     "type": "String"
                 }
             ],
@@ -385,12 +385,12 @@
             "params": [
                 {
                     "name": "userId",
-                    "description": "User who wants to unfriend (in url)",
+                    "description": "User who wants to unfriend",
                     "type": "String"
                 },
                 {
                     "name": "friendId",
-                    "description": "Friend to remove (in header)",
+                    "description": "Friend to remove (in request content)",
                     "type": "String"
                 }
             ],
@@ -399,14 +399,14 @@
                 "type": "JSON"
             },
             "example": [
-                " /api/user/:userId/addFriend"
+                " /api/user/:userId/unfriend"
             ],
             "class": "UserRoutes"
         },
         {
             "file": "routes/userRoutes.js",
             "line": 322,
-            "description": "[GET]\n\nGet a list of friend who is not your app friend, so can add them as friend later",
+            "description": "[GET]\n\nGet a list of app user you can add them as friend\nWhen this is useful? User wants to add friend via 'Search by name'",
             "itemtype": "method",
             "name": "getFriendCandidate",
             "params": [
@@ -417,11 +417,114 @@
                 }
             ],
             "return": {
-                "description": "List of friend to add",
+                "description": "List of app user to add",
                 "type": "JSON"
             },
             "example": [
                 " /api/user/:userId/getFriendCandidate"
+            ],
+            "class": "UserRoutes"
+        },
+        {
+            "file": "routes/userRoutes.js",
+            "line": 340,
+            "description": "[GET]\n\nGet a list of app user who is your facebook friend but not your friend in this app\nWhen this is useful? User wants to add friend via 'Find friends from facebook'",
+            "itemtype": "method",
+            "name": "getFbFriendCandidate",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "List of app user to add",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/user/:userId/getFbFriendCandidate"
+            ],
+            "class": "UserRoutes"
+        },
+        {
+            "file": "routes/userRoutes.js",
+            "line": 360,
+            "description": "[POST]\n\nSend a friend request",
+            "itemtype": "method",
+            "name": "addFriendReq",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "toFriendId",
+                    "description": "(in request content)",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Success",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/user/:userId/addFriendReq"
+            ],
+            "class": "UserRoutes"
+        },
+        {
+            "file": "routes/userRoutes.js",
+            "line": 378,
+            "description": "[GET]\n\nGet friend requests",
+            "itemtype": "method",
+            "name": "getFriendReq",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "List of friend requests",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/user/:userId/getFriendReq"
+            ],
+            "class": "UserRoutes"
+        },
+        {
+            "file": "routes/userRoutes.js",
+            "line": 395,
+            "description": "[GET]\n\nReview friend request, also need to tell approve or deny\nFirst will remove the entry in friendReq and if it's approved it will do add friend",
+            "itemtype": "method",
+            "name": "reviewFriendReq",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "approve",
+                    "description": "(in request content)",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "reviewId",
+                    "description": "(in request content)",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Success",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/user/:userId/reviewFriendReq"
             ],
             "class": "UserRoutes"
         }
