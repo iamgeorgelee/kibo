@@ -33,47 +33,34 @@ Currently we do:
 
 ###Before Push
 * Use JS Beautifier
-* Comment with YUIDoc syntaxs.
-
-[YUIDoc Syntax](http://yui.github.io/yuidoc/syntax/index.html)
-
-[More explaination about YUIDoc](http://code.tutsplus.com/tutorials/documenting-javascript-with-yuidoc--net-25324)
-
+* Comment with YUIDoc syntaxs
+    * [YUIDoc Syntax](http://yui.github.io/yuidoc/syntax/index.html)
+    * [More explaination about YUIDoc](http://code.tutsplus.com/tutorials/documenting-javascript-with-yuidoc--net-25324)
 
 ##TODO
 
 ###Higher Priority
 
-* async.series should rewrite with async.waterfall
 * User Preference
 * Restaurant - Send event location and participant id, return list of restaurants
 * Able to create user defined event: choose restaurant from recommendation, pick friends, send notification, user receive invite and accept/reject. No voting. [7/20]
 * middle check point + voting [8/3]
 * Move facebook App secret to DB
-* [bug] User friend list allow duplicate friend
 * [bug] Not handling facebook paging
+* [bug] All id should use object id?
 
 
 ###Lower Priority
 
+* async.series should rewrite with async.waterfall? Some maybe
 * Mocha - Unit Test
-
-[Grunt Mocha Plugin](https://github.com/pghalliday/grunt-mocha-test)
-
-[User Mocha to test your RestAPI](http://thewayofcode.wordpress.com/2013/04/21/how-to-build-and-test-rest-api-with-nodejs-express-mocha/)
-
+    * [Grunt Mocha Plugin](https://github.com/pghalliday/grunt-mocha-test)
+    * [User Mocha to test your RestAPI](http://thewayofcode.wordpress.com/2013/04/21/how-to-build-and-test-rest-api-with-nodejs-express-mocha/)
 * Security Scan
-Dynamic Code Analysis(Fuzz in run time), Static Code Analysis(Scan code for security vulnerability)
-
+    * Dynamic Code Analysis(Fuzz in run time), Static Code Analysis(Scan code for security vulnerability)
 * SSL
-Heroku by default is without SSL
-
+    * Heroku by default is without SSL
 * Uglify
-
-
-##Known Issue
-* [Web Page] [Ignore for now] When the User Collection is totally empty, link to Facebook work correctly in DB but may not display in EJS.
-
 
 
 [CheatSheet for writing README.md](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)

@@ -360,7 +360,9 @@ module.exports = function(app, passport) {
     /**
      * [POST]
      *
-     * Send a friend request
+     * Send a friend request.
+     *
+     * userA send a friend request to userB, in user B's DB entry will record the request.
      *
      * @method addFriendReq
      * @param {String} userId
