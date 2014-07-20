@@ -41,6 +41,7 @@ app.use(passport.session());
 
 // User Routes e.g. login, signup
 require('./routes/userRoutes.js')(app, passport);
+require('./controllers/eventController.js')(app);
 
 // ========================
 // ==== MODE SELECTION ====
