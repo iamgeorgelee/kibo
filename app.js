@@ -39,6 +39,7 @@ app.use(passport.session());
 
 require('./controllers/userController.js')(app, passport);
 require('./controllers/restController.js')(app);
+require('./controllers/eventController.js')(app);
 
 // ========================
 // ==== MODE SELECTION ====
