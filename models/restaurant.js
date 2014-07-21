@@ -11,26 +11,32 @@ var db = require('../routes/dbRoutes.js');
 exports.getRecommendRest = function(participants, callback){
     async.waterfall([
         function(callback){
-            var i=0, j=0;
-            var locationString = '';
-            var preferenceString = '';
-            for(var prop in participants){
-                participants[prop].userLocation.forEach(function(usrloc){
-                    locationString += ( i === 0? usrloc: ',' + usrloc);
-                    i++;
-                });
+            var i = 0, j = 0, locationString = '', preferenceString = '';
 
-                participants[prop].userPreference.forEach(function(usrpref){
-                    preferenceString += ( j === 0? usrpref: ',' + usrpref);
-                    j++;
-                });
+            function parseLocation(usrloc) {
+                locationString += (i === 0 ? usrloc : ',' + usrloc);
+                i++;
+            }
+
+            function parsePreference(usrpref) {
+                preferenceString += (j === 0 ? usrpref : ',' + usrpref);
+                j++;
+            }
+
+            for (var prop in participants) {
+                participants[prop].userLocation.forEach(parseLocation);
+                participants[prop].userLocation.forEach(parsePreference);
             }
             callback(null, locationString, preferenceString);
         },
         function(locationString, preferenceString, callback){
             // Call recommend to get recommend restaurant IDs
-            restRoutes.getRecommendRest(locationString, preferenceString, function(data){
-                callback(null, data.restaurant_ids);
+            restRoutes.getRecommendRest(locationString, preferenceString, function (data) {
+                if (data.restaurant_ids === null) {
+                    callback('no recommendation', null);
+                } else {
+                    callback(null, data.restaurant_ids);
+                }
             });
         },
         function(restIds, callback){
@@ -42,10 +48,10 @@ exports.getRecommendRest = function(participants, callback){
                 });
             }, function(err){
                 if( err ) {
-                  console.log('Retrieve restaurant failed');
+                  //Retrieve restaurant failed
                   callback(err, null);
                 } else {
-                  console.log('All data retrieved successfully');
+                  //All data retrieved successfully
                   callback(null, restDetail);
                 }
             });

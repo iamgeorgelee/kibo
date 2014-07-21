@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/dbController.html">dbController</a></li>
             
+                <li><a href="../classes/eventContorller.html">eventContorller</a></li>
+            
                 <li><a href="../classes/restController.html">restController</a></li>
             
                 <li><a href="../classes/UserController.html">UserController</a></li>
@@ -207,13 +209,6 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_addFriendReq">addFriendReq</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
                                 <a href="#method_fbAuth">fbAuth</a>
 
                                 
@@ -222,6 +217,20 @@
                         
                             <li class="index-item method private">
                                 <a href="#method_fbAuth/Callback">fbAuth/Callback</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_friendReq">friendReq</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_friendReq">friendReq</a>
 
                                 
                                 
@@ -256,21 +265,7 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_getFriendReq">getFriendReq</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
                                 <a href="#method_getUserById">getUserById</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_getUserPreference">getUserPreference</a>
 
                                 
                                 
@@ -305,14 +300,21 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_setUserPreference">setUserPreference</a>
+                                <a href="#method_unfriend">unfriend</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_unfriend">unfriend</a>
+                                <a href="#method_userPreference">userPreference</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_userPreference">userPreference</a>
 
                                 
                                 
@@ -402,7 +404,7 @@
             
         
         
-        <a href="../files/controllers_userController.js.html#l375"><code>controllers&#x2F;userController.js:375</code></a>
+        <a href="../files/controllers_userController.js.html#l368"><code>controllers&#x2F;userController.js:368</code></a>
         
         </p>
 
@@ -490,145 +492,6 @@
 </div>
 
                 
-                    <div id="method_addFriendReq" class="method item">
-    <h3 class="name"><code>addFriendReq</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>userId</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>toFriendId</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">JSON</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/controllers_userController.js.html#l449"><code>controllers&#x2F;userController.js:449</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>[POST]</p>
-<p>Send a friend request.</p>
-<p>userA send a friend request to userB, in user B&#39;s DB entry will record the request.</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">userId</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">toFriendId</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>(in request content)</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">JSON</span>:
-                    
-                    <p>Success</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <p> /api/user/:userId/addFriendReq</p>
-
-            </div>
-        </div>
-    
-</div>
-
-                
                     <div id="method_fbAuth" class="method item">
     <h3 class="name"><code>fbAuth</code></h3>
 
@@ -665,7 +528,7 @@
             
         
         
-        <a href="../files/controllers_userController.js.html#l270"><code>controllers&#x2F;userController.js:270</code></a>
+        <a href="../files/controllers_userController.js.html#l263"><code>controllers&#x2F;userController.js:263</code></a>
         
         </p>
 
@@ -752,7 +615,7 @@ After perform facebook account authentication, facebook will render to callback 
             
         
         
-        <a href="../files/controllers_userController.js.html#l287"><code>controllers&#x2F;userController.js:287</code></a>
+        <a href="../files/controllers_userController.js.html#l280"><code>controllers&#x2F;userController.js:280</code></a>
         
         </p>
 
@@ -786,6 +649,261 @@ This is for facebook itself.</p>
         </div>
     
 
+    
+</div>
+
+                
+                    <div id="method_friendReq" class="method item">
+    <h3 class="name"><code>friendReq</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>userId</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">JSON</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/controllers_userController.js.html#l455"><code>controllers&#x2F;userController.js:455</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>[GET]</p>
+<p>Get friend requests</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">userId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">JSON</span>:
+                    
+                    <p>List of friend requests</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <p> /api/user/:userId/friendReq</p>
+
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="method_friendReq" class="method item">
+    <h3 class="name"><code>friendReq</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>userId</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>toFriendId</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">JSON</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/controllers_userController.js.html#l442"><code>controllers&#x2F;userController.js:442</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>[POST]</p>
+<p>Send a friend request.</p>
+<p>userA send a friend request to userB, in user B&#39;s DB entry will record the request.</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">userId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">toFriendId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>(in request content)</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">JSON</span>:
+                    
+                    <p>Success</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <p> /api/user/:userId/friendReq</p>
+
+            </div>
+        </div>
     
 </div>
 
@@ -836,7 +954,7 @@ This is for facebook itself.</p>
             
         
         
-        <a href="../files/controllers_userController.js.html#l431"><code>controllers&#x2F;userController.js:431</code></a>
+        <a href="../files/controllers_userController.js.html#l424"><code>controllers&#x2F;userController.js:424</code></a>
         
         </p>
 
@@ -953,7 +1071,7 @@ When this is useful? User wants to add friend via &#39;Find friends from faceboo
             
         
         
-        <a href="../files/controllers_userController.js.html#l341"><code>controllers&#x2F;userController.js:341</code></a>
+        <a href="../files/controllers_userController.js.html#l334"><code>controllers&#x2F;userController.js:334</code></a>
         
         </p>
 
@@ -1069,7 +1187,7 @@ When this is useful? User wants to add friend via &#39;Find friends from faceboo
             
         
         
-        <a href="../files/controllers_userController.js.html#l413"><code>controllers&#x2F;userController.js:413</code></a>
+        <a href="../files/controllers_userController.js.html#l406"><code>controllers&#x2F;userController.js:406</code></a>
         
         </p>
 
@@ -1186,7 +1304,7 @@ When this is useful? User wants to add friend via &#39;Search by name&#39;</p>
             
         
         
-        <a href="../files/controllers_userController.js.html#l358"><code>controllers&#x2F;userController.js:358</code></a>
+        <a href="../files/controllers_userController.js.html#l351"><code>controllers&#x2F;userController.js:351</code></a>
         
         </p>
 
@@ -1256,122 +1374,6 @@ When this is useful? User wants to add friend via &#39;Search by name&#39;</p>
 </div>
 
                 
-                    <div id="method_getFriendReq" class="method item">
-    <h3 class="name"><code>getFriendReq</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>userId</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">JSON</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/controllers_userController.js.html#l469"><code>controllers&#x2F;userController.js:469</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>[GET]</p>
-<p>Get friend requests</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">userId</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">JSON</span>:
-                    
-                    <p>List of friend requests</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <p> /api/user/:userId/getFriendReq</p>
-
-            </div>
-        </div>
-    
-</div>
-
-                
                     <div id="method_getUserById" class="method item">
     <h3 class="name"><code>getUserById</code></h3>
 
@@ -1418,7 +1420,7 @@ When this is useful? User wants to add friend via &#39;Search by name&#39;</p>
             
         
         
-        <a href="../files/controllers_userController.js.html#l324"><code>controllers&#x2F;userController.js:324</code></a>
+        <a href="../files/controllers_userController.js.html#l317"><code>controllers&#x2F;userController.js:317</code></a>
         
         </p>
 
@@ -1488,122 +1490,6 @@ When this is useful? User wants to add friend via &#39;Search by name&#39;</p>
 </div>
 
                 
-                    <div id="method_getUserPreference" class="method item">
-    <h3 class="name"><code>getUserPreference</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>userId</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">Json</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/controllers_userController.js.html#l524"><code>controllers&#x2F;userController.js:524</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>[GET]</p>
-<p>Get user preference</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">userId</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">Json</span>:
-                    
-                    <p>user preference</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <p> /api/user/:userId/getUserPreference</p>
-
-            </div>
-        </div>
-    
-</div>
-
-                
                     <div id="method_getUsers" class="method item">
     <h3 class="name"><code>getUsers</code></h3>
 
@@ -1640,7 +1526,7 @@ When this is useful? User wants to add friend via &#39;Search by name&#39;</p>
             
         
         
-        <a href="../files/controllers_userController.js.html#l308"><code>controllers&#x2F;userController.js:308</code></a>
+        <a href="../files/controllers_userController.js.html#l301"><code>controllers&#x2F;userController.js:301</code></a>
         
         </p>
 
@@ -1739,7 +1625,7 @@ When this is useful? User wants to add friend via &#39;Search by name&#39;</p>
             
         
         
-        <a href="../files/controllers_userController.js.html#l254"><code>controllers&#x2F;userController.js:254</code></a>
+        <a href="../files/controllers_userController.js.html#l247"><code>controllers&#x2F;userController.js:247</code></a>
         
         </p>
 
@@ -1878,7 +1764,7 @@ When this is useful? User wants to add friend via &#39;Search by name&#39;</p>
             
         
         
-        <a href="../files/controllers_userController.js.html#l238"><code>controllers&#x2F;userController.js:238</code></a>
+        <a href="../files/controllers_userController.js.html#l231"><code>controllers&#x2F;userController.js:231</code></a>
         
         </p>
 
@@ -2023,7 +1909,7 @@ When this is useful? User wants to add friend via &#39;Search by name&#39;</p>
             
         
         
-        <a href="../files/controllers_userController.js.html#l486"><code>controllers&#x2F;userController.js:486</code></a>
+        <a href="../files/controllers_userController.js.html#l477"><code>controllers&#x2F;userController.js:477</code></a>
         
         </p>
 
@@ -2126,144 +2012,6 @@ First will remove the entry in friendReq and if it&#39;s approved it will do add
 </div>
 
                 
-                    <div id="method_setUserPreference" class="method item">
-    <h3 class="name"><code>setUserPreference</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>userId</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>preference</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/controllers_userController.js.html#l506"><code>controllers&#x2F;userController.js:506</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>[POST]</p>
-<p>Set user preference</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">userId</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">preference</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Send all user preference, not just the one to add or remove</p>
-
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
-                    
-                    <p>Success</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <p> /api/user/:userId/setUserPreference</p>
-
-            </div>
-        </div>
-    
-</div>
-
-                
                     <div id="method_unfriend" class="method item">
     <h3 class="name"><code>unfriend</code></h3>
 
@@ -2316,7 +2064,7 @@ First will remove the entry in friendReq and if it&#39;s approved it will do add
             
         
         
-        <a href="../files/controllers_userController.js.html#l395"><code>controllers&#x2F;userController.js:395</code></a>
+        <a href="../files/controllers_userController.js.html#l388"><code>controllers&#x2F;userController.js:388</code></a>
         
         </p>
 
@@ -2403,6 +2151,260 @@ First will remove the entry in friendReq and if it&#39;s approved it will do add
 </div>
 
                 
+                    <div id="method_userPreference" class="method item">
+    <h3 class="name"><code>userPreference</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>userId</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>preference</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/controllers_userController.js.html#l497"><code>controllers&#x2F;userController.js:497</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>[POST]</p>
+<p>Set user preference</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">userId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">preference</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Send all user preference, not just the one to add or remove</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Boolean" class="crosslink external" target="_blank">Boolean</a></span>:
+                    
+                    <p>Success</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <p> /api/user/:userId/userPreference</p>
+
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="method_userPreference" class="method item">
+    <h3 class="name"><code>userPreference</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>userId</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">Json</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/controllers_userController.js.html#l508"><code>controllers&#x2F;userController.js:508</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>[GET]</p>
+<p>Get user preference</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">userId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">Json</span>:
+                    
+                    <p>user preference</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <p> /api/user/:userId/userPreference</p>
+
+            </div>
+        </div>
+    
+</div>
+
+                
             </div>
         
 
@@ -2443,7 +2445,7 @@ First will remove the entry in friendReq and if it&#39;s approved it will do add
             
         
         
-        <a href="../files/controllers_userController.js.html#l167"><code>controllers&#x2F;userController.js:167</code></a>
+        <a href="../files/controllers_userController.js.html#l160"><code>controllers&#x2F;userController.js:160</code></a>
         
         </p>
 
@@ -2496,7 +2498,7 @@ Since we dont really need to care about web page right now, temporary ignore it.
             
         
         
-        <a href="../files/controllers_userController.js.html#l209"><code>controllers&#x2F;userController.js:209</code></a>
+        <a href="../files/controllers_userController.js.html#l202"><code>controllers&#x2F;userController.js:202</code></a>
         
         </p>
 

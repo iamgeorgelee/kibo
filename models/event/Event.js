@@ -3,8 +3,8 @@
 //constructor
 function Event(data) {
 
-		for(prop in data) {                        
-	       		this[prop] = data[prop];                  
+		for(var prop in data) {
+	       		this[prop] = data[prop];
 	   	}
 
 }
@@ -15,8 +15,8 @@ Event.prototype.add_participant = function(participant) {
 
 Event.prototype.rsvp = function(participant, decision) {
 
-	for	(index = 0; index < this.guest.length; index++) {
-    	if(this.guest[index].id == participant){
+	for	(var index = 0; index < this.guest.length; index++) {
+    	if(this.guest[index].id === participant){
 
     		this.guest[index].going = decision;
     		this.guest[index].stage = 1;
@@ -37,7 +37,7 @@ Event.prototype.getCreater = function() {
 };
 
 Event.prototype.create = function() {
-	 
+
 
 	 console.log("Event created.");
 };

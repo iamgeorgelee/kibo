@@ -8,7 +8,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var connect = require('connect');
 var flash = require('connect-flash');
-var session = require('express-session');
 var logger = require('morgan');
 var passport = require('passport');
 var port = process.env.PORT || 8080;
@@ -26,7 +25,7 @@ app.use(logger('dev'));
 app.use(connect.methodOverride());
 app.use(connect.cookieParser());
 app.use(bodyParser());
-app.use(session({
+app.use(connect.session({
 	secret: 'kibokibokibo'
 }));
 app.use(flash());

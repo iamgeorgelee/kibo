@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>controllers/restController.js - kibo</title>
+    <title>controllers/eventController.js - kibo</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -90,60 +90,114 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: controllers/restController.js</h1>
+                        <h1 class="file-heading">File: controllers/eventController.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
+var db = require(&#x27;../routes/dbRoutes.js&#x27;);
+var EventHandler = require(&#x27;../models/event/EventHandler.js&#x27;);
+var async = require(&#x27;async&#x27;);
+
 /**
- * Restaurant API
+ * User API
  *
- * @class restController
+ * @class eventContorller
  * @constructor
  */
 
-var rest = require(&#x27;../models/restaurant.js&#x27;);
-// var base64_encode = require(&#x27;base64&#x27;).encode;
-var base64Decode = require(&#x27;base64&#x27;).decode;
 
 module.exports = function(app) {
+
+
     /**
      * [GET]
      *
-     * Get recommand restaurant list
+     * Get app user list
      *
-     * payload should look like this
-     * {  &quot;participants&quot;: [
-     *     {
-     *       &quot;userId&quot;: &quot;123456&quot;,
-     *       &quot;userPreference&quot;: [&quot;chinese&quot;, &quot;mexican&quot;],
-     *       &quot;userLocation&quot;: [37.353596, -121.824393]
-     *     },
-     *     {
-     *       &quot;userId&quot;: &quot;154345&quot;,
-     *       &quot;userPreference&quot;: [&quot;korean&quot;, &quot;pizza&quot;, &quot;italian&quot;],
-     *       &quot;userLocation&quot;: [37.571382, -122.327199]
-     *     }]
-     * }
-     * Please remember this should encode with base64 utf-8 format before it sent
-     *
-     * @method getRecommendRest
-     * @param {String} participants (uft-8 encoded)
-     * @return {JSON} restaurant list
-     * @example /api/getRecommendRest
+     * @method getUsers
+     * @return {JSON} app user list
+     * @example /api/getUsers
      */
-    app.route(&#x27;/api/getRecommendRest&#x27;)
+    app.route(&#x27;/api/event&#x27;)
         .get(function(req, res) {
-            try {
-              var decodedQueryObj = JSON.parse(base64Decode(req.query.participants));
-
-              rest.getRecommendRest(decodedQueryObj.participants, function(data) {
-                    return res.send(data);
-                });
-            } catch (e) {
-              // An error has occured, probably on JSON,parse
-              return res.send(&#x27;Not valid input, unable to do JSON.parse. Please check your pre-encoded JSON format&#x27;);
-            }
+            EventHandler.getEventById(function(data) {
+                return res.send(data);
+            });
         });
+
+    /**
+     * [GET]
+     *
+     * Get event by id
+     *
+     * @method getEventById
+     * @param {String} eventId
+     * @return {JSON} event data
+     * @example /api/event/:eventId
+     */
+    app.route(&#x27;/api/event/:eventId&#x27;)
+        .get(function(req, res) {
+            EventHandler.getEventById(req.params.eventId, function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [POST]
+     *
+     * Create Event
+     * (should add send friend request later on)
+     *
+     * @method createEvent
+     * @param {String} userId User who wants to add friend
+     * @param {String} friendId Friend to add (in request content)
+     * @return {JSON} user data
+     * @example /api/event
+     * {
+	*	  &quot;name&quot;: &quot;test1&quot;,
+	*	  &quot;time&quot;: &quot;6:30&quot;,
+	*	  &quot;Date&quot;: &quot;11/11/2014&quot;,
+	*	  &quot;guest&quot;: [
+	*	    {
+	*	      &quot;id&quot;: &quot;a45612378&quot;
+	*	    },
+	*	    {
+	*	      &quot;id&quot;: &quot;a445122378&quot;
+	*	    }
+	*	  ],
+	*	  &quot;creater&quot;: &quot;a123456789&quot;
+	*	}
+     *
+     */
+    app.route(&#x27;/api/event/&#x27;)
+        .post(function(req, res) {
+            EventHandler.createEvent(req.body, function(data) {
+                return res.send(data);
+            });
+     	});
+
+    /**
+     * [PUT]
+     *
+     * guest RSVP
+     *
+     *
+     * @method RSVP
+     * @param {String} userId User who wants to add friend
+     * @param {String} friendId Friend to add (in request content)
+     * @return {JSON} user data
+     * @example /api/event
+     */
+    app.route(&#x27;/api/event/rsvp&#x27;)
+        .put(function(req, res) {
+
+            EventHandler.rsvp(req.body, function(data) {
+
+                return res.send(data);
+            });
+     	});
+
+
 };
     </pre>
 </div>

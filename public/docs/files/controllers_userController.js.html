@@ -43,6 +43,8 @@
             
                 <li><a href="../classes/dbController.html">dbController</a></li>
             
+                <li><a href="../classes/eventContorller.html">eventContorller</a></li>
+            
                 <li><a href="../classes/restController.html">restController</a></li>
             
                 <li><a href="../classes/UserController.html">UserController</a></li>
@@ -154,20 +156,13 @@ var localLogin = function (passport, req, res, next) {
 };
 
 var fbAuth = function (passport, req, res, next) {
-    // passport.authenticate(&#x27;facebook&#x27;, {
-    //     scope: &#x27;email, user_likes, user_friends, read_friendlists&#x27;
-    // }, function (err, user, info) {
-    //     if (err) {
-    //         return next(err);
-    //     }
-    // })(req, res, next);
-
-    passport.authenticate(&#x27;facebook-token&#x27;, {session: false},
-      function (req, res) {
-        // do something with req.user
-        res.send(req.user? 200 : 401);
-        // return res.json({status: &#x27;OK&#x27;});
-      });
+    passport.authenticate(&#x27;facebook&#x27;, {
+        scope: &#x27;email, user_likes, user_friends, read_friendlists&#x27;
+    }, function (err, user, info) {
+        if (err) {
+            return next(err);
+        }
+    })(req, res, next);
 };
 
 var fbAuthCallback = function (passport, req, res, next) {
@@ -547,30 +542,28 @@ module.exports = function(app, passport) {
      *
      * userA send a friend request to userB, in user B&#x27;s DB entry will record the request.
      *
-     * @method addFriendReq
+     * @method friendReq
      * @param {String} userId
      * @param {String} toFriendId (in request content)
      * @return {JSON} Success
-     * @example /api/user/:userId/addFriendReq
+     * @example /api/user/:userId/friendReq
      */
-    app.route(&#x27;/api/user/:userId/addFriendReq&#x27;)
-        .post(function(req, res) {
-            user.addFriendReq(req.params.userId, req.param(&#x27;toFriendId&#x27;), function(data) {
-                return res.send(data);
-            });
-        });
-
     /**
      * [GET]
      *
      * Get friend requests
      *
-     * @method getFriendReq
+     * @method friendReq
      * @param {String} userId
      * @return {JSON} List of friend requests
-     * @example /api/user/:userId/getFriendReq
+     * @example /api/user/:userId/friendReq
      */
-    app.route(&#x27;/api/user/:userId/getFriendReq&#x27;)
+    app.route(&#x27;/api/user/:userId/friendReq&#x27;)
+        .post(function(req, res) {
+            user.addFriendReq(req.params.userId, req.param(&#x27;toFriendId&#x27;), function(data) {
+                return res.send(data);
+            });
+        })
         .get(function(req, res) {
             user.getFriendReq(req.params.userId, function(data) {
                 return res.send(data);
@@ -602,30 +595,28 @@ module.exports = function(app, passport) {
      *
      * Set user preference
      *
-     * @method setUserPreference
+     * @method userPreference
      * @param {String} userId
      * @param {Array} preference Send all user preference, not just the one to add or remove
      * @return {Boolean} Success
-     * @example /api/user/:userId/setUserPreference
+     * @example /api/user/:userId/userPreference
      */
-    app.route(&#x27;/api/user/:userId/setUserPreference&#x27;)
-        .post(function(req, res) {
-            user.setUserPreference(req.params.userId, req.param(&#x27;preference&#x27;), function(data) {
-                return res.send(data);
-            });
-        });
-
-    /**
+     /**
      * [GET]
      *
      * Get user preference
      *
-     * @method getUserPreference
+     * @method userPreference
      * @param {String} userId
      * @return {Json} user preference
-     * @example /api/user/:userId/getUserPreference
+     * @example /api/user/:userId/userPreference
      */
-    app.route(&#x27;/api/user/:userId/getUserPreference&#x27;)
+    app.route(&#x27;/api/user/:userId/userPreference&#x27;)
+        .post(function(req, res) {
+            user.setUserPreference(req.params.userId, req.param(&#x27;preference&#x27;), function(data) {
+                return res.send(data);
+            });
+        })
         .get(function(req, res) {
             user.getUserPreference(req.params.userId, function(data) {
                 return res.send(data);

@@ -3,6 +3,7 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "UserController",
         "dbController",
+        "eventContorller",
         "restController"
     ],
     "modules": [

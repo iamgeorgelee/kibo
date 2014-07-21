@@ -111,7 +111,7 @@ exports.createUser = function (input, callback) {
  * @example Example of input
  *  {"$set": {
  *       username: username,
- *       password: User.generateHash(password)
+ *       password: generateHash(password)
  *  }}
  */
 exports.updateUser = function (userId, input, callback) {
@@ -144,7 +144,7 @@ exports.createEvent = function (input, callback) {
  * @example Example of input
  *  {"$set": {
  *       username: username,
- *       password: User.generateHash(password)
+ *       password: generateHash(password)
  *  }}
  */
 exports.updateEvent = function (eventId, input, callback) {
@@ -163,7 +163,7 @@ exports.updateEvent = function (eventId, input, callback) {
 //  * @example Example of input
 //  *  {"$set": {
 //  *       username: username,
-//  *       password: User.generateHash(password)
+//  *       password: generateHash(password)
 //  *  }}
 //  */
 // exports.updateEvent = function (eventId, userId, input, callback) {

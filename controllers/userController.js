@@ -446,30 +446,28 @@ module.exports = function(app, passport) {
      *
      * userA send a friend request to userB, in user B's DB entry will record the request.
      *
-     * @method addFriendReq
+     * @method friendReq
      * @param {String} userId
      * @param {String} toFriendId (in request content)
      * @return {JSON} Success
-     * @example /api/user/:userId/addFriendReq
+     * @example /api/user/:userId/friendReq
      */
-    app.route('/api/user/:userId/addFriendReq')
-        .post(function(req, res) {
-            user.addFriendReq(req.params.userId, req.param('toFriendId'), function(data) {
-                return res.send(data);
-            });
-        });
-
     /**
      * [GET]
      *
      * Get friend requests
      *
-     * @method getFriendReq
+     * @method friendReq
      * @param {String} userId
      * @return {JSON} List of friend requests
-     * @example /api/user/:userId/getFriendReq
+     * @example /api/user/:userId/friendReq
      */
-    app.route('/api/user/:userId/getFriendReq')
+    app.route('/api/user/:userId/friendReq')
+        .post(function(req, res) {
+            user.addFriendReq(req.params.userId, req.param('toFriendId'), function(data) {
+                return res.send(data);
+            });
+        })
         .get(function(req, res) {
             user.getFriendReq(req.params.userId, function(data) {
                 return res.send(data);
@@ -501,30 +499,28 @@ module.exports = function(app, passport) {
      *
      * Set user preference
      *
-     * @method setUserPreference
+     * @method userPreference
      * @param {String} userId
      * @param {Array} preference Send all user preference, not just the one to add or remove
      * @return {Boolean} Success
-     * @example /api/user/:userId/setUserPreference
+     * @example /api/user/:userId/userPreference
      */
-    app.route('/api/user/:userId/setUserPreference')
-        .post(function(req, res) {
-            user.setUserPreference(req.params.userId, req.param('preference'), function(data) {
-                return res.send(data);
-            });
-        });
-
-    /**
+     /**
      * [GET]
      *
      * Get user preference
      *
-     * @method getUserPreference
+     * @method userPreference
      * @param {String} userId
      * @return {Json} user preference
-     * @example /api/user/:userId/getUserPreference
+     * @example /api/user/:userId/userPreference
      */
-    app.route('/api/user/:userId/getUserPreference')
+    app.route('/api/user/:userId/userPreference')
+        .post(function(req, res) {
+            user.setUserPreference(req.params.userId, req.param('preference'), function(data) {
+                return res.send(data);
+            });
+        })
         .get(function(req, res) {
             user.getUserPreference(req.params.userId, function(data) {
                 return res.send(data);

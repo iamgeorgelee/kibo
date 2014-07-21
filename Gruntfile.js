@@ -5,7 +5,6 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         jshint: {
             options: {
-                camelcase: true,
                 eqeqeq: true,
                 indent: true,
                 latedef: true,

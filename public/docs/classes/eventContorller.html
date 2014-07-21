@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>dbController - kibo</title>
+    <title>eventContorller - kibo</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -90,7 +90,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>dbController Class</h1>
+                        <h1>eventContorller Class</h1>
 <div class="box meta">
     
 
@@ -98,7 +98,7 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/routes_dbRoutes.js.html#l1"><code>routes&#x2F;dbRoutes.js:1</code></a>
+            Defined in: <a href="../files/controllers_eventController.js.html#l5"><code>controllers&#x2F;eventController.js:5</code></a>
         </div>
     
 
@@ -114,15 +114,15 @@
 
 
 <div class="box intro">
-    <p>MongoLab API</p>
+    <p>User API</p>
 
 </div>
 
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_dbController" class="method item">
-    <h3 class="name"><code>dbController</code></h3>
+        <div id="method_eventContorller" class="method item">
+    <h3 class="name"><code>eventContorller</code></h3>
 
     
         <span class="paren">()</span>
@@ -153,7 +153,7 @@
             
         
         
-        <a href="../files/routes_dbRoutes.js.html#l1"><code>routes&#x2F;dbRoutes.js:1</code></a>
+        <a href="../files/controllers_eventController.js.html#l5"><code>controllers&#x2F;eventController.js:5</code></a>
         
         </p>
 
@@ -207,35 +207,21 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_createUser">createUser</a>
+                                <a href="#method_getEventById">getEventById</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_getCollection">getCollection</a>
+                                <a href="#method_getUsers">getUsers</a>
 
                                 
                                 
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_getDocument">getDocument</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_updateEvent">updateEvent</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_updateUser">updateUser</a>
+                                <a href="#method_RSVP">RSVP</a>
 
                                 
                                 
@@ -266,599 +252,13 @@
             
                 <li class="arg">
                     
-                        <code>input</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">JSON</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/routes_dbRoutes.js.html#l123"><code>routes&#x2F;dbRoutes.js:123</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Create Event</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">input</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">JSON</span>:
-                    
-                    <p>event</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_createUser" class="method item">
-    <h3 class="name"><code>createUser</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>input</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">JSON</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/routes_dbRoutes.js.html#l91"><code>routes&#x2F;dbRoutes.js:91</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Create user</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">input</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">JSON</span>:
-                    
-                    <p>user</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_getCollection" class="method item">
-    <h3 class="name"><code>getCollection</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>collectionName</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">JSON</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/routes_dbRoutes.js.html#l59"><code>routes&#x2F;dbRoutes.js:59</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Get collection by collection name</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">collectionName</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">JSON</span>:
-                    
-                    <p>userList</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_getDocument" class="method item">
-    <h3 class="name"><code>getDocument</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>collectionName</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>documentName</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">JSON</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/routes_dbRoutes.js.html#l74"><code>routes&#x2F;dbRoutes.js:74</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Get document by document name
-e.g. Get User by userid</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">collectionName</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">documentName</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">JSON</span>:
-                    
-                    <p>user</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_updateEvent" class="method item">
-    <h3 class="name"><code>updateEvent</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>EventId</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>input</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">JSON</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/routes_dbRoutes.js.html#l137"><code>routes&#x2F;dbRoutes.js:137</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Update Event</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">EventId</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">input</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">JSON</span>:
-                    
-                    <p>event</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <p> Example of input
- {&quot;$set&quot;: {
-      username: username,
-      password: generateHash(password)
- }}</p>
-
-            </div>
-        </div>
-    
-</div>
-
-                
-                    <div id="method_updateUser" class="method item">
-    <h3 class="name"><code>updateUser</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
                         <code>userId</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>input</code>
+                        <code>friendId</code>
                     
                 </li>
             
@@ -895,7 +295,7 @@ e.g. Get User by userid</p>
             
         
         
-        <a href="../files/routes_dbRoutes.js.html#l104"><code>routes&#x2F;dbRoutes.js:104</code></a>
+        <a href="../files/controllers_eventController.js.html#l49"><code>controllers&#x2F;eventController.js:49</code></a>
         
         </p>
 
@@ -906,7 +306,9 @@ e.g. Get User by userid</p>
     </div>
 
     <div class="description">
-        <p>Update user</p>
+        <p>[POST]</p>
+<p>Create Event
+(should add send friend request later on)</p>
 
     </div>
 
@@ -925,7 +327,8 @@ e.g. Get User by userid</p>
                     
 
                     <div class="param-description">
-                         
+                        <p>User who wants to add friend</p>
+
                     </div>
 
                     
@@ -933,8 +336,139 @@ e.g. Get User by userid</p>
             
                 <li class="param">
                     
-                        <code class="param-name">input</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
+                        <code class="param-name">friendId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Friend to add (in request content)</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">JSON</span>:
+                    
+                    <p>user data</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <p> /api/event
+{
+      &quot;name&quot;: &quot;test1&quot;,
+      &quot;time&quot;: &quot;6:30&quot;,
+      &quot;Date&quot;: &quot;11/11/2014&quot;,
+      &quot;guest&quot;: [
+        {
+          &quot;id&quot;: &quot;a45612378&quot;
+        },
+        {
+          &quot;id&quot;: &quot;a445122378&quot;
+        }
+      ],
+      &quot;creater&quot;: &quot;a123456789&quot;
+    }</p>
+
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="method_getEventById" class="method item">
+    <h3 class="name"><code>getEventById</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>eventId</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">JSON</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/controllers_eventController.js.html#l32"><code>controllers&#x2F;eventController.js:32</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>[GET]</p>
+<p>Get event by id</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">eventId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
                     
 
                     
@@ -959,7 +493,7 @@ e.g. Get User by userid</p>
                     
                         <span class="type">JSON</span>:
                     
-                    <p>user</p>
+                    <p>event data</p>
 
                 
             </div>
@@ -971,11 +505,229 @@ e.g. Get User by userid</p>
             <h4>Example:</h4>
 
             <div class="example-content">
-                <p> Example of input
- {&quot;$set&quot;: {
-      username: username,
-      password: generateHash(password)
- }}</p>
+                <p> /api/event/:eventId</p>
+
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="method_getUsers" class="method item">
+    <h3 class="name"><code>getUsers</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">JSON</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/controllers_eventController.js.html#l16"><code>controllers&#x2F;eventController.js:16</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>[GET]</p>
+<p>Get app user list</p>
+
+    </div>
+
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">JSON</span>:
+                    
+                    <p>app user list</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <p> /api/getUsers</p>
+
+            </div>
+        </div>
+    
+</div>
+
+                
+                    <div id="method_RSVP" class="method item">
+    <h3 class="name"><code>RSVP</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>userId</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>friendId</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">JSON</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/controllers_eventController.js.html#l83"><code>controllers&#x2F;eventController.js:83</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>[PUT]</p>
+<p>guest RSVP</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">userId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>User who wants to add friend</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">friendId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Friend to add (in request content)</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">JSON</span>:
+                    
+                    <p>user data</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <p> /api/event</p>
 
             </div>
         </div>
