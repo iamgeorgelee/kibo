@@ -43,7 +43,11 @@
             
                 <li><a href="../classes/dbController.html">dbController</a></li>
             
-                <li><a href="../classes/UserRoutes.html">UserRoutes</a></li>
+                <li><a href="../classes/eventContorller.html">eventContorller</a></li>
+            
+                <li><a href="../classes/restController.html">restController</a></li>
+            
+                <li><a href="../classes/UserController.html">UserController</a></li>
             
             </ul>
 
@@ -100,7 +104,6 @@ var express = require(&#x27;express&#x27;);
 var bodyParser = require(&#x27;body-parser&#x27;);
 var connect = require(&#x27;connect&#x27;);
 var flash = require(&#x27;connect-flash&#x27;);
-var session = require(&#x27;express-session&#x27;);
 var logger = require(&#x27;morgan&#x27;);
 var passport = require(&#x27;passport&#x27;);
 var port = process.env.PORT || 8080;
@@ -118,21 +121,20 @@ app.use(logger(&#x27;dev&#x27;));
 app.use(connect.methodOverride());
 app.use(connect.cookieParser());
 app.use(bodyParser());
-app.use(session({
+app.use(connect.session({
 	secret: &#x27;kibokibokibo&#x27;
 }));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 // ================
 // ==== ROUTES ====
 // ================
 
-// User Routes e.g. login, signup
-require(&#x27;./routes/userRoutes.js&#x27;)(app, passport);
+require(&#x27;./controllers/userController.js&#x27;)(app, passport);
+require(&#x27;./controllers/restController.js&#x27;)(app);
+require(&#x27;./controllers/eventController.js&#x27;)(app);
 
 // ========================
 // ==== MODE SELECTION ====

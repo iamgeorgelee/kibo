@@ -6,20 +6,38 @@
         "url": ""
     },
     "files": {
+        "controllers/eventController.js": {
+            "name": "controllers/eventController.js",
+            "modules": {},
+            "classes": {
+                "eventContorller": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "controllers/restController.js": {
+            "name": "controllers/restController.js",
+            "modules": {},
+            "classes": {
+                "restController": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "controllers/userController.js": {
+            "name": "controllers/userController.js",
+            "modules": {},
+            "classes": {
+                "UserController": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "routes/dbRoutes.js": {
             "name": "routes/dbRoutes.js",
             "modules": {},
             "classes": {
                 "dbController": 1
-            },
-            "fors": {},
-            "namespaces": {}
-        },
-        "routes/userRoutes.js": {
-            "name": "routes/userRoutes.js",
-            "modules": {},
-            "classes": {
-                "UserRoutes": 1
             },
             "fors": {},
             "namespaces": {}
@@ -39,17 +57,61 @@
             "name": "Kibo",
             "submodules": {},
             "classes": {
-                "dbController": 1,
-                "UserRoutes": 1
+                "eventContorller": 1,
+                "restController": 1,
+                "UserController": 1,
+                "dbController": 1
             },
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "routes/userRoutes.js",
+            "file": "routes/dbRoutes.js",
             "line": 1
         }
     },
     "classes": {
+        "eventContorller": {
+            "name": "eventContorller",
+            "shortname": "eventContorller",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Kibo",
+            "file": "controllers/eventController.js",
+            "line": 5,
+            "description": "User API",
+            "is_constructor": 1
+        },
+        "restController": {
+            "name": "restController",
+            "shortname": "restController",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Kibo",
+            "file": "controllers/restController.js",
+            "line": 1,
+            "description": "Restaurant API",
+            "is_constructor": 1
+        },
+        "UserController": {
+            "name": "UserController",
+            "shortname": "UserController",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Kibo",
+            "file": "controllers/userController.js",
+            "line": 1,
+            "description": "User API",
+            "is_constructor": 1
+        },
         "dbController": {
             "name": "dbController",
             "shortname": "dbController",
@@ -63,131 +125,141 @@
             "line": 1,
             "description": "MongoLab API",
             "is_constructor": 1
-        },
-        "UserRoutes": {
-            "name": "UserRoutes",
-            "shortname": "UserRoutes",
-            "classitems": [],
-            "plugins": [],
-            "extensions": [],
-            "plugin_for": [],
-            "extension_for": [],
-            "module": "Kibo",
-            "file": "routes/userRoutes.js",
-            "line": 1,
-            "description": "User API",
-            "is_constructor": 1
         }
     },
     "classitems": [
         {
-            "file": "routes/dbRoutes.js",
-            "line": 57,
-            "description": "Get collection by collection name",
+            "file": "controllers/eventController.js",
+            "line": 16,
+            "description": "[GET]\n\nGet app user list",
             "itemtype": "method",
-            "name": "getCollection",
-            "params": [
-                {
-                    "name": "collectionName",
-                    "description": "",
-                    "type": "String"
-                }
-            ],
+            "name": "getUsers",
             "return": {
-                "description": "userList",
-                "type": "JSON"
-            },
-            "class": "dbController"
-        },
-        {
-            "file": "routes/dbRoutes.js",
-            "line": 72,
-            "description": "Get document by document name\ne.g. Get User by userid",
-            "itemtype": "method",
-            "name": "getDocument",
-            "params": [
-                {
-                    "name": "collectionName",
-                    "description": "",
-                    "type": "String"
-                },
-                {
-                    "name": "documentName",
-                    "description": "",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "user",
-                "type": "JSON"
-            },
-            "class": "dbController"
-        },
-        {
-            "file": "routes/dbRoutes.js",
-            "line": 89,
-            "description": "Create user",
-            "itemtype": "method",
-            "name": "createUser",
-            "params": [
-                {
-                    "name": "input",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "user",
-                "type": "JSON"
-            },
-            "class": "dbController"
-        },
-        {
-            "file": "routes/dbRoutes.js",
-            "line": 102,
-            "description": "Update user",
-            "itemtype": "method",
-            "name": "updateUser",
-            "params": [
-                {
-                    "name": "userId",
-                    "description": "",
-                    "type": "String"
-                },
-                {
-                    "name": "input",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "user",
+                "description": "app user list",
                 "type": "JSON"
             },
             "example": [
-                " Example of input\n {\"$set\": {\n      username: username,\n      password: User.generateHash(password)\n }}"
+                " /api/getUsers"
             ],
-            "class": "dbController"
+            "class": "eventContorller"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 76,
+            "file": "controllers/eventController.js",
+            "line": 32,
+            "description": "[GET]\n\nGet event by id",
+            "itemtype": "method",
+            "name": "getEventById",
+            "params": [
+                {
+                    "name": "eventId",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "event data",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/event/:eventId"
+            ],
+            "class": "eventContorller"
+        },
+        {
+            "file": "controllers/eventController.js",
+            "line": 49,
+            "description": "[POST]\n\nCreate Event\n(should add send friend request later on)",
+            "itemtype": "method",
+            "name": "createEvent",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "User who wants to add friend",
+                    "type": "String"
+                },
+                {
+                    "name": "friendId",
+                    "description": "Friend to add (in request content)",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "user data",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/event\n{\n\t  \"name\": \"test1\",\n\t  \"time\": \"6:30\",\n\t  \"Date\": \"11/11/2014\",\n\t  \"guest\": [\n\t    {\n\t      \"id\": \"a45612378\"\n\t    },\n\t    {\n\t      \"id\": \"a445122378\"\n\t    }\n\t  ],\n\t  \"creater\": \"a123456789\"\n\t}\n"
+            ],
+            "class": "eventContorller"
+        },
+        {
+            "file": "controllers/eventController.js",
+            "line": 83,
+            "description": "[PUT]\n\nguest RSVP",
+            "itemtype": "method",
+            "name": "RSVP",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "User who wants to add friend",
+                    "type": "String"
+                },
+                {
+                    "name": "friendId",
+                    "description": "Friend to add (in request content)",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "user data",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/event"
+            ],
+            "class": "eventContorller"
+        },
+        {
+            "file": "controllers/restController.js",
+            "line": 13,
+            "description": "[GET]\n\nGet recommand restaurant list\n\npayload should look like this\n{  \"participants\": [\n    {\n      \"userId\": \"123456\",\n      \"userPreference\": [\"chinese\", \"mexican\"],\n      \"userLocation\": [37.353596, -121.824393]\n    },\n    {\n      \"userId\": \"154345\",\n      \"userPreference\": [\"korean\", \"pizza\", \"italian\"],\n      \"userLocation\": [37.571382, -122.327199]\n    }]\n}\nPlease remember this should encode with base64 utf-8 format before it sent",
+            "itemtype": "method",
+            "name": "getRecommendRest",
+            "params": [
+                {
+                    "name": "participants",
+                    "description": "(uft-8 encoded)",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "restaurant list",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/getRecommendRest"
+            ],
+            "class": "restController"
+        },
+        {
+            "file": "controllers/userController.js",
+            "line": 160,
             "description": "Clearly a stupid way and obviously there will be a problem when web page user and mobile user do facebook auth the same time.\nSince we dont really need to care about web page right now, temporary ignore it. Need to fix later.",
             "itemtype": "attribute",
             "name": "",
-            "class": "UserRoutes"
+            "class": "UserController"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 118,
+            "file": "controllers/userController.js",
+            "line": 202,
             "description": "Needs to verify later, since the callback changed due to support API.",
             "itemtype": "attribute",
             "name": "",
-            "class": "UserRoutes"
+            "class": "UserController"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 147,
+            "file": "controllers/userController.js",
+            "line": 231,
             "description": "[POST]\n\nPerform sign up for local account",
             "itemtype": "method",
             "name": "localSignup",
@@ -210,11 +282,11 @@
             "example": [
                 " /api/localSignup"
             ],
-            "class": "UserRoutes"
+            "class": "UserController"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 163,
+            "file": "controllers/userController.js",
+            "line": 247,
             "description": "[POST]\n\nPerform login for local account",
             "itemtype": "method",
             "name": "localLogin",
@@ -237,11 +309,11 @@
             "example": [
                 " /api/localLogin"
             ],
-            "class": "UserRoutes"
+            "class": "UserController"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 179,
+            "file": "controllers/userController.js",
+            "line": 263,
             "description": "[GET]\n\nPerform facebook account authentication.\nScope defines what kind of data you want user to authorize you.\nAfter perform facebook account authentication, facebook will render to callback location.",
             "itemtype": "method",
             "name": "fbAuth",
@@ -252,11 +324,11 @@
             "example": [
                 " /api/fbAuth"
             ],
-            "class": "UserRoutes"
+            "class": "UserController"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 197,
+            "file": "controllers/userController.js",
+            "line": 280,
             "description": "After perform facebook account authentication, facebook will render back to this location.\nThis is for facebook itself.",
             "itemtype": "method",
             "name": "fbAuth/Callback",
@@ -266,11 +338,11 @@
                 "description": "user data",
                 "type": "JSON"
             },
-            "class": "UserRoutes"
+            "class": "UserController"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 218,
+            "file": "controllers/userController.js",
+            "line": 301,
             "description": "[GET]\n\nGet app user list",
             "itemtype": "method",
             "name": "getUsers",
@@ -281,11 +353,11 @@
             "example": [
                 " /api/getUsers"
             ],
-            "class": "UserRoutes"
+            "class": "UserController"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 234,
+            "file": "controllers/userController.js",
+            "line": 317,
             "description": "[GET]\n\nGet user by id",
             "itemtype": "method",
             "name": "getUserById",
@@ -303,11 +375,11 @@
             "example": [
                 " /api/user/:userId"
             ],
-            "class": "UserRoutes"
+            "class": "UserController"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 251,
+            "file": "controllers/userController.js",
+            "line": 334,
             "description": "[GET]\n\nGet facebook friends who also authorize this app.",
             "itemtype": "method",
             "name": "getFbFriends",
@@ -325,11 +397,11 @@
             "example": [
                 " /api/user/:userId/getFbFriends"
             ],
-            "class": "UserRoutes"
+            "class": "UserController"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 268,
+            "file": "controllers/userController.js",
+            "line": 351,
             "description": "[GET]\n\nGet friend list",
             "itemtype": "method",
             "name": "getFriendList",
@@ -347,12 +419,12 @@
             "example": [
                 " /api/user/:userId/getFriendList"
             ],
-            "class": "UserRoutes"
+            "class": "UserController"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 285,
-            "description": "[POST]\n\nAdd friend\n(should add send friend request later on)",
+            "file": "controllers/userController.js",
+            "line": 368,
+            "description": "[POST]\n\nAdd friend\n\nAvoid use this function directly, should do review friend request instead",
             "itemtype": "method",
             "name": "addFriend",
             "params": [
@@ -374,11 +446,11 @@
             "example": [
                 " /api/user/:userId/addFriend"
             ],
-            "class": "UserRoutes"
+            "class": "UserController"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 304,
+            "file": "controllers/userController.js",
+            "line": 388,
             "description": "[POST]\n\nUnfriend",
             "itemtype": "method",
             "name": "unfriend",
@@ -401,11 +473,11 @@
             "example": [
                 " /api/user/:userId/unfriend"
             ],
-            "class": "UserRoutes"
+            "class": "UserController"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 322,
+            "file": "controllers/userController.js",
+            "line": 406,
             "description": "[GET]\n\nGet a list of app user you can add them as friend\nWhen this is useful? User wants to add friend via 'Search by name'",
             "itemtype": "method",
             "name": "getFriendCandidate",
@@ -423,11 +495,11 @@
             "example": [
                 " /api/user/:userId/getFriendCandidate"
             ],
-            "class": "UserRoutes"
+            "class": "UserController"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 340,
+            "file": "controllers/userController.js",
+            "line": 424,
             "description": "[GET]\n\nGet a list of app user who is your facebook friend but not your friend in this app\nWhen this is useful? User wants to add friend via 'Find friends from facebook'",
             "itemtype": "method",
             "name": "getFbFriendCandidate",
@@ -445,14 +517,14 @@
             "example": [
                 " /api/user/:userId/getFbFriendCandidate"
             ],
-            "class": "UserRoutes"
+            "class": "UserController"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 360,
-            "description": "[POST]\n\nSend a friend request",
+            "file": "controllers/userController.js",
+            "line": 442,
+            "description": "[POST]\n\nSend a friend request.\n\nuserA send a friend request to userB, in user B's DB entry will record the request.",
             "itemtype": "method",
-            "name": "addFriendReq",
+            "name": "friendReq",
             "params": [
                 {
                     "name": "userId",
@@ -470,16 +542,16 @@
                 "type": "JSON"
             },
             "example": [
-                " /api/user/:userId/addFriendReq"
+                " /api/user/:userId/friendReq"
             ],
-            "class": "UserRoutes"
+            "class": "UserController"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 378,
+            "file": "controllers/userController.js",
+            "line": 455,
             "description": "[GET]\n\nGet friend requests",
             "itemtype": "method",
-            "name": "getFriendReq",
+            "name": "friendReq",
             "params": [
                 {
                     "name": "userId",
@@ -492,13 +564,13 @@
                 "type": "JSON"
             },
             "example": [
-                " /api/user/:userId/getFriendReq"
+                " /api/user/:userId/friendReq"
             ],
-            "class": "UserRoutes"
+            "class": "UserController"
         },
         {
-            "file": "routes/userRoutes.js",
-            "line": 395,
+            "file": "controllers/userController.js",
+            "line": 477,
             "description": "[GET]\n\nReview friend request, also need to tell approve or deny\nFirst will remove the entry in friendReq and if it's approved it will do add friend",
             "itemtype": "method",
             "name": "reviewFriendReq",
@@ -526,7 +598,191 @@
             "example": [
                 " /api/user/:userId/reviewFriendReq"
             ],
-            "class": "UserRoutes"
+            "class": "UserController"
+        },
+        {
+            "file": "controllers/userController.js",
+            "line": 497,
+            "description": "[POST]\n\nSet user preference",
+            "itemtype": "method",
+            "name": "userPreference",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "preference",
+                    "description": "Send all user preference, not just the one to add or remove",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Success",
+                "type": "Boolean"
+            },
+            "example": [
+                " /api/user/:userId/userPreference"
+            ],
+            "class": "UserController"
+        },
+        {
+            "file": "controllers/userController.js",
+            "line": 508,
+            "description": "[GET]\n\nGet user preference",
+            "itemtype": "method",
+            "name": "userPreference",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "user preference",
+                "type": "Json"
+            },
+            "example": [
+                " /api/user/:userId/userPreference"
+            ],
+            "class": "UserController"
+        },
+        {
+            "file": "routes/dbRoutes.js",
+            "line": 59,
+            "description": "Get collection by collection name",
+            "itemtype": "method",
+            "name": "getCollection",
+            "params": [
+                {
+                    "name": "collectionName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "userList",
+                "type": "JSON"
+            },
+            "class": "dbController"
+        },
+        {
+            "file": "routes/dbRoutes.js",
+            "line": 74,
+            "description": "Get document by document name\ne.g. Get User by userid",
+            "itemtype": "method",
+            "name": "getDocument",
+            "params": [
+                {
+                    "name": "collectionName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "documentName",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "user",
+                "type": "JSON"
+            },
+            "class": "dbController"
+        },
+        {
+            "file": "routes/dbRoutes.js",
+            "line": 91,
+            "description": "Create user",
+            "itemtype": "method",
+            "name": "createUser",
+            "params": [
+                {
+                    "name": "input",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "user",
+                "type": "JSON"
+            },
+            "class": "dbController"
+        },
+        {
+            "file": "routes/dbRoutes.js",
+            "line": 104,
+            "description": "Update user",
+            "itemtype": "method",
+            "name": "updateUser",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "input",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "user",
+                "type": "JSON"
+            },
+            "example": [
+                " Example of input\n {\"$set\": {\n      username: username,\n      password: generateHash(password)\n }}"
+            ],
+            "class": "dbController"
+        },
+        {
+            "file": "routes/dbRoutes.js",
+            "line": 123,
+            "description": "Create Event",
+            "itemtype": "method",
+            "name": "createEvent",
+            "params": [
+                {
+                    "name": "input",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "event",
+                "type": "JSON"
+            },
+            "class": "dbController"
+        },
+        {
+            "file": "routes/dbRoutes.js",
+            "line": 137,
+            "description": "Update Event",
+            "itemtype": "method",
+            "name": "updateEvent",
+            "params": [
+                {
+                    "name": "EventId",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "input",
+                    "description": "",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "event",
+                "type": "JSON"
+            },
+            "example": [
+                " Example of input\n {\"$set\": {\n      username: username,\n      password: generateHash(password)\n }}"
+            ],
+            "class": "dbController"
         }
     ],
     "warnings": []

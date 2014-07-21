@@ -9,7 +9,8 @@ var dbConfig = require('../config/db.js');
 var querystring = require('querystring');
 var https = require('https');
 
-function performrequest(host, endpoint, method, data, success) {
+var performrequest = function(host, endpoint, method, data, success) {
+
     var dataString = JSON.stringify(data),
         headers = {};
 
@@ -52,7 +53,8 @@ function performrequest(host, endpoint, method, data, success) {
     req.on('error', function (e) {
         console.error(e);
     });
-}
+};
+module.exports.performrequest = performrequest;
 
 /**
  * Get collection by collection name
@@ -109,7 +111,7 @@ exports.createUser = function (input, callback) {
  * @example Example of input
  *  {"$set": {
  *       username: username,
- *       password: User.generateHash(password)
+ *       password: generateHash(password)
  *  }}
  */
 exports.updateUser = function (userId, input, callback) {
@@ -142,7 +144,7 @@ exports.createEvent = function (input, callback) {
  * @example Example of input
  *  {"$set": {
  *       username: username,
- *       password: User.generateHash(password)
+ *       password: generateHash(password)
  *  }}
  */
 exports.updateEvent = function (eventId, input, callback) {
@@ -161,7 +163,7 @@ exports.updateEvent = function (eventId, input, callback) {
 //  * @example Example of input
 //  *  {"$set": {
 //  *       username: username,
-//  *       password: User.generateHash(password)
+//  *       password: generateHash(password)
 //  *  }}
 //  */
 // exports.updateEvent = function (eventId, userId, input, callback) {

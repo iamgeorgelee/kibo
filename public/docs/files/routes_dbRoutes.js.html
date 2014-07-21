@@ -43,7 +43,11 @@
             
                 <li><a href="../classes/dbController.html">dbController</a></li>
             
-                <li><a href="../classes/UserRoutes.html">UserRoutes</a></li>
+                <li><a href="../classes/eventContorller.html">eventContorller</a></li>
+            
+                <li><a href="../classes/restController.html">restController</a></li>
+            
+                <li><a href="../classes/UserController.html">UserController</a></li>
             
             </ul>
 
@@ -101,7 +105,8 @@ var dbConfig = require(&#x27;../config/db.js&#x27;);
 var querystring = require(&#x27;querystring&#x27;);
 var https = require(&#x27;https&#x27;);
 
-function performrequest(host, endpoint, method, data, success) {
+var performrequest = function(host, endpoint, method, data, success) {
+
     var dataString = JSON.stringify(data),
         headers = {};
 
@@ -144,7 +149,8 @@ function performrequest(host, endpoint, method, data, success) {
     req.on(&#x27;error&#x27;, function (e) {
         console.error(e);
     });
-}
+};
+module.exports.performrequest = performrequest;
 
 /**
  * Get collection by collection name
@@ -201,7 +207,7 @@ exports.createUser = function (input, callback) {
  * @example Example of input
  *  {&quot;$set&quot;: {
  *       username: username,
- *       password: User.generateHash(password)
+ *       password: generateHash(password)
  *  }}
  */
 exports.updateUser = function (userId, input, callback) {
@@ -210,7 +216,58 @@ exports.updateUser = function (userId, input, callback) {
     });
 };
 
+/**
+ * Create Event
+ *
+ * @method createEvent
+ * @param {Object} input
+ * @return {JSON} event
+ */
+exports.createEvent = function (input, callback) {
+    performrequest(dbConfig.host, &#x27;/api/1/databases/kibo/collections/Event?apiKey=&#x27; + dbConfig.apiKey, &#x27;POST&#x27;, input, function (data) {
+        callback(data);
+    });
+};
 
+
+/**
+ * Update Event
+ *
+ * @method updateEvent
+ * @param {String} EventId
+ * @param {Object} input
+ * @return {JSON} event
+ * @example Example of input
+ *  {&quot;$set&quot;: {
+ *       username: username,
+ *       password: generateHash(password)
+ *  }}
+ */
+exports.updateEvent = function (eventId, input, callback) {
+    performrequest(dbConfig.host, &#x27;/api/1/databases/kibo/collections/Event/&#x27; + eventId + &#x27;?apiKey=&#x27; + dbConfig.apiKey, &#x27;PUT&#x27;, input, function (data) {
+        callback(data);
+    });
+};
+
+// /**
+//  * Update Event
+//  *
+//  * @method updateEvent
+//  * @param {String} EventId
+//  * @param {Object} input
+//  * @return {JSON} event
+//  * @example Example of input
+//  *  {&quot;$set&quot;: {
+//  *       username: username,
+//  *       password: generateHash(password)
+//  *  }}
+//  */
+// exports.updateEvent = function (eventId, userId, input, callback) {
+//    // var query = ;
+//     performrequest(dbConfig.host, &#x27;/api/1/databases/kibo/collections/Event?apiKey=&#x27; + dbConfig.apiKey +&#x27;&amp;q={_id:&#x27; + eventId +&#x27;,guest.id:&#x27; + userId + &#x27;}&#x27;, &#x27;PUT&#x27;, input, function (data) {
+//         callback(data);
+//     });
+// };
 
     </pre>
 </div>

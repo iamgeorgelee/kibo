@@ -1,15 +1,22 @@
+/**
+ * User API
+ *
+ * @class UserController
+ * @constructor
+ */
+
 var user = require('../models/user.js');
 
 // to make sure a user is logged in
-exports.isLoggedIn = function (req, res, next) {
+function isLoggedIn(req, res, next) {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated()) return next();
 
     // if they aren't redirect them to the home page
     res.redirect('/');
-};
+}
 
-exports.localSignup = function (passport, req, res, next) {
+var localSignup = function (passport, req, res, next) {
     passport.authenticate('local-signup', {
         failureFlash: true
     }, function (err, user, info) { // optional 'info' argument, containing additional details provided by the strategy's verify callback.
@@ -29,8 +36,9 @@ exports.localSignup = function (passport, req, res, next) {
         });
     })(req, res, next);
 };
+// module.exports.localSignup = localSignup;
 
-exports.localLogin = function (passport, req, res, next) {
+var localLogin = function (passport, req, res, next) {
     passport.authenticate('local-login', {
         failureFlash: true
     }, function (err, user, info) {
@@ -51,7 +59,7 @@ exports.localLogin = function (passport, req, res, next) {
     })(req, res, next);
 };
 
-exports.fbAuth = function (passport, req, res, next) {
+var fbAuth = function (passport, req, res, next) {
     passport.authenticate('facebook', {
         scope: 'email, user_likes, user_friends, read_friendlists'
     }, function (err, user, info) {
@@ -61,7 +69,7 @@ exports.fbAuth = function (passport, req, res, next) {
     })(req, res, next);
 };
 
-exports.fbAuthCallback = function (passport, req, res, next) {
+var fbAuthCallback = function (passport, req, res, next) {
     passport.authenticate('facebook', function (err, user, info) {
         if (err) {
             return next(err); // will generate a 500 error
@@ -81,69 +89,441 @@ exports.fbAuthCallback = function (passport, req, res, next) {
     })(req, res, next);
 };
 
-exports.getUsers = function (callback) {
-    user.getUsers(function(data){
-        callback(data);
-    });
-};
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
-exports.getUserById = function (userId, callback) {
-    user.getUserById(userId, function(data){
-        callback(data);
-    });
-};
 
-// get facebook friend who aso authorize this app
-exports.getFbFriends = function (userId, callback) {
-    user.getFbFriends(userId, function(data){
-        callback(data);
-    });
-};
+module.exports = function(app, passport) {
+    // =======================================
+    // ==== Routes below is for web pages ====
+    // =======================================
 
-exports.getFriendList = function (userId, callback) {
-    user.getFriendList(userId, function(data){
-        callback(data);
-    });
-};
+    // HOME PAGE
+    app.route('/')
+    	.get(function (req, res) {
+    		res.render('index', {
+    			message: req.flash('loginMessage'),
+    			isAuthenticated: req.isAuthenticated(),
+    			user: req.user
+    		});
+    	});
+    // route for login
+    app.route('/login')
+        .post(passport.authenticate('local-login', {
+            successRedirect: '/profile',
+            failureRedirect: '/',
+            failureFlash: true // allow flash messages
+        }));
 
-exports.addFriend = function (userId, friendId, callback) {
-    user.addFriend(userId, friendId, function(data){
-        callback(data);
-    });
-};
+    // route for signup page
+    app.route('/signup')
+        .get(function(req, res) {
+            res.render('signup', {
+                message: req.flash('signupMessage'), // pass in any flash data if signup error exist
+                user: req.user, // take user from session for view purpose
+                isAuthenticated: req.isAuthenticated()
+            });
+        })
+        .post(passport.authenticate('local-signup', {
+            successRedirect: '/profile',
+            failureRedirect: '/signup',
+            failureFlash: true // allow flash messages
+        }));
 
-exports.unfriend = function (userId, friendId, callback) {
-    user.unfriend(userId, friendId, function(data){
-        callback(data);
-    });
-};
+    // route for profile page
+    // we will want this protected so you have to be logged in to visit
+    // we will use route middleware to verify this (the isLoggedIn function)
+    app.route('/profile')
+        .get(isLoggedIn, function(req, res) {
+            res.render('profile', {
+                user: req.user, // take user from session for view purpose
+                isAuthenticated: req.isAuthenticated()
+            });
+        });
 
-exports.getFriendCandidate = function (userId, callback) {
-    user.getFriendCandidate(userId, function(data){
-        callback(data);
-    });
-};
+    // route for logout
+    app.route('/logout')
+        .get(function(req, res) {
+            //destroy the session
+            req.session.destroy(function(err) {
+                if (err) {
+                    console.error(err);
+                    res.end();
+                }
+                res.redirect('/');
+            });
+        });
 
-exports.getFbFriendCandidate = function (userId, callback) {
-    user.getFbFriendCandidate(userId, function(data){
-        callback(data);
-    });
-};
+    // ====================================
+    // ==== AUTHENTICATE (FIRST LOGIN) ====
+    // ====================================
 
-exports.addFriendReq = function (userId, toFriendId, callback) {
-    user.addFriendReq(userId, toFriendId, function(data){
-        callback(data);
-    });
-};
+    /**
+     * Clearly a stupid way and obviously there will be a problem when web page user and mobile user do facebook auth the same time.
+     * Since we dont really need to care about web page right now, temporary ignore it. Need to fix later.
+     * @attribute
+     */
+    var fromFBApi = false; // to check where the facebook auth request from
 
-exports.getFriendReq = function (userId, callback) {
-    user.getFriendReq(userId, function(data){
-        callback(data);
-    });
-};
+    // route for facebook authentication and login
+    app.route('/auth/facebook')
+        .get(passport.authenticate('facebook', {
+            // scope defines what kind of data you want user to authorize you
+            scope: 'email, user_likes, user_friends, read_friendlists'
+        }));
 
-exports.reviewFriendReq = function (userId, approve, reviewId, callback) {
-    user.reviewFriendReq(userId, approve, reviewId, function(data){
-        callback(data);
-    });
+    // ==================================================================
+    // ==== AUTHORIZE (ALREADY LOGGED IN / LINKING TO OTHER ACCOUNT) ====
+    // ==================================================================
+
+    // route for connect local account
+    // render to a signup page
+    app.route('/connect/local')
+        .get(function(req, res) {
+            res.render('connect-local', {
+                message: req.flash('loginMessage'),
+                user: req.user, // take user from session for view purpose
+                isAuthenticated: req.isAuthenticated()
+            });
+        })
+        .post(passport.authenticate('local-signup', {
+            successRedirect: '/profile',
+            failureRedirect: '/connect/local',
+            failureFlash: true // allow flash messages
+        }));
+
+    // route for connect facebook account
+    // send to facebook to do the authentication
+    app.route('/connect/facebook')
+        .get(passport.authorize('facebook', {
+            // scope defines what kind of data you want user to authorize you
+            scope: 'email, user_likes, user_friends, read_friendlists'
+        }));
+
+    /**
+     * Needs to verify later, since the callback changed due to support API.
+     * @attribute
+     */
+    // handle the callback after facebook has authorized the user
+    app.route('/connect/facebook/callback')
+        .get(passport.authorize('facebook', {
+            successRedirect: '/profile',
+            failureRedirect: '/'
+        }));
+
+    // =========================
+    // ==== UNLINK ACCOUNTS ====
+    // =========================
+
+    app.route('/unlink/local')
+        .get(function(req, res) {
+            passport.unlinkLocal(req, res);
+        });
+
+    app.route('/unlink/facebook')
+        .get(function(req, res) {
+            passport.unlinkFacebook(req, res);
+        });
+
+    // ====================================
+    // ==== Start from here is the API ====
+    // ====================================
+
+    /**
+     * [POST]
+     *
+     * Perform sign up for local account
+     *
+     * @method localSignup
+     * @param {String} username (in request content)
+     * @param {String} password (in request content)
+     * @return {JSON} user data
+     * @example /api/localSignup
+     */
+    app.route('/api/localSignup')
+        .post(function(req, res, next) {
+            localSignup(passport, req, res, next);
+        });
+
+    /**
+     * [POST]
+     *
+     * Perform login for local account
+     *
+     * @method localLogin
+     * @param {String} username (in request content)
+     * @param {String} password (in request content)
+     * @return {JSON} user data
+     * @example /api/localLogin
+     */
+    app.route('/api/localLogin')
+        .post(function(req, res, next) {
+            localLogin(passport, req, res, next);
+        });
+
+    /**
+     * [GET]
+     *
+     * Perform facebook account authentication.
+     * Scope defines what kind of data you want user to authorize you.
+     * After perform facebook account authentication, facebook will render to callback location.
+     *
+     * @method fbAuth
+     * @return {JSON} user data
+     * @example /api/fbAuth
+     */
+    app.route('/api/fbAuth')
+        .get(function(req, res, next) {
+            fromFBApi = true; // to check where the facebook auth request from
+            fbAuth(passport, req, res, next);
+        });
+
+    /**
+     * After perform facebook account authentication, facebook will render back to this location.
+     * This is for facebook itself.
+     *
+     * @method fbAuth/Callback
+     * @private
+     * @return {JSON} user data
+     */
+    app.route('/api/fbAuth/callback')
+        .get(function(req, res, next) {
+            if (fromFBApi === true) {
+                fbAuthCallback(passport, req, res, next);
+            }
+            else {
+                passport.authenticate('facebook', {
+                    successRedirect: '/profile',
+                    failureRedirect: '/'
+                })(req, res, next);
+            }
+        });
+
+    /**
+     * [GET]
+     *
+     * Get app user list
+     *
+     * @method getUsers
+     * @return {JSON} app user list
+     * @example /api/getUsers
+     */
+    app.route('/api/getUsers')
+        .get(function(req, res) {
+            user.getUsers(function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [GET]
+     *
+     * Get user by id
+     *
+     * @method getUserById
+     * @param {String} userId
+     * @return {JSON} user data
+     * @example /api/user/:userId
+     */
+    app.route('/api/user/:userId')
+        .get(function(req, res) {
+            user.getUserById(req.params.userId, function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [GET]
+     *
+     * Get facebook friends who also authorize this app.
+     *
+     * @method getFbFriends
+     * @param {String} userId
+     * @return {JSON} facebook friends
+     * @example /api/user/:userId/getFbFriends
+     */
+    app.route('/api/user/:userId/getFbFriends')
+        .get(function(req, res) {
+            user.getFbFriends(req.params.userId, function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [GET]
+     *
+     * Get friend list
+     *
+     * @method getFriendList
+     * @param {String} userId
+     * @return {JSON} List of friends
+     * @example /api/user/:userId/getFriendList
+     */
+    app.route('/api/user/:userId/getFriendList')
+        .get(function(req, res) {
+            user.getFriendList(req.params.userId, function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [POST]
+     *
+     * Add friend
+     *
+     * Avoid use this function directly, should do review friend request instead
+     *
+     * @method addFriend
+     * @param {String} userId User who wants to add friend
+     * @param {String} friendId Friend to add (in request content)
+     * @return {JSON} user data
+     * @example /api/user/:userId/addFriend
+     */
+    app.route('/api/user/:userId/addFriend')
+        .post(function(req, res) {
+            user.addFriend(req.params.userId, req.param('friendId'), function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [POST]
+     *
+     * Unfriend
+     *
+     * @method unfriend
+     * @param {String} userId User who wants to unfriend
+     * @param {String} friendId Friend to remove (in request content)
+     * @return {JSON} user data
+     * @example /api/user/:userId/unfriend
+     */
+    app.route('/api/user/:userId/unfriend')
+        .post(function(req, res) {
+            user.unfriend(req.params.userId, req.param('friendId'), function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [GET]
+     *
+     * Get a list of app user you can add them as friend
+     * When this is useful? User wants to add friend via 'Search by name'
+     *
+     * @method getFriendCandidate
+     * @param {String} userId
+     * @return {JSON} List of app user to add
+     * @example /api/user/:userId/getFriendCandidate
+     */
+    app.route('/api/user/:userId/getFriendCandidate')
+        .get(function(req, res) {
+            user.getFriendCandidate(req.params.userId, function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [GET]
+     *
+     * Get a list of app user who is your facebook friend but not your friend in this app
+     * When this is useful? User wants to add friend via 'Find friends from facebook'
+     *
+     * @method getFbFriendCandidate
+     * @param {String} userId
+     * @return {JSON} List of app user to add
+     * @example /api/user/:userId/getFbFriendCandidate
+     */
+    app.route('/api/user/:userId/getFbFriendCandidate')
+        .get(function(req, res) {
+            user.getFbFriendCandidate(req.params.userId, function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [POST]
+     *
+     * Send a friend request.
+     *
+     * userA send a friend request to userB, in user B's DB entry will record the request.
+     *
+     * @method friendReq
+     * @param {String} userId
+     * @param {String} toFriendId (in request content)
+     * @return {JSON} Success
+     * @example /api/user/:userId/friendReq
+     */
+    /**
+     * [GET]
+     *
+     * Get friend requests
+     *
+     * @method friendReq
+     * @param {String} userId
+     * @return {JSON} List of friend requests
+     * @example /api/user/:userId/friendReq
+     */
+    app.route('/api/user/:userId/friendReq')
+        .post(function(req, res) {
+            user.addFriendReq(req.params.userId, req.param('toFriendId'), function(data) {
+                return res.send(data);
+            });
+        })
+        .get(function(req, res) {
+            user.getFriendReq(req.params.userId, function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [GET]
+     *
+     * Review friend request, also need to tell approve or deny
+     * First will remove the entry in friendReq and if it's approved it will do add friend
+     *
+     * @method reviewFriendReq
+     * @param {String} userId
+     * @param {Boolean} approve (in request content)
+     * @param {String} reviewId (in request content)
+     * @return {JSON} Success
+     * @example /api/user/:userId/reviewFriendReq
+     */
+    app.route('/api/user/:userId/reviewFriendReq')
+        .post(function(req, res) {
+            user.reviewFriendReq(req.params.userId, req.param('approve'), req.param('reviewId'), function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [POST]
+     *
+     * Set user preference
+     *
+     * @method userPreference
+     * @param {String} userId
+     * @param {Array} preference Send all user preference, not just the one to add or remove
+     * @return {Boolean} Success
+     * @example /api/user/:userId/userPreference
+     */
+     /**
+     * [GET]
+     *
+     * Get user preference
+     *
+     * @method userPreference
+     * @param {String} userId
+     * @return {Json} user preference
+     * @example /api/user/:userId/userPreference
+     */
+    app.route('/api/user/:userId/userPreference')
+        .post(function(req, res) {
+            user.setUserPreference(req.params.userId, req.param('preference'), function(data) {
+                return res.send(data);
+            });
+        })
+        .get(function(req, res) {
+            user.getUserPreference(req.params.userId, function(data) {
+                return res.send(data);
+            });
+        });
 };

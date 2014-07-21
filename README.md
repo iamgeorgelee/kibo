@@ -46,12 +46,20 @@ Currently we do:
 * Able to create user defined event: choose restaurant from recommendation, pick friends, send notification, user receive invite and accept/reject. No voting. [7/20]
 * middle check point + voting [8/3]
 * Move facebook App secret to DB
+* rewrite authenticate and move passport.js
 * [bug] Not handling facebook paging
 * [bug] All id should use object id?
+* API proteced with OAuth 2
+    * http://thewayofcode.wordpress.com/2013/11/25/how-to-secure-your-http-api-endpoints-using-facebook-as-oauth-provider/
+    * http://coderead.wordpress.com/2012/08/16/securing-node-js-restful-services-with-jwt-tokens/
+    * http://www.sitepoint.com/using-json-web-tokens-node-js/
+    * https://github.com/hokaccha/node-jwt-simple
+    * https://docs.auth0.com/nodejs-tutorial
 
 
 ###Lower Priority
 
+* local signup - verify password strong or not
 * async.series should rewrite with async.waterfall? Some maybe
 * Mocha - Unit Test
     * [Grunt Mocha Plugin](https://github.com/pghalliday/grunt-mocha-test)

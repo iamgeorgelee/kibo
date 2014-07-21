@@ -1,5 +1,5 @@
 var db = require('../routes/dbRoutes.js');
-var EventHandler = require('../models/event/eventHandler.js');
+var EventHandler = require('../models/event/EventHandler.js');
 var async = require('async');
 
 /**
@@ -11,7 +11,7 @@ var async = require('async');
 
 
 module.exports = function(app) {
- 
+
 
     /**
      * [GET]
@@ -56,7 +56,7 @@ module.exports = function(app) {
      * @param {String} userId User who wants to add friend
      * @param {String} friendId Friend to add (in request content)
      * @return {JSON} user data
-     * @example /api/event 
+     * @example /api/event
      * {
 	*	  "name": "test1",
 	*	  "time": "6:30",
@@ -71,7 +71,7 @@ module.exports = function(app) {
 	*	  ],
 	*	  "creater": "a123456789"
 	*	}
-     * 
+     *
      */
     app.route('/api/event/')
         .post(function(req, res) {
@@ -84,7 +84,7 @@ module.exports = function(app) {
      * [PUT]
      *
      * guest RSVP
-     * 
+     *
      *
      * @method RSVP
      * @param {String} userId User who wants to add friend
@@ -93,10 +93,10 @@ module.exports = function(app) {
      * @example /api/event
      */
     app.route('/api/event/rsvp')
-        .put(function(req, res) { 
+        .put(function(req, res) {
 
             EventHandler.rsvp(req.body, function(data) {
-                
+
                 return res.send(data);
             });
      	});
