@@ -1,8 +1,9 @@
 YUI.add("yuidoc-meta", function(Y) {
    Y.YUIDoc = { meta: {
     "classes": [
-        "UserRoutes",
-        "dbController"
+        "UserController",
+        "dbController",
+        "restController"
     ],
     "modules": [
         "Kibo"

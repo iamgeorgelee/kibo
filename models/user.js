@@ -1,7 +1,5 @@
 var async = require('async');
-var bcrypt = require('bcrypt-nodejs');
 var db = require('../routes/dbRoutes.js');
-var user = require('./user.js');
 var graph = require('fbgraph'); // graph is a facebook SDK
 var options = { // options needed for SDK
     timeout: 3000,
@@ -36,17 +34,7 @@ function isUserIdValid(userId, callback) {
     });
 }
 
-// generating a hash
-exports.generateHash = function (userPassword) {
-    return bcrypt.hashSync(userPassword, bcrypt.genSaltSync(8), null);
-};
-
-// checking if password is valid
-exports.validPassword = function (password, userPassword) {
-    return bcrypt.compareSync(password, userPassword);
-};
-
-exports.getUsers = function (callback) {
+var getUsers = function (callback) {
     db.getCollection('User', function (data) {
         if (data.message === 'Collection not found') {
             callback({
@@ -58,6 +46,7 @@ exports.getUsers = function (callback) {
         }
     });
 };
+module.exports.getUsers = getUsers;
 
 exports.getUserById = function (userId, callback) {
     isUserIdValid(userId, function(data){
@@ -69,7 +58,7 @@ exports.getUserById = function (userId, callback) {
     });
 };
 
-exports.getFbFriends = function (userId, callback) {
+var getFbFriends = function (userId, callback) {
     isUserIdValid(userId, function(data){
         if(!data.success){
             callback(data);
@@ -80,8 +69,9 @@ exports.getFbFriends = function (userId, callback) {
         }
     });
 };
+module.exports.getFbFriends = getFbFriends;
 
-exports.getFriendList = function (userId, callback) {
+var getFriendList = function (userId, callback) {
     isUserIdValid(userId, function(data){
         if(!data.success){
             callback(data);
@@ -97,8 +87,9 @@ exports.getFriendList = function (userId, callback) {
         }
     });
 };
+module.exports.getFriendList = getFriendList;
 
-exports.addFriend = function (userId, friendId, callback) {
+var addFriend = function (userId, friendId, callback) {
     var newUserData, userData, friendData, userNewFriendList, friendNewFriendList;
 
     async.series([
@@ -206,6 +197,7 @@ exports.addFriend = function (userId, friendId, callback) {
         }
     });
 };
+module.exports.addFriend = addFriend;
 
 exports.unfriend = function (userId, friendId, callback) {
     var newUserData, userData, friendData, userNewFriendList, friendNewFriendList;
@@ -312,14 +304,14 @@ exports.unfriend = function (userId, friendId, callback) {
     });
 };
 
-exports.getFriendCandidate = function (userId, callback) {
+var getFriendCandidate = function (userId, callback) {
     var userFriendList, userList, friendCandidateList = [];
 
     async.series([
         function (callback) {
             async.parallel([
                 function (callback) {
-                    user.getFriendList(userId, function (data) {
+                    getFriendList(userId, function (data) {
                         if(!isSuccess(data)){
                             callback(data);
                         } else{
@@ -329,7 +321,7 @@ exports.getFriendCandidate = function (userId, callback) {
                     });
                 },
                 function (callback) {
-                    user.getUsers(function (data) {
+                    getUsers(function (data) {
                         if(!isSuccess(data)){
                             callback(data);
                         } else{
@@ -364,13 +356,15 @@ exports.getFriendCandidate = function (userId, callback) {
         }
     });
 };
+module.exports.getFriendCandidate = getFriendCandidate;
 
-exports.getFbFriendCandidate = function (userId, callback) {
+
+var getFbFriendCandidate = function (userId, callback) {
     var friendCandidateList = [], fbFriends, appFriends;
 
     async.parallel([
         function (callback) {
-            user.getFriendCandidate(userId, function (data) {
+            getFriendCandidate(userId, function (data) {
                 if(!isSuccess(data)){
                     callback(data);
                 } else{
@@ -380,7 +374,7 @@ exports.getFbFriendCandidate = function (userId, callback) {
             });
         },
         function (callback) {
-            user.getFbFriends(userId, function (data) {
+            getFbFriends(userId, function (data) {
                 if(!isSuccess(data)){
                     callback(data);
                 } else{
@@ -404,6 +398,7 @@ exports.getFbFriendCandidate = function (userId, callback) {
         }
     });
 };
+module.exports.getFbFriendCandidate = getFbFriendCandidate;
 
 exports.addFriendReq = function(userId, toFriendId, callback){
     var userData, toFriendData, newFriendReqList;
@@ -553,7 +548,7 @@ exports.reviewFriendReq = function (userId, approve, reviewId, callback) {
         },
         function(callback){
             if(approve){
-                user.addFriend(userId, reviewId, function(data){
+                addFriend(userId, reviewId, function(data){
                     if(isSuccess(data)){
                         callback();
                     }else{
@@ -571,3 +566,53 @@ exports.reviewFriendReq = function (userId, approve, reviewId, callback) {
         }
     });
 };
+
+var setUserPreference = function (userId, preference, callback) {
+    async.waterfall([
+        //check is the userId valid
+        function (callback) {
+            isUserIdValid(userId, function(data){
+                if(!data.success){
+                    callback(data, null);
+                } else{
+                    // userData = data.userData;
+                    callback(null, data.userData);
+                }
+            });
+        },
+        function (userData, callback) {
+            db.updateUser(userId, {
+                "$set": {
+                    preference: preference
+                }
+            }, function (data) {
+                callback(null, {success:true});
+            });
+        }
+    ], function (err, result) {
+        if (err) {
+            callback(err);
+        } else{
+            callback(result);
+        }
+    });
+};
+module.exports.setUserPreference = setUserPreference;
+
+var getUserPreference = function (userId, callback) {
+    isUserIdValid(userId, function(data){
+        if(!data.success){
+            callback(data);
+        } else{
+            if (data.userData.hasOwnProperty('preference')) {
+                callback(data.userData.preference);
+            } else {
+                callback({
+                    success: false,
+                    message: 'No preference set'
+                });
+            }
+        }
+    });
+};
+module.exports.getUserPreference = getUserPreference;

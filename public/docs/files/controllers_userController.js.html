@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>routes/userRoutes.js - kibo</title>
+    <title>controllers/userController.js - kibo</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -43,7 +43,9 @@
             
                 <li><a href="../classes/dbController.html">dbController</a></li>
             
-                <li><a href="../classes/UserRoutes.html">UserRoutes</a></li>
+                <li><a href="../classes/restController.html">restController</a></li>
+            
+                <li><a href="../classes/UserController.html">UserController</a></li>
             
             </ul>
 
@@ -86,19 +88,110 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: routes/userRoutes.js</h1>
+                        <h1 class="file-heading">File: controllers/userController.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
  * User API
  *
- * @class UserRoutes
+ * @class UserController
  * @constructor
  */
 
-// User routes use users controller
-var userController = require(&#x27;../controllers/userController&#x27;);
+var user = require(&#x27;../models/user.js&#x27;);
+
+// to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated()) return next();
+
+    // if they aren&#x27;t redirect them to the home page
+    res.redirect(&#x27;/&#x27;);
+}
+
+var localSignup = function (passport, req, res, next) {
+    passport.authenticate(&#x27;local-signup&#x27;, {
+        failureFlash: true
+    }, function (err, user, info) { // optional &#x27;info&#x27; argument, containing additional details provided by the strategy&#x27;s verify callback.
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return res.send({
+                success: false,
+                message: req.flash(&#x27;signupMessage&#x27;)
+            });
+        }
+        return res.send({
+            success: true,
+            message: &#x27;authentication succeeded&#x27;,
+            user: user
+        });
+    })(req, res, next);
+};
+// module.exports.localSignup = localSignup;
+
+var localLogin = function (passport, req, res, next) {
+    passport.authenticate(&#x27;local-login&#x27;, {
+        failureFlash: true
+    }, function (err, user, info) {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return res.send({
+                success: false,
+                message: req.flash(&#x27;loginMessage&#x27;)
+            });
+        }
+        return res.send({
+            success: true,
+            message: &#x27;login succeeded&#x27;,
+            user: user
+        });
+    })(req, res, next);
+};
+
+var fbAuth = function (passport, req, res, next) {
+    // passport.authenticate(&#x27;facebook&#x27;, {
+    //     scope: &#x27;email, user_likes, user_friends, read_friendlists&#x27;
+    // }, function (err, user, info) {
+    //     if (err) {
+    //         return next(err);
+    //     }
+    // })(req, res, next);
+
+    passport.authenticate(&#x27;facebook-token&#x27;, {session: false},
+      function (req, res) {
+        // do something with req.user
+        res.send(req.user? 200 : 401);
+        // return res.json({status: &#x27;OK&#x27;});
+      });
+};
+
+var fbAuthCallback = function (passport, req, res, next) {
+    passport.authenticate(&#x27;facebook&#x27;, function (err, user, info) {
+        if (err) {
+            return next(err); // will generate a 500 error
+        }
+
+        if (!user) {
+            return res.send({
+                success: false,
+                message: &#x27;login fail&#x27;
+            });
+        }
+        return res.send({
+            success: true,
+            message: &#x27;login succeeded&#x27;,
+            user: user
+        });
+    })(req, res, next);
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 module.exports = function(app, passport) {
     // =======================================
@@ -141,7 +234,7 @@ module.exports = function(app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.route(&#x27;/profile&#x27;)
-        .get(userController.isLoggedIn, function(req, res) {
+        .get(isLoggedIn, function(req, res) {
             res.render(&#x27;profile&#x27;, {
                 user: req.user, // take user from session for view purpose
                 isAuthenticated: req.isAuthenticated()
@@ -249,7 +342,7 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/localSignup&#x27;)
         .post(function(req, res, next) {
-            userController.localSignup(passport, req, res, next);
+            localSignup(passport, req, res, next);
         });
 
     /**
@@ -265,7 +358,7 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/localLogin&#x27;)
         .post(function(req, res, next) {
-            userController.localLogin(passport, req, res, next);
+            localLogin(passport, req, res, next);
         });
 
     /**
@@ -282,8 +375,7 @@ module.exports = function(app, passport) {
     app.route(&#x27;/api/fbAuth&#x27;)
         .get(function(req, res, next) {
             fromFBApi = true; // to check where the facebook auth request from
-
-            userController.fbAuth(passport, req, res, next);
+            fbAuth(passport, req, res, next);
         });
 
     /**
@@ -297,7 +389,7 @@ module.exports = function(app, passport) {
     app.route(&#x27;/api/fbAuth/callback&#x27;)
         .get(function(req, res, next) {
             if (fromFBApi === true) {
-                userController.fbAuthCallback(passport, req, res, next);
+                fbAuthCallback(passport, req, res, next);
             }
             else {
                 passport.authenticate(&#x27;facebook&#x27;, {
@@ -318,7 +410,7 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/getUsers&#x27;)
         .get(function(req, res) {
-            userController.getUsers(function(data) {
+            user.getUsers(function(data) {
                 return res.send(data);
             });
         });
@@ -335,7 +427,7 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/user/:userId&#x27;)
         .get(function(req, res) {
-            userController.getUserById(req.params.userId, function(data) {
+            user.getUserById(req.params.userId, function(data) {
                 return res.send(data);
             });
         });
@@ -352,7 +444,7 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/user/:userId/getFbFriends&#x27;)
         .get(function(req, res) {
-            userController.getFbFriends(req.params.userId, function(data) {
+            user.getFbFriends(req.params.userId, function(data) {
                 return res.send(data);
             });
         });
@@ -369,7 +461,7 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/user/:userId/getFriendList&#x27;)
         .get(function(req, res) {
-            userController.getFriendList(req.params.userId, function(data) {
+            user.getFriendList(req.params.userId, function(data) {
                 return res.send(data);
             });
         });
@@ -378,7 +470,8 @@ module.exports = function(app, passport) {
      * [POST]
      *
      * Add friend
-     * (should add send friend request later on)
+     *
+     * Avoid use this function directly, should do review friend request instead
      *
      * @method addFriend
      * @param {String} userId User who wants to add friend
@@ -388,7 +481,7 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/user/:userId/addFriend&#x27;)
         .post(function(req, res) {
-            userController.addFriend(req.params.userId, req.param(&#x27;friendId&#x27;), function(data) {
+            user.addFriend(req.params.userId, req.param(&#x27;friendId&#x27;), function(data) {
                 return res.send(data);
             });
         });
@@ -406,7 +499,7 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/user/:userId/unfriend&#x27;)
         .post(function(req, res) {
-            userController.unfriend(req.params.userId, req.param(&#x27;friendId&#x27;), function(data) {
+            user.unfriend(req.params.userId, req.param(&#x27;friendId&#x27;), function(data) {
                 return res.send(data);
             });
         });
@@ -424,7 +517,7 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/user/:userId/getFriendCandidate&#x27;)
         .get(function(req, res) {
-            userController.getFriendCandidate(req.params.userId, function(data) {
+            user.getFriendCandidate(req.params.userId, function(data) {
                 return res.send(data);
             });
         });
@@ -442,17 +535,17 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/user/:userId/getFbFriendCandidate&#x27;)
         .get(function(req, res) {
-            userController.getFbFriendCandidate(req.params.userId, function(data) {
+            user.getFbFriendCandidate(req.params.userId, function(data) {
                 return res.send(data);
             });
         });
 
-
-
     /**
      * [POST]
      *
-     * Send a friend request
+     * Send a friend request.
+     *
+     * userA send a friend request to userB, in user B&#x27;s DB entry will record the request.
      *
      * @method addFriendReq
      * @param {String} userId
@@ -462,7 +555,7 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/user/:userId/addFriendReq&#x27;)
         .post(function(req, res) {
-            userController.addFriendReq(req.params.userId, req.param(&#x27;toFriendId&#x27;), function(data) {
+            user.addFriendReq(req.params.userId, req.param(&#x27;toFriendId&#x27;), function(data) {
                 return res.send(data);
             });
         });
@@ -479,7 +572,7 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/user/:userId/getFriendReq&#x27;)
         .get(function(req, res) {
-            userController.getFriendReq(req.params.userId, function(data) {
+            user.getFriendReq(req.params.userId, function(data) {
                 return res.send(data);
             });
         });
@@ -499,7 +592,42 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/user/:userId/reviewFriendReq&#x27;)
         .post(function(req, res) {
-            userController.reviewFriendReq(req.params.userId, req.param(&#x27;approve&#x27;), req.param(&#x27;reviewId&#x27;), function(data) {
+            user.reviewFriendReq(req.params.userId, req.param(&#x27;approve&#x27;), req.param(&#x27;reviewId&#x27;), function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [POST]
+     *
+     * Set user preference
+     *
+     * @method setUserPreference
+     * @param {String} userId
+     * @param {Array} preference Send all user preference, not just the one to add or remove
+     * @return {Boolean} Success
+     * @example /api/user/:userId/setUserPreference
+     */
+    app.route(&#x27;/api/user/:userId/setUserPreference&#x27;)
+        .post(function(req, res) {
+            user.setUserPreference(req.params.userId, req.param(&#x27;preference&#x27;), function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [GET]
+     *
+     * Get user preference
+     *
+     * @method getUserPreference
+     * @param {String} userId
+     * @return {Json} user preference
+     * @example /api/user/:userId/getUserPreference
+     */
+    app.route(&#x27;/api/user/:userId/getUserPreference&#x27;)
+        .get(function(req, res) {
+            user.getUserPreference(req.params.userId, function(data) {
                 return res.send(data);
             });
         });

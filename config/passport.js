@@ -1,8 +1,7 @@
 // Passport is a node module doing local and facebook authentication
-
+var bcrypt = require('bcrypt-nodejs');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
-var User = require('../models/user.js');
 var db = require('../routes/dbRoutes.js');
 var Users; // store current user list
 
@@ -10,6 +9,16 @@ var Users; // store current user list
 db.getCollection('User', function (data) {
     Users = data;
 });
+
+// generating a hash
+function generateHash(userPassword) {
+    return bcrypt.hashSync(userPassword, bcrypt.genSaltSync(8), null);
+}
+
+// checking if password is valid
+function validPassword (password, userPassword) {
+    return bcrypt.compareSync(password, userPassword);
+}
 
 module.exports = function (passport, config) {
     // used to serialize the user for the session
@@ -55,7 +64,7 @@ module.exports = function (passport, config) {
                     db.createUser({
                         username: username,
                         name: username, //Account display name
-                        password: User.generateHash(password) // hash the password before store to db
+                        password: generateHash(password) // hash the password before store to db
                     }, function (data) {
                         //refresh user list
                         db.getCollection('User', function (data) {
@@ -73,7 +82,7 @@ module.exports = function (passport, config) {
                 db.updateUser(user._id.$oid, {
                     "$set": {
                         username: username,
-                        password: User.generateHash(password)
+                        password: generateHash(password)
                     }
                 }, function (data) {
                     //refresh user list
@@ -102,7 +111,7 @@ module.exports = function (passport, config) {
         if (!user) return done(null, false, req.flash('loginMessage', 'No user found.'));
 
         // if the user is found but the password is wrong
-        if (!User.validPassword(password, user.password)) return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+        if (!validPassword(password, user.password)) return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
 
         return done(null, user);
     }));

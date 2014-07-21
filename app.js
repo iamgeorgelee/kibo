@@ -33,14 +33,12 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 // ================
 // ==== ROUTES ====
 // ================
 
-// User Routes e.g. login, signup
-require('./routes/userRoutes.js')(app, passport);
+require('./controllers/userController.js')(app, passport);
+require('./controllers/restController.js')(app);
 
 // ========================
 // ==== MODE SELECTION ====
