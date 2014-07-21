@@ -221,7 +221,7 @@
         },
         {
             "file": "controllers/restController.js",
-            "line": 13,
+            "line": 11,
             "description": "[GET]\n\nGet recommand restaurant list\n\npayload should look like this\n{  \"participants\": [\n    {\n      \"userId\": \"123456\",\n      \"userPreference\": [\"chinese\", \"mexican\"],\n      \"userLocation\": [37.353596, -121.824393]\n    },\n    {\n      \"userId\": \"154345\",\n      \"userPreference\": [\"korean\", \"pizza\", \"italian\"],\n      \"userLocation\": [37.571382, -122.327199]\n    }]\n}\nPlease remember this should encode with base64 utf-8 format before it sent",
             "itemtype": "method",
             "name": "getRecommendRest",
