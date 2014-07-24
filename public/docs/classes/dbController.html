@@ -200,14 +200,7 @@
                     <ul class="index-list methods">
                         
                             <li class="index-item method">
-                                <a href="#method_createEvent">createEvent</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_createUser">createUser</a>
+                                <a href="#method_createDocument">createDocument</a>
 
                                 
                                 
@@ -228,14 +221,7 @@
                             </li>
                         
                             <li class="index-item method">
-                                <a href="#method_updateEvent">updateEvent</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item method">
-                                <a href="#method_updateUser">updateUser</a>
+                                <a href="#method_updateDocument">updateDocument</a>
 
                                 
                                 
@@ -257,8 +243,8 @@
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_createEvent" class="method item">
-    <h3 class="name"><code>createEvent</code></h3>
+                    <div id="method_createDocument" class="method item">
+    <h3 class="name"><code>createDocument</code></h3>
 
     
         <div class="args">
@@ -266,109 +252,9 @@
             
                 <li class="arg">
                     
-                        <code>input</code>
+                        <code>collectionName</code>
                     
                 </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">JSON</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/routes_dbRoutes.js.html#l123"><code>routes&#x2F;dbRoutes.js:123</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Create Event</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">input</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">JSON</span>:
-                    
-                    <p>event</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-</div>
-
-                
-                    <div id="method_createUser" class="method item">
-    <h3 class="name"><code>createUser</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
             
                 <li class="arg">
                     
@@ -420,7 +306,7 @@
     </div>
 
     <div class="description">
-        <p>Create user</p>
+        <p>Create document in given collection</p>
 
     </div>
 
@@ -429,6 +315,21 @@
             <h4>Parameters:</h4>
 
             <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">collectionName</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
             
                 <li class="param">
                     
@@ -458,7 +359,7 @@
                     
                         <span class="type">JSON</span>:
                     
-                    <p>user</p>
+                    <p>document (Depends)</p>
 
                 
             </div>
@@ -703,8 +604,8 @@ e.g. Get User by userid</p>
 </div>
 
                 
-                    <div id="method_updateEvent" class="method item">
-    <h3 class="name"><code>updateEvent</code></h3>
+                    <div id="method_updateDocument" class="method item">
+    <h3 class="name"><code>updateDocument</code></h3>
 
     
         <div class="args">
@@ -712,7 +613,13 @@ e.g. Get User by userid</p>
             
                 <li class="arg">
                     
-                        <code>EventId</code>
+                        <code>collectionName</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>documentId</code>
                     
                 </li>
             
@@ -755,7 +662,7 @@ e.g. Get User by userid</p>
             
         
         
-        <a href="../files/routes_dbRoutes.js.html#l137"><code>routes&#x2F;dbRoutes.js:137</code></a>
+        <a href="../files/routes_dbRoutes.js.html#l105"><code>routes&#x2F;dbRoutes.js:105</code></a>
         
         </p>
 
@@ -766,7 +673,7 @@ e.g. Get User by userid</p>
     </div>
 
     <div class="description">
-        <p>Update Event</p>
+        <p>Update document in given collection</p>
 
     </div>
 
@@ -778,7 +685,22 @@ e.g. Get User by userid</p>
             
                 <li class="param">
                     
-                        <code class="param-name">EventId</code>
+                        <code class="param-name">collectionName</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">documentId</code>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
                     
 
@@ -819,147 +741,7 @@ e.g. Get User by userid</p>
                     
                         <span class="type">JSON</span>:
                     
-                    <p>event</p>
-
-                
-            </div>
-        </div>
-    
-
-    
-        <div class="example">
-            <h4>Example:</h4>
-
-            <div class="example-content">
-                <p> Example of input
- {&quot;$set&quot;: {
-      username: username,
-      password: generateHash(password)
- }}</p>
-
-            </div>
-        </div>
-    
-</div>
-
-                
-                    <div id="method_updateUser" class="method item">
-    <h3 class="name"><code>updateUser</code></h3>
-
-    
-        <div class="args">
-            <span class="paren">(</span><ul class="args-list inline commas">
-            
-                <li class="arg">
-                    
-                        <code>userId</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>input</code>
-                    
-                </li>
-            
-            </ul><span class="paren">)</span>
-        </div>
-    
-
-    
-        <span class="returns-inline">
-            <span class="type">JSON</span>
-        </span>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/routes_dbRoutes.js.html#l104"><code>routes&#x2F;dbRoutes.js:104</code></a>
-        
-        </p>
-
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>Update user</p>
-
-    </div>
-
-    
-        <div class="params">
-            <h4>Parameters:</h4>
-
-            <ul class="params-list">
-            
-                <li class="param">
-                    
-                        <code class="param-name">userId</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">input</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object" class="crosslink external" target="_blank">Object</a></span>
-                    
-
-                    
-
-                    <div class="param-description">
-                         
-                    </div>
-
-                    
-                </li>
-            
-            </ul>
-        </div>
-    
-
-    
-        <div class="returns">
-            <h4>Returns:</h4>
-
-            <div class="returns-description">
-                
-                    
-                        <span class="type">JSON</span>:
-                    
-                    <p>user</p>
+                    <p>document (Depends)</p>
 
                 
             </div>

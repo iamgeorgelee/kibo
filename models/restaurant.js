@@ -47,20 +47,10 @@ exports.getRecommendRest = function(participants, callback){
                     callback();
                 });
             }, function(err){
-                if( err ) {
-                  //Retrieve restaurant failed
-                  callback(err, null);
-                } else {
-                  //All data retrieved successfully
-                  callback(null, restDetail);
-                }
+                (err)? callback(err, null): callback(null, restDetail);
             });
         }], function (err, result) {
-            if (err) {
-                callback(err);
-            } else{
-                callback(result);
-            }
+            (err)? callback(err): callback(result);
         }
     );
 };

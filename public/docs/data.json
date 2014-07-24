@@ -695,31 +695,12 @@
         {
             "file": "routes/dbRoutes.js",
             "line": 91,
-            "description": "Create user",
+            "description": "Create document in given collection",
             "itemtype": "method",
-            "name": "createUser",
+            "name": "createDocument",
             "params": [
                 {
-                    "name": "input",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "user",
-                "type": "JSON"
-            },
-            "class": "dbController"
-        },
-        {
-            "file": "routes/dbRoutes.js",
-            "line": 104,
-            "description": "Update user",
-            "itemtype": "method",
-            "name": "updateUser",
-            "params": [
-                {
-                    "name": "userId",
+                    "name": "collectionName",
                     "description": "",
                     "type": "String"
                 },
@@ -730,42 +711,25 @@
                 }
             ],
             "return": {
-                "description": "user",
+                "description": "document (Depends)",
                 "type": "JSON"
             },
-            "example": [
-                " Example of input\n {\"$set\": {\n      username: username,\n      password: generateHash(password)\n }}"
-            ],
             "class": "dbController"
         },
         {
             "file": "routes/dbRoutes.js",
-            "line": 123,
-            "description": "Create Event",
+            "line": 105,
+            "description": "Update document in given collection",
             "itemtype": "method",
-            "name": "createEvent",
+            "name": "updateDocument",
             "params": [
                 {
-                    "name": "input",
+                    "name": "collectionName",
                     "description": "",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "event",
-                "type": "JSON"
-            },
-            "class": "dbController"
-        },
-        {
-            "file": "routes/dbRoutes.js",
-            "line": 137,
-            "description": "Update Event",
-            "itemtype": "method",
-            "name": "updateEvent",
-            "params": [
+                    "type": "String"
+                },
                 {
-                    "name": "EventId",
+                    "name": "documentId",
                     "description": "",
                     "type": "String"
                 },
@@ -776,7 +740,7 @@
                 }
             ],
             "return": {
-                "description": "event",
+                "description": "document (Depends)",
                 "type": "JSON"
             },
             "example": [
