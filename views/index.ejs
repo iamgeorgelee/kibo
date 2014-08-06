@@ -1,5 +1,6 @@
 <% include header %>
 
+<div class="col-xs-12 col-sm-9">
     <div class="jumbotron">
       <div class="container">
         <!-- show any messages that come back with authentication -->
@@ -38,40 +39,56 @@
                 <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                 <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-            </div>
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-            </div>
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                 <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-            </div>
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-            </div>
-            <div class="col-md-4">
-                <h2>Heading</h2>
-                <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-            </div>
-        </div>
     </div>
+</div>
+<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+    <% if (isAuthenticated) { %>
+        <h3>Friend List</h3>
+        <ul class="list-group" id="friendList">
+            <% for(var prop in user.friends) { %>
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading"><%= user.friends[prop].name %></h4>
+                    <p class="list-group-item-text"><%= user.friends[prop].id %></p>
+                </li>
+            <% } %>
+        </ul>
+        <br/>
+        <h3>Friend Request</h3>
+        <ul class="list-group" id="friendReqList">
+            <% for(var prop in user.friendReq) { %>
+                <li class="list-group-item">
+                    <h4 class="list-group-item-heading"><%= user.friendReq[prop].name %></h4>
+                    <p class="list-group-item-text"><%= user.friendReq[prop].id %></p>
+                </li>
+            <% } %>
+        </ul>
+        <br/>
+        <form role="form">
+          <div class="form-group">
+            <label for="toFriendIdForm">Friend ID to request</label>
+            <input class="form-control" id="toFriendIdForm" placeholder="Enter to friend id">
+          </div>
+          <button type="button" class="btn btn-primary" id="FriendReqBtn" style="margin-top: 5px; margin-bottom: 5px;">Send Friend Request</button><br/>
+        </form>
+        </br>
+        <form role="form">
+          <div class="form-group">
+            <label for="reviewFriendReqForm">Friend ID to review</label>
+            <input class="form-control" id="reviewFriendReqForm" placeholder="Enter to accept user id">
+          </div>
+          <button type="button" class="btn btn-success" id="AcptBtn" style="margin-bottom: 5px;">Accept Friend Request</button><br/>
+          <button type="button" class="btn btn-danger"  id="RejctBtn" style="margin-bottom: 5px;">Reject Friend Request</button><br/>
+        </form>
+        </br>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Log from Socket.io</h3>
+            </div>
+            <div class="panel-body">
+                <span id="socketioBrowserLog"></span>
+            </div>
+        </div>
+    <% } %>
+</div>
 
 <% include footer %>

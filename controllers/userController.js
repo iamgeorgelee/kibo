@@ -93,6 +93,7 @@ var fbAuthCallback = function (passport, req, res, next) {
 
 
 module.exports = function(app, passport) {
+
     // =======================================
     // ==== Routes below is for web pages ====
     // =======================================
@@ -261,6 +262,27 @@ module.exports = function(app, passport) {
         });
 
     /**
+     * [POST]
+     *
+     * Create new user via Facebook auth
+     *
+     * @method createUser
+     * @param {String} token (in request content)
+     * @param {String} profileId (in request content)
+     * @param {String} email (in request content)
+     * @param {String} name (in request content)
+     * @param {String} profilePic (in request content)
+     * @return {JSON} success, userId
+     * @example /api/createUser
+     */
+    app.route('/api/createUser')
+        .post(function(req, res) {
+            user.createUser(req.param('token'), req.param('profileId'), req.param('email'), req.param('name'), req.param('profilePic'), function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
      * [GET]
      *
      * Perform facebook account authentication.
@@ -269,6 +291,7 @@ module.exports = function(app, passport) {
      *
      * @method fbAuth
      * @return {JSON} user data
+     * @deprecated Facebook auth now works in front end
      * @example /api/fbAuth
      */
     app.route('/api/fbAuth')
@@ -282,6 +305,7 @@ module.exports = function(app, passport) {
      * This is for facebook itself.
      *
      * @method fbAuth/Callback
+     * @deprecated Facebook auth now works in front end
      * @private
      * @return {JSON} user data
      */
@@ -475,7 +499,7 @@ module.exports = function(app, passport) {
         });
 
     /**
-     * [GET]
+     * [POST]
      *
      * Review friend request, also need to tell approve or deny
      * First will remove the entry in friendReq and if it's approved it will do add friend

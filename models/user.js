@@ -1,4 +1,5 @@
 var async = require('async');
+var bcrypt = require('bcrypt-nodejs');
 var db = require('../routes/dbRoutes.js');
 var graph = require('fbgraph'); // graph is a facebook SDK
 var options = { // options needed for SDK
@@ -10,6 +11,21 @@ var options = { // options needed for SDK
         connection: "keep-alive"
     }
 };
+
+// generating a hash
+function generateHash(dataToCrypt) {
+    // bcrypt.hash(dataToCrypt, bcrypt.genSaltSync(8), null, function(err, hash) {
+    //     return hash;
+    // });
+    return bcrypt.hashSync(dataToCrypt, bcrypt.genSaltSync(8), null);
+}
+
+function deHash(originData, hashedData) {
+    bcrypt.compare(originData, hashedData, function(err, res) {
+        // res return boolean
+        return res;
+    });
+}
 
 function isSuccess(data) {
     if (data.hasOwnProperty('success')) {
@@ -53,6 +69,22 @@ exports.getUserById = function (userId, callback) {
         (!data.success)? callback(data): callback(data.userData);
     });
 };
+
+var createUser = function (token, profileId, email, name, profilePic, callback) {
+    db.createDocument('User', {
+        facebook: {
+            id: profileId,
+            token: generateHash(token),
+            profilePic: profilePic // profile picture link
+        },
+        name: name,
+        email: email
+    }, function (data) {
+        callback({success:true, userId: data._id.$oid});
+    });
+
+};
+module.exports.createUser = createUser;
 
 var getFbFriends = function (userId, callback) {
     isUserIdValid(userId, function(data){
@@ -531,7 +563,7 @@ exports.reviewFriendReq = function (userId, approve, reviewId, callback) {
             });
         },
         function(callback){
-            if(approve){
+            if(approve === true || approve === "true"){
                 addFriend(userId, reviewId, function(data){
                     (isSuccess(data))? callback(): callback(data);
                 });
