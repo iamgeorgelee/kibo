@@ -58,7 +58,7 @@ exports.createEvent = function(payload, callback){
 
         	newEvent.stage = 3;
 
-			db.createEvent(newEvent, function(data){
+			db.createDocument('Event', newEvent, function(data){
 	     //  console.log(data.creater);
 	       	callback(data);
 
@@ -80,7 +80,7 @@ exports.rsvp = function(payload, callback){
 			var result = temp.rsvp(payload.guestId, payload.going);
 
 			if(result === true){
-				db.updateEvent(payload.eventId,
+				db.updateDocument('Event', payload.eventId,
 	                {"$set": {
 					             "guest" : temp.guest
 					   }

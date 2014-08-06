@@ -13,6 +13,7 @@ module.exports = function(grunt) {
                 nonbsp: true,
                 undef: true,
                 eqnull: true,
+                expr: true,
                 node: true,
                 reporter: require('jshint-stylish')
             },

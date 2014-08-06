@@ -61,7 +61,7 @@ module.exports = function (passport, config) {
                     return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
                 } else {
                     // if there is no user with that username create the user
-                    db.createUser({
+                    db.createDocument('User',{
                         username: username,
                         name: username, //Account display name
                         password: generateHash(password) // hash the password before store to db
@@ -79,7 +79,7 @@ module.exports = function (passport, config) {
                 user = req.user; // pull the user out of the session
 
                 // update user with his local login credential
-                db.updateUser(user._id.$oid, {
+                db.updateDocument('User', user._id.$oid, {
                     "$set": {
                         username: username,
                         password: generateHash(password)
@@ -148,7 +148,7 @@ module.exports = function (passport, config) {
                     return done(null, user);
                 } else {
                     // if there is no user found with that facebook id, create them
-                    db.createUser({
+                    db.createDocument('User', {
                         facebook: {
                             id: profile.id,
                             token: token,
@@ -170,7 +170,7 @@ module.exports = function (passport, config) {
                 user = req.user; // pull the user out of the session
 
                 // update the current users facebook credentials
-                db.updateUser(user._id.$oid, {
+                db.updateDocument('User', user._id.$oid, {
                     "$set": {
                         name: profile.name.givenName + ' ' + profile.name.familyName,
                         email: profile.emails[0].value,
@@ -201,7 +201,7 @@ module.exports = function (passport, config) {
     passport.unlinkLocal = function (req, res) {
         var user = req.user;
 
-        db.updateUser(user._id.$oid, {
+        db.updateDocument('User', user._id.$oid, {
             "$unset": {
                 username: "",
                 password: ""
@@ -219,7 +219,7 @@ module.exports = function (passport, config) {
     passport.unlinkFacebook = function (req, res) {
         var user = req.user;
 
-        db.updateUser(user._id.$oid, {
+        db.updateDocument('User', user._id.$oid, {
             "$unset": {
                 "facebook": ""
             }

@@ -6,8 +6,6 @@
  */
 
 var rest = require('../models/restaurant.js');
-// var base64_encode = require('base64').encode;
-var base64Decode = require('base64').decode;
 
 module.exports = function(app) {
     /**
@@ -38,14 +36,16 @@ module.exports = function(app) {
     app.route('/api/getRecommendRest')
         .get(function(req, res) {
             try {
-              var decodedQueryObj = JSON.parse(base64Decode(req.query.participants));
+                //decode base64 string
+                var decodedInput = new Buffer(req.query.participants, 'base64').toString("utf8");
+                var decodedQueryObj = JSON.parse(decodedInput);
 
-              rest.getRecommendRest(decodedQueryObj.participants, function(data) {
+                rest.getRecommendRest(decodedQueryObj.participants, function (data) {
                     return res.send(data);
                 });
             } catch (e) {
-              // An error has occured, probably on JSON,parse
-              return res.send('Not valid input, unable to do JSON.parse. Please check your pre-encoded JSON format');
+                // An error has occured, probably on JSON,parse
+                return res.send('Not valid input, unable to do JSON.parse. Please check your pre-encoded JSON format');
             }
         });
 };

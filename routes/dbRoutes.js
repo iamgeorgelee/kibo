@@ -89,69 +89,71 @@ exports.getDocument = function (collectionName, documentId, callback) {
 };
 
 /**
- * Create user
+ * Create document in given collection
  *
- * @method createUser
+ * @method createDocument
+ * @param {String} collectionName
  * @param {Object} input
- * @return {JSON} user
+ * @return {JSON} document (Depends)
  */
-exports.createUser = function (input, callback) {
-    performrequest(dbConfig.host, '/api/1/databases/kibo/collections/User?apiKey=' + dbConfig.apiKey, 'POST', input, function (data) {
+exports.createDocument = function (collectionName, input, callback) {
+    performrequest(dbConfig.host, '/api/1/databases/kibo/collections/' + collectionName + '?apiKey=' + dbConfig.apiKey, 'POST', input, function (data) {
         callback(data);
     });
 };
 
 /**
- * Update user
+ * Update document in given collection
  *
- * @method updateUser
- * @param {String} userId
+ * @method updateDocument
+ * @param {String} collectionName
+ * @param {String} documentId
  * @param {Object} input
- * @return {JSON} user
+ * @return {JSON} document (Depends)
  * @example Example of input
  *  {"$set": {
  *       username: username,
  *       password: generateHash(password)
  *  }}
  */
-exports.updateUser = function (userId, input, callback) {
-    performrequest(dbConfig.host, '/api/1/databases/kibo/collections/User/' + userId + '?apiKey=' + dbConfig.apiKey, 'PUT', input, function (data) {
+exports.updateDocument = function (collectionName, documentId, input, callback) {
+    performrequest(dbConfig.host, '/api/1/databases/kibo/collections/' + collectionName + '/' + documentId + '?apiKey=' + dbConfig.apiKey, 'PUT', input, function (data) {
         callback(data);
     });
 };
 
-/**
- * Create Event
- *
- * @method createEvent
- * @param {Object} input
- * @return {JSON} event
- */
-exports.createEvent = function (input, callback) {
-    performrequest(dbConfig.host, '/api/1/databases/kibo/collections/Event?apiKey=' + dbConfig.apiKey, 'POST', input, function (data) {
-        callback(data);
-    });
-};
+// /**
+//  * Create Event
+//  *
+//  * @method createEvent
+//  * @param {Object} input
+//  * @return {JSON} event
+//  */
+// exports.createEvent = function (input, callback) {
+//     performrequest(dbConfig.host, '/api/1/databases/kibo/collections/Event?apiKey=' + dbConfig.apiKey, 'POST', input, function (data) {
+//         callback(data);
+//     });
+// };
 
 
-/**
- * Update Event
- *
- * @method updateEvent
- * @param {String} EventId
- * @param {Object} input
- * @return {JSON} event
- * @example Example of input
- *  {"$set": {
- *       username: username,
- *       password: generateHash(password)
- *  }}
- */
-exports.updateEvent = function (eventId, input, callback) {
-    performrequest(dbConfig.host, '/api/1/databases/kibo/collections/Event/' + eventId + '?apiKey=' + dbConfig.apiKey, 'PUT', input, function (data) {
-        callback(data);
-    });
-};
+// /**
+//  * Update Event
+//  *
+//  * @method updateEvent
+//  * @param {String} EventId
+//  * @param {Object} input
+//  * @return {JSON} event
+//  * @example Example of input
+//  *  {"$set": {
+//  *       username: username,
+//  *       password: generateHash(password)
+//  *  }}
+//  */
+// exports.updateEvent = function (eventId, input, callback) {
+//     performrequest(dbConfig.host, '/api/1/databases/kibo/collections/Event/' + eventId + '?apiKey=' + dbConfig.apiKey, 'PUT', input, function (data) {
+//         callback(data);
+//     });
+// };
 
 // /**
 //  * Update Event

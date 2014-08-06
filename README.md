@@ -41,6 +41,8 @@ Currently we do:
 
 ###Higher Priority
 
+* Should not able to add yourself as friend
+* Socket.io should move to a single js file
 * User Preference
 * Restaurant - Send event location and participant id, return list of restaurants
 * Able to create user defined event: choose restaurant from recommendation, pick friends, send notification, user receive invite and accept/reject. No voting. [7/20]

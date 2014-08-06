@@ -1,4 +1,5 @@
 var async = require('async');
+var bcrypt = require('bcrypt-nodejs');
 var db = require('../routes/dbRoutes.js');
 var graph = require('fbgraph'); // graph is a facebook SDK
 var options = { // options needed for SDK
@@ -10,6 +11,21 @@ var options = { // options needed for SDK
         connection: "keep-alive"
     }
 };
+
+// generating a hash
+function generateHash(dataToCrypt) {
+    // bcrypt.hash(dataToCrypt, bcrypt.genSaltSync(8), null, function(err, hash) {
+    //     return hash;
+    // });
+    return bcrypt.hashSync(dataToCrypt, bcrypt.genSaltSync(8), null);
+}
+
+function deHash(originData, hashedData) {
+    bcrypt.compare(originData, hashedData, function(err, res) {
+        // res return boolean
+        return res;
+    });
+}
 
 function isSuccess(data) {
     if (data.hasOwnProperty('success')) {
@@ -50,13 +66,25 @@ module.exports.getUsers = getUsers;
 
 exports.getUserById = function (userId, callback) {
     isUserIdValid(userId, function(data){
-        if(!data.success){
-            callback(data);
-        } else{
-            callback(data.userData);
-        }
+        (!data.success)? callback(data): callback(data.userData);
     });
 };
+
+var createUser = function (token, profileId, email, name, profilePic, callback) {
+    db.createDocument('User', {
+        facebook: {
+            id: profileId,
+            token: generateHash(token),
+            profilePic: profilePic // profile picture link
+        },
+        name: name,
+        email: email
+    }, function (data) {
+        callback({success:true, userId: data._id.$oid});
+    });
+
+};
+module.exports.createUser = createUser;
 
 var getFbFriends = function (userId, callback) {
     isUserIdValid(userId, function(data){
@@ -150,11 +178,8 @@ var addFriend = function (userId, friendId, callback) {
                 },
                 function(callback){
                     //check does the friend already has 'friends' property if no, create one
-                    if (friendData.hasOwnProperty('friends')) {
-                        friendNewFriendList = friendData.friends;
-                    } else {
-                        friendNewFriendList = [];
-                    }
+                    friendNewFriendList = (friendData.hasOwnProperty('friends'))? friendData.friends: [];
+
                     friendNewFriendList.push({
                         "id": userId,
                         "name": userData.name
@@ -168,7 +193,7 @@ var addFriend = function (userId, friendId, callback) {
             async.parallel([
                 function (callback) {
                     //update requester friendlist
-                    db.updateUser(userId, {
+                    db.updateDocument('User', userId, {
                         "$set": {
                             friends: userNewFriendList
                         }
@@ -179,7 +204,7 @@ var addFriend = function (userId, friendId, callback) {
                 },
                 function (callback) {
                     //update requestee friendlist
-                    db.updateUser(friendId, {
+                    db.updateDocument('User', friendId, {
                         "$set": {
                             friends: friendNewFriendList
                         }
@@ -241,7 +266,6 @@ exports.unfriend = function (userId, friendId, callback) {
                         userNewFriendList = userData.friends;
                         for (var prop in userNewFriendList) {
                             if(userNewFriendList[prop].id === friendId){
-                                // delete userNewFriendList[prop];
                                 userNewFriendList.splice(prop, 1);
                             }
                         }
@@ -274,7 +298,7 @@ exports.unfriend = function (userId, friendId, callback) {
             async.parallel([
                 function (callback) {
                     //update requester friendlist
-                    db.updateUser(userId, {
+                    db.updateDocument('User', userId, {
                         "$set": {
                             friends: userNewFriendList
                         }
@@ -285,7 +309,7 @@ exports.unfriend = function (userId, friendId, callback) {
                 },
                 function (callback) {
                     //update requestee friendlist
-                    db.updateUser(friendId, {
+                    db.updateDocument('User', friendId, {
                         "$set": {
                             friends: friendNewFriendList
                         }
@@ -296,11 +320,7 @@ exports.unfriend = function (userId, friendId, callback) {
             ], callback);
         }
     ], function (err) {
-        if (err) {
-            callback(err);
-        } else{
-            callback(newUserData);
-        }
+        (err)? callback(err): callback(newUserData);
     });
 };
 
@@ -458,7 +478,7 @@ exports.addFriendReq = function(userId, toFriendId, callback){
         },
         function(callback){
             //Add user info to friend data
-            db.updateUser(toFriendId, {
+            db.updateDocument('User', toFriendId, {
                 "$set": {
                     friendReq: newFriendReqList
                 }
@@ -467,11 +487,7 @@ exports.addFriendReq = function(userId, toFriendId, callback){
             });
         }
     ], function(err) {
-        if (err) {
-            callback(err);
-        } else{
-            callback({success:true});
-        }
+        (err)? callback(err): callback({success:true});
     });
 };
 
@@ -538,7 +554,7 @@ exports.reviewFriendReq = function (userId, approve, reviewId, callback) {
             callback();
         },
         function(callback){
-            db.updateUser(userId, {
+            db.updateDocument('User', userId, {
                 "$set": {
                     friendReq: newFriendReqList
                 }
@@ -547,23 +563,15 @@ exports.reviewFriendReq = function (userId, approve, reviewId, callback) {
             });
         },
         function(callback){
-            if(approve){
+            if(approve === true || approve === "true"){
                 addFriend(userId, reviewId, function(data){
-                    if(isSuccess(data)){
-                        callback();
-                    }else{
-                        callback(data);
-                    }
+                    (isSuccess(data))? callback(): callback(data);
                 });
             }
             //if not approved do nothing
         }
     ], function(err) {
-        if (err) {
-            callback(err);
-        } else{
-            callback({success:true});
-        }
+        (err)? callback(err): callback({success:true});
     });
 };
 
@@ -572,16 +580,11 @@ var setUserPreference = function (userId, preference, callback) {
         //check is the userId valid
         function (callback) {
             isUserIdValid(userId, function(data){
-                if(!data.success){
-                    callback(data, null);
-                } else{
-                    // userData = data.userData;
-                    callback(null, data.userData);
-                }
+                (!data.success)? callback(data, null): callback(null, data.userData);
             });
         },
         function (userData, callback) {
-            db.updateUser(userId, {
+            db.updateDocument('User', userId, {
                 "$set": {
                     preference: preference
                 }
@@ -590,11 +593,7 @@ var setUserPreference = function (userId, preference, callback) {
             });
         }
     ], function (err, result) {
-        if (err) {
-            callback(err);
-        } else{
-            callback(result);
-        }
+        (err)? callback(err): callback(result);
     });
 };
 module.exports.setUserPreference = setUserPreference;
