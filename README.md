@@ -5,15 +5,15 @@
 
 
 ###Locations
-* [Production Version](http://kibo.herokuapp.com/)
+* [Production Version](https://kibo.herokuapp.com/)
 Ignore the landing page. Web version will no longer be updated.
-* [API Doc](http://kibo.herokuapp.com/docs)
+* [API Doc](https://kibo.herokuapp.com/docs)
 
 
 ###API Call Example
 http://[Host]/api/[method]
 ```
-http://kibo.herokuapp.com/api/localLogin
+https://kibo.herokuapp.com/api/localLogin
 ```
 Send with username and password
 
@@ -68,8 +68,6 @@ Currently we do:
     * [User Mocha to test your RestAPI](http://thewayofcode.wordpress.com/2013/04/21/how-to-build-and-test-rest-api-with-nodejs-express-mocha/)
 * Security Scan
     * Dynamic Code Analysis(Fuzz in run time), Static Code Analysis(Scan code for security vulnerability)
-* SSL
-    * Heroku by default is without SSL
 * Uglify
 
 
