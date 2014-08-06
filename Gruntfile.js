@@ -39,6 +39,6 @@ module.exports = function(grunt) {
     // grunt.loadNpmTasks('grunt-nodemon');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
-    // grunt.registerTask('default', ['jshint', 'yuidoc', 'nodemon']);
+    grunt.registerTask('heroku:production', ['jshint', 'yuidoc']);
     grunt.registerTask('default', ['jshint', 'yuidoc']);
 };
