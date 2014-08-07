@@ -48,4 +48,21 @@ module.exports = function(app) {
                 return res.send('Not valid input, unable to do JSON.parse. Please check your pre-encoded JSON format');
             }
         });
+
+    /**
+     * [GET]
+     *
+     * Get restaurant by id
+     *
+     * @method getRestaurantById
+     * @param {String} restaurantId
+     * @return {JSON} restaurant info
+     * @example /api/getRestaurantById/:restaurantId
+     */
+    app.route('/api/getRestaurantById/:restaurantId')
+        .get(function(req, res) {
+            rest.getRestaurantById(req.params.restaurantId, function(data){
+                return res.send(data);
+            });
+        });
 };
