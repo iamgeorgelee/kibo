@@ -30,52 +30,31 @@
             //send user data after connect
             socket.emit('userConnect', userData);
 
-
             $("#FriendReqBtn").click(function(){
                 var toFriendId = $("#toFriendIdForm").val();
 
-                $.post("/api/user/" + userData._id.$oid + "/friendReq", {toFriendId : toFriendId}, function(data){
-                    console.log( data.success );
-                }, "json");
-
                 $('#socketioBrowserLog').append("<div>Send Friend Request to userId:" + toFriendId + "</div>");
+                socket.emit('addFriendReq', userData._id.$oid, toFriendId, userData.name);
+            })
 
-                socket.emit('addFriendReq', toFriendId, userData.name);
+            $("#AcptBtn").click(function(){
+                var reviewId = $("#reviewFriendReqForm").val();
+
+                $('#socketioBrowserLog').append("<div>Accept Friend Request from userId:" + reviewId + "</div>");
+                socket.emit('reviewFriendReq', userData._id.$oid, true, reviewId, userData.name);
+            })
+
+            $("#RejctBtn").click(function(){
+                var reviewId = $("#reviewFriendReqForm").val();
+
+                $('#socketioBrowserLog').append("<div>Reject Friend Request from userId:" + reviewId + "</div>");
+                socket.emit('reviewFriendReq', userData._id.$oid, false, reviewId, userData.name);
             })
 
             socket.on('youGotFriendReq', function(data){
                 $('#socketioBrowserLog').append(data);
             });
-
-            $("#AcptBtn").click(function(){
-                var reviewId = $("#reviewFriendReqForm").val();
-
-                $.post("/api/user/" + userData._id.$oid + "/reviewFriendReq", {approve : true, reviewId: reviewId}, function(data){
-                    console.log( data.success );
-                }, "json");
-
-                $('#socketioBrowserLog').append("<div>Accept Friend Request from userId:" + reviewId + "</div>");
-
-                socket.emit('acceptFriendReq', reviewId, userData.name);
-            })
-
-            socket.on('youGotAccept', function(data){
-                $('#socketioBrowserLog').append(data);
-            });
-
-            $("#RejctBtn").click(function(){
-                var reviewId = $("#reviewFriendReqForm").val();
-
-                $.post("/api/user/" + userData._id.$oid + "/reviewFriendReq", {approve : false, reviewId: reviewId}, function(data){
-                    console.log( data.success );
-                }, "json");
-
-                $('#socketioBrowserLog').append("<div>Reject Friend Request from userId:" + reviewId + "</div>");
-
-                socket.emit('rejectFriendReq', reviewId, userData.name);
-            })
-
-            socket.on('youGotReject', function(data){
+            socket.on('youGotReview', function(data){
                 $('#socketioBrowserLog').append(data);
             });
         });

@@ -20,19 +20,6 @@ module.exports = function(grunt) {
             // The paths tell JSHint which files to validate
             myFiles: ['*.js', 'config/**/*.js', 'controllers/**/*.js', 'models/**/*.js', 'routes/**/*.js']
         },
-        // nodemon: {
-        //     dev: {
-        //         script: 'app.js',
-        //         // options: {
-        //         //     args: [],
-        //         //     ignore: ['public/**', 'node_modules/**'],
-        //         //     ext: 'js,html',
-        //         //     nodeArgs: ['--debug'],
-        //         //     delayTime: 1,
-        //         //     cwd: __dirname
-        //         // }
-        //     }
-        // },
         yuidoc: {
             compile: {
                 name: '<%= pkg.name %>',
@@ -52,6 +39,6 @@ module.exports = function(grunt) {
     // grunt.loadNpmTasks('grunt-nodemon');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
 
-    // grunt.registerTask('default', ['jshint', 'yuidoc', 'nodemon']);
+    grunt.registerTask('heroku:production', ['jshint', 'yuidoc']);
     grunt.registerTask('default', ['jshint', 'yuidoc']);
 };

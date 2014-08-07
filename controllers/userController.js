@@ -89,9 +89,6 @@ var fbAuthCallback = function (passport, req, res, next) {
     })(req, res, next);
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 module.exports = function(app, passport) {
 
     // =======================================
@@ -523,9 +520,27 @@ module.exports = function(app, passport) {
      *
      * Set user preference
      *
+     * Input should be full user preference, that says, all new add or delete preference should manipulate in client slide
+     *
+     * weights = -1, 0, 1
+     * 1 => Like it
+     * 0 => soso
+     * -1 => definitely not
+     *
+     * "preference" : [
+     *    {
+     *      categories: "pizza",
+     *      weights: "1"
+     *    },
+     *    {
+     *      categories: "salad",
+     *      weights: "-1"
+     *    }
+     * ]
+     *
      * @method userPreference
      * @param {String} userId
-     * @param {Array} preference Send all user preference, not just the one to add or remove
+     * @param {Array} preference
      * @return {Boolean} Success
      * @example /api/user/:userId/userPreference
      */

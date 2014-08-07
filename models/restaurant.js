@@ -54,3 +54,16 @@ exports.getRecommendRest = function(participants, callback){
         }
     );
 };
+
+exports.getRestaurantById = function(restaurantId, callback) {
+    db.getDocument("Restaurants", restaurantId, function(data){
+        var response;
+
+        if (data.message === 'Document not found') {
+            response = {success:false, message: 'No such restaurant'};
+        } else {
+            response = {success:true, restaurantData:data};
+        }
+        callback(response);
+    });
+};

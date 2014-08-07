@@ -5,15 +5,16 @@
 
 
 ###Locations
-* [Production Version](http://kibo.herokuapp.com/)
+* [Production Version](https://kibo.herokuapp.com/)
 Ignore the landing page. Web version will no longer be updated.
-* [API Doc](http://kibo.herokuapp.com/docs)
+* [Herokuapp log](https://addons-sso.heroku.com/apps/kibo/addons/papertrail:choklad)
+* [API Doc](https://kibo.herokuapp.com/docs)
 
 
 ###API Call Example
 http://[Host]/api/[method]
 ```
-http://kibo.herokuapp.com/api/localLogin
+https://kibo.herokuapp.com/api/localLogin
 ```
 Send with username and password
 
@@ -41,9 +42,8 @@ Currently we do:
 
 ###Higher Priority
 
+* Get location, recommend restaurant by location
 * Should not able to add yourself as friend
-* Socket.io should move to a single js file
-* User Preference
 * Restaurant - Send event location and participant id, return list of restaurants
 * Able to create user defined event: choose restaurant from recommendation, pick friends, send notification, user receive invite and accept/reject. No voting. [7/20]
 * middle check point + voting [8/3]
@@ -63,13 +63,12 @@ Currently we do:
 
 * local signup - verify password strong or not
 * async.series should rewrite with async.waterfall? Some maybe
+* Get all restaurant (for search)
 * Mocha - Unit Test
     * [Grunt Mocha Plugin](https://github.com/pghalliday/grunt-mocha-test)
     * [User Mocha to test your RestAPI](http://thewayofcode.wordpress.com/2013/04/21/how-to-build-and-test-rest-api-with-nodejs-express-mocha/)
 * Security Scan
     * Dynamic Code Analysis(Fuzz in run time), Static Code Analysis(Scan code for security vulnerability)
-* SSL
-    * Heroku by default is without SSL
 * Uglify
 
 

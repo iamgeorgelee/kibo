@@ -22,7 +22,6 @@
     "grunt-cli": "^0.1.13",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-yuidoc": "^0.5.2",
-    "grunt-nodemon": "^0.2.1",
     "jshint-stylish": "^0.4.0"
   }
 }
