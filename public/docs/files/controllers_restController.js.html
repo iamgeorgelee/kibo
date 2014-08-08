@@ -125,9 +125,9 @@ module.exports = function(app) {
      * Please remember this should encode with base64 utf-8 format before it sent
      *
      * @method getRecommendRest
-     * @param {String} participants (uft-8 encoded)
+     * @param {String} participants
      * @return {JSON} restaurant list
-     * @example /api/getRecommendRest
+     * @example /api/getRecommendRest?participants=&lt;uft-8 encoded participants arry&gt;
      */
     app.route(&#x27;/api/getRecommendRest&#x27;)
         .get(function(req, res) {
@@ -137,6 +137,49 @@ module.exports = function(app) {
                 var decodedQueryObj = JSON.parse(decodedInput);
 
                 rest.getRecommendRest(decodedQueryObj.participants, function (data) {
+                    return res.send(data);
+                });
+            } catch (e) {
+                // An error has occured, probably on JSON,parse
+                return res.send(&#x27;Not valid input, unable to do JSON.parse. Please check your pre-encoded JSON format&#x27;);
+            }
+        });
+
+    /**
+     * [GET]
+     *
+     * Get restaurant by id
+     *
+     * @method getRestaurantById
+     * @param {String} restaurantId
+     * @return {JSON} restaurant info
+     * @example /api/getRestaurantById/:restaurantId
+     */
+    app.route(&#x27;/api/getRestaurantById/:restaurantId&#x27;)
+        .get(function(req, res) {
+            rest.getRestaurantById(req.params.restaurantId, function(data){
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [GET]
+     *
+     * Get restaurant by an array of ids
+     *
+     * @method getRestaurantByIds
+     * @param {array} restIds
+     * @return {JSON} restaurant info
+     * @example /api/getRestaurantByIds?restIds=&lt;uft-8 encoded participants arry&gt;
+     */
+    app.route(&#x27;/api/getRestaurantByIds&#x27;)
+        .get(function(req, res) {
+            try {
+                //decode base64 string
+                var decodedInput = new Buffer(req.query.restIds, &#x27;base64&#x27;).toString(&quot;utf8&quot;);
+                var decodedQueryObj = JSON.parse(decodedInput);
+
+                rest.getRestaurantByIds(decodedQueryObj.restaurant_ids, function(data){
                     return res.send(data);
                 });
             } catch (e) {

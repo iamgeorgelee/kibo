@@ -42,6 +42,7 @@ Currently we do:
 
 ###Higher Priority
 
+* Get recommend Restaurant cannot get all, { [Error: socket hang up] code: 'ECONNRESET' }, 
 * Get location, recommend restaurant by location
 * Should not able to add yourself as friend
 * Restaurant - Send event location and participant id, return list of restaurants

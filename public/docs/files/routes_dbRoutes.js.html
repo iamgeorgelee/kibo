@@ -155,13 +155,17 @@ module.exports.performrequest = performrequest;
 /**
  * Get collection by collection name
  *
+ * TODO: Should support all optional parameters in http://docs.mongolab.com/restapi/#list-documents, now only support &quot;q&quot;
+ *
  * @method getCollection
  * @param {String} collectionName
+ * @param {String} queryString
  * @return {JSON} userList
  */
-exports.getCollection = function (collectionName, callback) {
+exports.getCollection = function (collectionName, queryString, callback) {
     performrequest(dbConfig.host, &#x27;/api/1/databases/kibo/collections/&#x27; + collectionName, &#x27;GET&#x27;, {
-        apiKey: dbConfig.apiKey
+        apiKey: dbConfig.apiKey,
+        q: queryString
     }, function (data) {
         callback(data);
     });
@@ -217,59 +221,6 @@ exports.updateDocument = function (collectionName, documentId, input, callback) 
         callback(data);
     });
 };
-
-// /**
-//  * Create Event
-//  *
-//  * @method createEvent
-//  * @param {Object} input
-//  * @return {JSON} event
-//  */
-// exports.createEvent = function (input, callback) {
-//     performrequest(dbConfig.host, &#x27;/api/1/databases/kibo/collections/Event?apiKey=&#x27; + dbConfig.apiKey, &#x27;POST&#x27;, input, function (data) {
-//         callback(data);
-//     });
-// };
-
-
-// /**
-//  * Update Event
-//  *
-//  * @method updateEvent
-//  * @param {String} EventId
-//  * @param {Object} input
-//  * @return {JSON} event
-//  * @example Example of input
-//  *  {&quot;$set&quot;: {
-//  *       username: username,
-//  *       password: generateHash(password)
-//  *  }}
-//  */
-// exports.updateEvent = function (eventId, input, callback) {
-//     performrequest(dbConfig.host, &#x27;/api/1/databases/kibo/collections/Event/&#x27; + eventId + &#x27;?apiKey=&#x27; + dbConfig.apiKey, &#x27;PUT&#x27;, input, function (data) {
-//         callback(data);
-//     });
-// };
-
-// /**
-//  * Update Event
-//  *
-//  * @method updateEvent
-//  * @param {String} EventId
-//  * @param {Object} input
-//  * @return {JSON} event
-//  * @example Example of input
-//  *  {&quot;$set&quot;: {
-//  *       username: username,
-//  *       password: generateHash(password)
-//  *  }}
-//  */
-// exports.updateEvent = function (eventId, userId, input, callback) {
-//    // var query = ;
-//     performrequest(dbConfig.host, &#x27;/api/1/databases/kibo/collections/Event?apiKey=&#x27; + dbConfig.apiKey +&#x27;&amp;q={_id:&#x27; + eventId +&#x27;,guest.id:&#x27; + userId + &#x27;}&#x27;, &#x27;PUT&#x27;, input, function (data) {
-//         callback(data);
-//     });
-// };
 
     </pre>
 </div>
