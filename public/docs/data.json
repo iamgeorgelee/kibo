@@ -251,6 +251,28 @@
         {
             "file": "controllers/restController.js",
             "line": 52,
+            "description": "[GET]\n\nGet top 3 recommand restaurant bases on user location",
+            "itemtype": "method",
+            "name": "getUserLocRecommendRest",
+            "params": [
+                {
+                    "name": "userLocation",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "restaurant list",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/user/:userId/getUserLocRecommendRest"
+            ],
+            "class": "restController"
+        },
+        {
+            "file": "controllers/restController.js",
+            "line": 69,
             "description": "[GET]\n\nGet restaurant by id",
             "itemtype": "method",
             "name": "getRestaurantById",
@@ -272,7 +294,7 @@
         },
         {
             "file": "controllers/restController.js",
-            "line": 69,
+            "line": 86,
             "description": "[GET]\n\nGet restaurant by an array of ids",
             "itemtype": "method",
             "name": "getRestaurantByIds",

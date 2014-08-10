@@ -11,20 +11,21 @@ var options = { // options needed for SDK
         connection: "keep-alive"
     }
 };
+var crypto = require('crypto');
+var salt = bcrypt.genSaltSync(8);
 
-// generating a hash
-function generateHash(dataToCrypt) {
-    // bcrypt.hash(dataToCrypt, bcrypt.genSaltSync(8), null, function(err, hash) {
-    //     return hash;
-    // });
-    return bcrypt.hashSync(dataToCrypt, bcrypt.genSaltSync(8), null);
+function encrypt(toEncrypt){
+  var cipher = crypto.createCipher('aes-256-cbc',salt);
+  var crypted = cipher.update(toEncrypt,'utf8','hex');
+  crypted += cipher.final('hex');
+  return crypted;
 }
 
-function deHash(originData, hashedData) {
-    bcrypt.compare(originData, hashedData, function(err, res) {
-        // res return boolean
-        return res;
-    });
+function decrypt(toDecrypt){
+  var decipher = crypto.createDecipher('aes-256-cbc',salt);
+  var dec = decipher.update(toDecrypt,'hex','utf8');
+  dec += decipher.final('utf8');
+  return dec;
 }
 
 function isSuccess(data) {
@@ -74,7 +75,7 @@ var createUser = function (token, profileId, email, name, profilePic, callback) 
     db.createDocument('User', {
         facebook: {
             id: profileId,
-            token: generateHash(token),
+            token: encrypt(token),
             profilePic: profilePic // profile picture link
         },
         name: name,
@@ -91,7 +92,7 @@ var getFbFriends = function (userId, callback) {
         if(!data.success){
             callback(data);
         } else{
-            graph.setOptions(options).setAccessToken(data.userData.facebook.token).get("me?fields=friends", function (err, res) {
+            graph.setOptions(options).setAccessToken(decrypt(data.userData.facebook.token)).get("me?fields=friends", function (err, res) {
                 callback(res.friends);
             });
         }
@@ -123,6 +124,10 @@ var addFriend = function (userId, friendId, callback) {
     async.series([
         //check is the userId and friendId valid, is there really such user?
         function (callback) {
+            if(userId === friendId){
+                callback("You should not add yourself as friend");
+            }
+
             async.parallel([
                 function (callback) {
                    isUserIdValid(userId, function(data){

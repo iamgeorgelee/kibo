@@ -52,6 +52,23 @@ module.exports = function(app) {
     /**
      * [GET]
      *
+     * Get top 3 recommand restaurant bases on user location
+     *
+     * @method getUserLocRecommendRest
+     * @param {String} userLocation
+     * @return {JSON} restaurant list
+     * @example /api/user/:userId/getUserLocRecommendRest
+     */
+    app.route('/api/user/:userId/getUserLocRecommendRest')
+        .get(function(req, res) {
+            rest.getUserLocRecommendRest(req.params.userId, req.query.userLocation, function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [GET]
+     *
      * Get restaurant by id
      *
      * @method getRestaurantById

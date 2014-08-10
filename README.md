@@ -42,14 +42,10 @@ Currently we do:
 
 ###Higher Priority
 
-* Get recommend Restaurant cannot get all, { [Error: socket hang up] code: 'ECONNRESET' }, 
-* Get location, recommend restaurant by location
-* Should not able to add yourself as friend
-* Restaurant - Send event location and participant id, return list of restaurants
 * Able to create user defined event: choose restaurant from recommendation, pick friends, send notification, user receive invite and accept/reject. No voting. [7/20]
 * middle check point + voting [8/3]
+* Error message should return with HTTP status code
 * Move facebook App secret to DB
-* rewrite authenticate and move passport.js
 * [bug] Not handling facebook paging
 * [bug] All id should use object id?
 * API proteced with OAuth 2
@@ -62,6 +58,7 @@ Currently we do:
 
 ###Lower Priority
 
+* rewrite authenticate and move passport.js
 * local signup - verify password strong or not
 * async.series should rewrite with async.waterfall? Some maybe
 * Get all restaurant (for search)
