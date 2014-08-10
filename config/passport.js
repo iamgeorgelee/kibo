@@ -6,7 +6,7 @@ var db = require('../routes/dbRoutes.js');
 var Users; // store current user list
 
 //Get initial list of user
-db.getCollection('User', function (data) {
+db.getCollection('User', null, function (data) {
     Users = data;
 });
 

@@ -234,6 +234,13 @@
                             </li>
                         
                             <li class="index-item method">
+                                <a href="#method_fbLogin">fbLogin</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
                                 <a href="#method_friendReq">friendReq</a>
 
                                 
@@ -415,7 +422,7 @@
             
         
         
-        <a href="../files/controllers_userController.js.html#l392"><code>controllers&#x2F;userController.js:392</code></a>
+        <a href="../files/controllers_userController.js.html#l407"><code>controllers&#x2F;userController.js:407</code></a>
         
         </p>
 
@@ -573,7 +580,7 @@
             
         
         
-        <a href="../files/controllers_userController.js.html#l264"><code>controllers&#x2F;userController.js:264</code></a>
+        <a href="../files/controllers_userController.js.html#l261"><code>controllers&#x2F;userController.js:261</code></a>
         
         </p>
 
@@ -746,7 +753,7 @@
             
         
         
-        <a href="../files/controllers_userController.js.html#l285"><code>controllers&#x2F;userController.js:285</code></a>
+        <a href="../files/controllers_userController.js.html#l300"><code>controllers&#x2F;userController.js:300</code></a>
         
         </p>
 
@@ -837,7 +844,7 @@ After perform facebook account authentication, facebook will render to callback 
             
         
         
-        <a href="../files/controllers_userController.js.html#l303"><code>controllers&#x2F;userController.js:303</code></a>
+        <a href="../files/controllers_userController.js.html#l318"><code>controllers&#x2F;userController.js:318</code></a>
         
         </p>
 
@@ -877,8 +884,8 @@ This is for facebook itself.</p>
 </div>
 
                 
-                    <div id="method_friendReq" class="method item">
-    <h3 class="name"><code>friendReq</code></h3>
+                    <div id="method_fbLogin" class="method item">
+    <h3 class="name"><code>fbLogin</code></h3>
 
     
         <div class="args">
@@ -886,7 +893,13 @@ This is for facebook itself.</p>
             
                 <li class="arg">
                     
-                        <code>userId</code>
+                        <code>token</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>profileId</code>
                     
                 </li>
             
@@ -923,7 +936,7 @@ This is for facebook itself.</p>
             
         
         
-        <a href="../files/controllers_userController.js.html#l479"><code>controllers&#x2F;userController.js:479</code></a>
+        <a href="../files/controllers_userController.js.html#l282"><code>controllers&#x2F;userController.js:282</code></a>
         
         </p>
 
@@ -934,8 +947,8 @@ This is for facebook itself.</p>
     </div>
 
     <div class="description">
-        <p>[GET]</p>
-<p>Get friend requests</p>
+        <p>[POST]</p>
+<p>Called after do FB authentication to get pesponsive user</p>
 
     </div>
 
@@ -947,14 +960,31 @@ This is for facebook itself.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">userId</code>
+                        <code class="param-name">token</code>
                         <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
                     
 
                     
 
                     <div class="param-description">
-                         
+                        <p>(in request content)</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">profileId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>(in request content)</p>
+
                     </div>
 
                     
@@ -973,7 +1003,7 @@ This is for facebook itself.</p>
                     
                         <span class="type">JSON</span>:
                     
-                    <p>List of friend requests</p>
+                    <p>success, userId</p>
 
                 
             </div>
@@ -985,7 +1015,7 @@ This is for facebook itself.</p>
             <h4>Example:</h4>
 
             <div class="example-content">
-                <p> /api/user/:userId/friendReq</p>
+                <p> /api/fbLogin</p>
 
             </div>
         </div>
@@ -1045,7 +1075,7 @@ This is for facebook itself.</p>
             
         
         
-        <a href="../files/controllers_userController.js.html#l466"><code>controllers&#x2F;userController.js:466</code></a>
+        <a href="../files/controllers_userController.js.html#l481"><code>controllers&#x2F;userController.js:481</code></a>
         
         </p>
 
@@ -1132,6 +1162,122 @@ This is for facebook itself.</p>
 </div>
 
                 
+                    <div id="method_friendReq" class="method item">
+    <h3 class="name"><code>friendReq</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>userId</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type">JSON</span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/controllers_userController.js.html#l494"><code>controllers&#x2F;userController.js:494</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>[GET]</p>
+<p>Get friend requests</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">userId</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                         
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type">JSON</span>:
+                    
+                    <p>List of friend requests</p>
+
+                
+            </div>
+        </div>
+    
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <p> /api/user/:userId/friendReq</p>
+
+            </div>
+        </div>
+    
+</div>
+
+                
                     <div id="method_getFbFriendCandidate" class="method item">
     <h3 class="name"><code>getFbFriendCandidate</code></h3>
 
@@ -1178,7 +1324,7 @@ This is for facebook itself.</p>
             
         
         
-        <a href="../files/controllers_userController.js.html#l448"><code>controllers&#x2F;userController.js:448</code></a>
+        <a href="../files/controllers_userController.js.html#l463"><code>controllers&#x2F;userController.js:463</code></a>
         
         </p>
 
@@ -1295,7 +1441,7 @@ When this is useful? User wants to add friend via &#39;Find friends from faceboo
             
         
         
-        <a href="../files/controllers_userController.js.html#l358"><code>controllers&#x2F;userController.js:358</code></a>
+        <a href="../files/controllers_userController.js.html#l373"><code>controllers&#x2F;userController.js:373</code></a>
         
         </p>
 
@@ -1411,7 +1557,7 @@ When this is useful? User wants to add friend via &#39;Find friends from faceboo
             
         
         
-        <a href="../files/controllers_userController.js.html#l430"><code>controllers&#x2F;userController.js:430</code></a>
+        <a href="../files/controllers_userController.js.html#l445"><code>controllers&#x2F;userController.js:445</code></a>
         
         </p>
 
@@ -1528,7 +1674,7 @@ When this is useful? User wants to add friend via &#39;Search by name&#39;</p>
             
         
         
-        <a href="../files/controllers_userController.js.html#l375"><code>controllers&#x2F;userController.js:375</code></a>
+        <a href="../files/controllers_userController.js.html#l390"><code>controllers&#x2F;userController.js:390</code></a>
         
         </p>
 
@@ -1644,7 +1790,7 @@ When this is useful? User wants to add friend via &#39;Search by name&#39;</p>
             
         
         
-        <a href="../files/controllers_userController.js.html#l341"><code>controllers&#x2F;userController.js:341</code></a>
+        <a href="../files/controllers_userController.js.html#l356"><code>controllers&#x2F;userController.js:356</code></a>
         
         </p>
 
@@ -1750,7 +1896,7 @@ When this is useful? User wants to add friend via &#39;Search by name&#39;</p>
             
         
         
-        <a href="../files/controllers_userController.js.html#l325"><code>controllers&#x2F;userController.js:325</code></a>
+        <a href="../files/controllers_userController.js.html#l340"><code>controllers&#x2F;userController.js:340</code></a>
         
         </p>
 
@@ -1849,7 +1995,7 @@ When this is useful? User wants to add friend via &#39;Search by name&#39;</p>
             
         
         
-        <a href="../files/controllers_userController.js.html#l248"><code>controllers&#x2F;userController.js:248</code></a>
+        <a href="../files/controllers_userController.js.html#l245"><code>controllers&#x2F;userController.js:245</code></a>
         
         </p>
 
@@ -1988,7 +2134,7 @@ When this is useful? User wants to add friend via &#39;Search by name&#39;</p>
             
         
         
-        <a href="../files/controllers_userController.js.html#l232"><code>controllers&#x2F;userController.js:232</code></a>
+        <a href="../files/controllers_userController.js.html#l229"><code>controllers&#x2F;userController.js:229</code></a>
         
         </p>
 
@@ -2133,7 +2279,7 @@ When this is useful? User wants to add friend via &#39;Search by name&#39;</p>
             
         
         
-        <a href="../files/controllers_userController.js.html#l501"><code>controllers&#x2F;userController.js:501</code></a>
+        <a href="../files/controllers_userController.js.html#l516"><code>controllers&#x2F;userController.js:516</code></a>
         
         </p>
 
@@ -2288,7 +2434,7 @@ First will remove the entry in friendReq and if it&#39;s approved it will do add
             
         
         
-        <a href="../files/controllers_userController.js.html#l412"><code>controllers&#x2F;userController.js:412</code></a>
+        <a href="../files/controllers_userController.js.html#l427"><code>controllers&#x2F;userController.js:427</code></a>
         
         </p>
 
@@ -2427,7 +2573,7 @@ First will remove the entry in friendReq and if it&#39;s approved it will do add
             
         
         
-        <a href="../files/controllers_userController.js.html#l521"><code>controllers&#x2F;userController.js:521</code></a>
+        <a href="../files/controllers_userController.js.html#l536"><code>controllers&#x2F;userController.js:536</code></a>
         
         </p>
 
@@ -2440,6 +2586,21 @@ First will remove the entry in friendReq and if it&#39;s approved it will do add
     <div class="description">
         <p>[POST]</p>
 <p>Set user preference</p>
+<p>Input should be full user preference, that says, all new add or delete preference should manipulate in client slide</p>
+<p>weights = -1, 0, 1
+1 =&gt; Like it
+0 =&gt; soso
+-1 =&gt; definitely not</p>
+<p>&quot;preference&quot; : [
+   {
+     categories: &quot;pizza&quot;,
+     weights: &quot;1&quot;
+   },
+   {
+     categories: &quot;salad&quot;,
+     weights: &quot;-1&quot;
+   }
+]</p>
 
     </div>
 
@@ -2473,8 +2634,7 @@ First will remove the entry in friendReq and if it&#39;s approved it will do add
                     
 
                     <div class="param-description">
-                        <p>Send all user preference, not just the one to add or remove</p>
-
+                         
                     </div>
 
                     
@@ -2559,7 +2719,7 @@ First will remove the entry in friendReq and if it&#39;s approved it will do add
             
         
         
-        <a href="../files/controllers_userController.js.html#l532"><code>controllers&#x2F;userController.js:532</code></a>
+        <a href="../files/controllers_userController.js.html#l565"><code>controllers&#x2F;userController.js:565</code></a>
         
         </p>
 
@@ -2669,7 +2829,7 @@ First will remove the entry in friendReq and if it&#39;s approved it will do add
             
         
         
-        <a href="../files/controllers_userController.js.html#l161"><code>controllers&#x2F;userController.js:161</code></a>
+        <a href="../files/controllers_userController.js.html#l158"><code>controllers&#x2F;userController.js:158</code></a>
         
         </p>
 
@@ -2722,7 +2882,7 @@ Since we dont really need to care about web page right now, temporary ignore it.
             
         
         
-        <a href="../files/controllers_userController.js.html#l203"><code>controllers&#x2F;userController.js:203</code></a>
+        <a href="../files/controllers_userController.js.html#l200"><code>controllers&#x2F;userController.js:200</code></a>
         
         </p>
 

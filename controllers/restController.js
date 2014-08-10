@@ -29,9 +29,9 @@ module.exports = function(app) {
      * Please remember this should encode with base64 utf-8 format before it sent
      *
      * @method getRecommendRest
-     * @param {String} participants (uft-8 encoded)
+     * @param {String} participants
      * @return {JSON} restaurant list
-     * @example /api/getRecommendRest
+     * @example /api/getRecommendRest?participants=<uft-8 encoded participants arry>
      */
     app.route('/api/getRecommendRest')
         .get(function(req, res) {
@@ -52,6 +52,23 @@ module.exports = function(app) {
     /**
      * [GET]
      *
+     * Get top 3 recommand restaurant bases on user location
+     *
+     * @method getUserLocRecommendRest
+     * @param {String} userLocation
+     * @return {JSON} restaurant list
+     * @example /api/user/:userId/getUserLocRecommendRest
+     */
+    app.route('/api/user/:userId/getUserLocRecommendRest')
+        .get(function(req, res) {
+            rest.getUserLocRecommendRest(req.params.userId, req.query.userLocation, function(data) {
+                return res.send(data);
+            });
+        });
+
+    /**
+     * [GET]
+     *
      * Get restaurant by id
      *
      * @method getRestaurantById
@@ -64,5 +81,31 @@ module.exports = function(app) {
             rest.getRestaurantById(req.params.restaurantId, function(data){
                 return res.send(data);
             });
+        });
+
+    /**
+     * [GET]
+     *
+     * Get restaurant by an array of ids
+     *
+     * @method getRestaurantByIds
+     * @param {array} restIds
+     * @return {JSON} restaurant info
+     * @example /api/getRestaurantByIds?restIds=<uft-8 encoded participants arry>
+     */
+    app.route('/api/getRestaurantByIds')
+        .get(function(req, res) {
+            try {
+                //decode base64 string
+                var decodedInput = new Buffer(req.query.restIds, 'base64').toString("utf8");
+                var decodedQueryObj = JSON.parse(decodedInput);
+
+                rest.getRestaurantByIds(decodedQueryObj.restaurant_ids, function(data){
+                    return res.send(data);
+                });
+            } catch (e) {
+                // An error has occured, probably on JSON,parse
+                return res.send('Not valid input, unable to do JSON.parse. Please check your pre-encoded JSON format');
+            }
         });
 };

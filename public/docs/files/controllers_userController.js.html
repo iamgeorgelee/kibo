@@ -185,9 +185,6 @@ var fbAuthCallback = function (passport, req, res, next) {
     })(req, res, next);
 };
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 module.exports = function(app, passport) {
 
     // =======================================
@@ -377,6 +374,24 @@ module.exports = function(app, passport) {
                 return res.send(data);
             });
         });
+    
+    /**
+     * [POST]
+     *
+     * Called after do FB authentication to get pesponsive user
+     *
+     * @method fbLogin
+     * @param {String} token (in request content)
+     * @param {String} profileId (in request content)
+     * @return {JSON} success, userId
+     * @example /api/fbLogin
+     */
+    app.route(&#x27;/api/fbLogin&#x27;)
+        .post(function(req, res) {
+            user.getUserByFbProfileId(req.param(&#x27;token&#x27;), req.param(&#x27;profileId&#x27;), function(data) {
+                return res.send(data);
+            });
+        });    
 
     /**
      * [GET]
@@ -619,9 +634,27 @@ module.exports = function(app, passport) {
      *
      * Set user preference
      *
+     * Input should be full user preference, that says, all new add or delete preference should manipulate in client slide
+     *
+     * weights = -1, 0, 1
+     * 1 =&gt; Like it
+     * 0 =&gt; soso
+     * -1 =&gt; definitely not
+     *
+     * &quot;preference&quot; : [
+     *    {
+     *      categories: &quot;pizza&quot;,
+     *      weights: &quot;1&quot;
+     *    },
+     *    {
+     *      categories: &quot;salad&quot;,
+     *      weights: &quot;-1&quot;
+     *    }
+     * ]
+     *
      * @method userPreference
      * @param {String} userId
-     * @param {Array} preference Send all user preference, not just the one to add or remove
+     * @param {Array} preference
      * @return {Boolean} Success
      * @example /api/user/:userId/userPreference
      */
