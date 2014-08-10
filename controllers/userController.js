@@ -278,6 +278,24 @@ module.exports = function(app, passport) {
                 return res.send(data);
             });
         });
+    
+    /**
+     * [POST]
+     *
+     * Called after do FB authentication to get pesponsive user
+     *
+     * @method fbLogin
+     * @param {String} token (in request content)
+     * @param {String} profileId (in request content)
+     * @return {JSON} success, userId
+     * @example /api/fbLogin
+     */
+    app.route('/api/fbLogin')
+        .post(function(req, res) {
+            user.getUserByFbProfileId(req.param('token'), req.param('profileId'), function(data) {
+                return res.send(data);
+            });
+        });    
 
     /**
      * [GET]

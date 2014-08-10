@@ -65,6 +65,33 @@ var getUsers = function (callback) {
 };
 module.exports.getUsers = getUsers;
 
+exports.getUserByFbProfileId = function (token, profileId, callback) {
+    var queryString = "{\"facebook.id\": \"" + profileId + "\"}";
+
+    async.waterfall([
+        function (callback) {
+            db.getCollection("User", queryString, function(data){
+                if (data.message === 'Document not found') {
+                    callback({success:false, message: 'No such user'}, null);
+                } else {
+                    callback(null, data[0]);
+                }
+            });
+        },
+        function (userData, callback) {
+            db.updateDocument('User', userData._id.$oid, {
+                "$set": {
+                    "facebook.token": token
+                }
+            }, function (data) {
+                callback(null, data);
+            });
+        }
+    ], function (err, result) {
+        (err)? callback(err): callback(result);
+    });
+};
+
 exports.getUserById = function (userId, callback) {
     isUserIdValid(userId, function(data){
         (!data.success)? callback(data): callback(data.userData);

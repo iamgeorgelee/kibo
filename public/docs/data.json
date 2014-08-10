@@ -429,6 +429,33 @@
         {
             "file": "controllers/userController.js",
             "line": 282,
+            "description": "[POST]\n\nCalled after do FB authentication to get pesponsive user",
+            "itemtype": "method",
+            "name": "fbLogin",
+            "params": [
+                {
+                    "name": "token",
+                    "description": "(in request content)",
+                    "type": "String"
+                },
+                {
+                    "name": "profileId",
+                    "description": "(in request content)",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "success, userId",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/fbLogin"
+            ],
+            "class": "UserController"
+        },
+        {
+            "file": "controllers/userController.js",
+            "line": 300,
             "description": "[GET]\n\nPerform facebook account authentication.\nScope defines what kind of data you want user to authorize you.\nAfter perform facebook account authentication, facebook will render to callback location.",
             "itemtype": "method",
             "name": "fbAuth",
@@ -445,7 +472,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 300,
+            "line": 318,
             "description": "After perform facebook account authentication, facebook will render back to this location.\nThis is for facebook itself.",
             "itemtype": "method",
             "name": "fbAuth/Callback",
@@ -461,7 +488,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 322,
+            "line": 340,
             "description": "[GET]\n\nGet app user list",
             "itemtype": "method",
             "name": "getUsers",
@@ -476,7 +503,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 338,
+            "line": 356,
             "description": "[GET]\n\nGet user by id",
             "itemtype": "method",
             "name": "getUserById",
@@ -498,7 +525,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 355,
+            "line": 373,
             "description": "[GET]\n\nGet facebook friends who also authorize this app.",
             "itemtype": "method",
             "name": "getFbFriends",
@@ -520,7 +547,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 372,
+            "line": 390,
             "description": "[GET]\n\nGet friend list",
             "itemtype": "method",
             "name": "getFriendList",
@@ -542,7 +569,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 389,
+            "line": 407,
             "description": "[POST]\n\nAdd friend\n\nAvoid use this function directly, should do review friend request instead",
             "itemtype": "method",
             "name": "addFriend",
@@ -569,7 +596,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 409,
+            "line": 427,
             "description": "[POST]\n\nUnfriend",
             "itemtype": "method",
             "name": "unfriend",
@@ -596,7 +623,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 427,
+            "line": 445,
             "description": "[GET]\n\nGet a list of app user you can add them as friend\nWhen this is useful? User wants to add friend via 'Search by name'",
             "itemtype": "method",
             "name": "getFriendCandidate",
@@ -618,7 +645,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 445,
+            "line": 463,
             "description": "[GET]\n\nGet a list of app user who is your facebook friend but not your friend in this app\nWhen this is useful? User wants to add friend via 'Find friends from facebook'",
             "itemtype": "method",
             "name": "getFbFriendCandidate",
@@ -640,7 +667,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 463,
+            "line": 481,
             "description": "[POST]\n\nSend a friend request.\n\nuserA send a friend request to userB, in user B's DB entry will record the request.",
             "itemtype": "method",
             "name": "friendReq",
@@ -667,7 +694,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 476,
+            "line": 494,
             "description": "[GET]\n\nGet friend requests",
             "itemtype": "method",
             "name": "friendReq",
@@ -689,7 +716,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 498,
+            "line": 516,
             "description": "[POST]\n\nReview friend request, also need to tell approve or deny\nFirst will remove the entry in friendReq and if it's approved it will do add friend",
             "itemtype": "method",
             "name": "reviewFriendReq",
@@ -721,7 +748,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 518,
+            "line": 536,
             "description": "[POST]\n\nSet user preference\n\nInput should be full user preference, that says, all new add or delete preference should manipulate in client slide\n\nweights = -1, 0, 1\n1 => Like it\n0 => soso\n-1 => definitely not\n\n\"preference\" : [\n   {\n     categories: \"pizza\",\n     weights: \"1\"\n   },\n   {\n     categories: \"salad\",\n     weights: \"-1\"\n   }\n]",
             "itemtype": "method",
             "name": "userPreference",
@@ -748,7 +775,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 547,
+            "line": 565,
             "description": "[GET]\n\nGet user preference",
             "itemtype": "method",
             "name": "userPreference",
