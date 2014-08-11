@@ -15,11 +15,11 @@ Event.prototype.add_participant = function(participant) {
 
 Event.prototype.rsvp = function(participant, decision) {
 
-	for	(var index = 0; index < this.guest.length; index++) {
-    	if(this.guest[index].id === participant){
+	for	(var index = 0; index < this.participants.length; index++) {
+    	if(this.participants[index].id === participant){
 
-    		this.guest[index].going = decision;
-    		this.guest[index].stage = 1;
+    		this.participants[index].going = decision;
+    		this.participants[index].stage = 1;
 
     		return true;
     	}

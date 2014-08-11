@@ -67,6 +67,9 @@ module.exports.performrequest = performrequest;
  * @return {JSON} userList
  */
 exports.getCollection = function (collectionName, queryString, callback) {
+
+    console.log(queryString);
+
     performrequest(dbConfig.host, '/api/1/databases/kibo/collections/' + collectionName, 'GET', {
         apiKey: dbConfig.apiKey,
         q: queryString
