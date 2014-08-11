@@ -1,5 +1,5 @@
 var async = require('async');
-var bcrypt = require('bcrypt-nodejs');
+// var bcrypt = require('bcrypt-nodejs');
 var db = require('../routes/dbRoutes.js');
 var graph = require('fbgraph'); // graph is a facebook SDK
 var options = { // options needed for SDK
@@ -15,17 +15,21 @@ var crypto = require('crypto');
 // var salt = bcrypt.genSaltSync(8);
 
 function encrypt(toEncrypt){
-  var cipher = crypto.createCipher('aes-256-cbc','someSalt_ChangeThisLater');
-  var crypted = cipher.update(toEncrypt,'utf8','hex');
-  crypted += cipher.final('hex');
-  return crypted;
+    var cipher = crypto.createCipher('aes-256-cbc', 'someSalt_ChangeThisLater');
+    var crypted = cipher.update(toEncrypt, 'utf8', 'hex');
+    crypted += cipher.final('hex');
+    return crypted;
 }
 
 function decrypt(toDecrypt){
-  var decipher = crypto.createDecipher('aes-256-cbc','someSalt_ChangeThisLater');
-  var dec = decipher.update(toDecrypt,'hex','utf8');
-  dec += decipher.final('utf8');
-  return dec;
+    try{
+        var decipher = crypto.createDecipher('aes-256-cbc', 'someSalt_ChangeThisLater');
+        var dec = decipher.update(toDecrypt, 'hex', 'utf8');
+        dec += decipher.final('utf8');
+        return dec;
+    } catch (err){
+        return err;
+    }
 }
 
 function isSuccess(data) {
@@ -81,7 +85,7 @@ exports.getUserByFbProfileId = function (token, profileId, callback) {
         function (userData, callback) {
             db.updateDocument('User', userData._id.$oid, {
                 "$set": {
-                    "facebook.token": token
+                    "facebook.token": encrypt(token)
                 }
             }, function (data) {
                 callback(null, data);
@@ -119,7 +123,12 @@ var getFbFriends = function (userId, callback) {
         if(!data.success){
             callback(data);
         } else{
-            graph.setOptions(options).setAccessToken(decrypt(data.userData.facebook.token)).get("me?fields=friends", function (err, res) {
+            var decryptedToken = decrypt(data.userData.facebook.token);
+            if(decryptedToken instanceof Error){
+                callback(decryptedToken.message);
+            }
+
+            graph.setOptions(options).setAccessToken(decryptedToken).get("me?fields=friends", function (err, res) {
                 callback(res.friends);
             });
         }

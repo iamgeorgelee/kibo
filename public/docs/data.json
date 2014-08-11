@@ -315,6 +315,28 @@
             "class": "restController"
         },
         {
+            "file": "controllers/restController.js",
+            "line": 112,
+            "description": "[GET]\n\nSearch restaurants w/ filter",
+            "itemtype": "method",
+            "name": "searchRestaurants",
+            "params": [
+                {
+                    "name": "filter",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "restaurant info",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/searchRestaurants?filter="
+            ],
+            "class": "restController"
+        },
+        {
             "file": "controllers/userController.js",
             "line": 158,
             "description": "Clearly a stupid way and obviously there will be a problem when web page user and mobile user do facebook auth the same time.\nSince we dont really need to care about web page right now, temporary ignore it. Need to fix later.",

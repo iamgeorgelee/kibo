@@ -108,4 +108,21 @@ module.exports = function(app) {
                 return res.send('Not valid input, unable to do JSON.parse. Please check your pre-encoded JSON format');
             }
         });
+
+    /**
+     * [GET]
+     *
+     * Search restaurants w/ filter
+     *
+     * @method searchRestaurants
+     * @param {String} filter
+     * @return {JSON} restaurant info
+     * @example /api/searchRestaurants?filter=
+     */
+    app.route('/api/searchRestaurants')
+        .get(function(req, res) {
+            rest.searchRestaurants(req.query.filter, function(data){
+                return res.send(data);
+            });
+        });
 };
