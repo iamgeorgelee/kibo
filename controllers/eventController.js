@@ -82,10 +82,10 @@ module.exports = function(app) {
 
         	var tomorrow = new Date();
         	tomorrow.setHours(23,59,59,999);
-        	tomorrow.setDate(date.getDate() + 1);
+        	tomorrow.setDate(tomorrow.getDate() + 1);
         	var seven = new Date();
         	seven.setHours(23,59,59,999);
-        	seven.setDate(date.getDate() + 7);
+        	seven.setDate(seven.getDate() + 7);
             EventHandler.getEventByUserRange(req.params.userId, "yes", "date", tomorrow.toJSON(), seven.toJSON(), function(data) {
                 return res.send(data);
             });

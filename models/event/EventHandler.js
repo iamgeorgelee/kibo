@@ -61,7 +61,7 @@ exports.createEvent = function(payload, callback){
         //stage 1 get restaurant list, create vote
         function(callback) {
 
-        	if(newEvent.restaurant == undefined) { // get recommendation
+        	if(newEvent.restaurant === undefined) { // get recommendation
 
 
         		//get users' location

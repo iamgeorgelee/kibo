@@ -142,6 +142,87 @@ module.exports = function(app) {
             });
         });
 
+          /**
+     * [GET]
+     *
+     * Get today&#x27;s event by user id 
+     *
+     * @method getEventById
+     * @param {String} type keyword
+     * @return {JSON} event data
+     * @example /api/event/today/userid
+     */
+    app.route(&#x27;/api/event/today/:userId&#x27;)
+        .get(function(req, res) {
+
+        	var current = new Date();
+        	var eod = new Date();
+        	eod.setHours(23,59,59,999);
+            EventHandler.getEventByUserRange(req.params.userId, &quot;yes&quot;, &quot;date&quot;, current.toJSON(), eod.toJSON(), function(data) {
+                return res.send(data);
+            });
+        });
+
+          /**
+     * [GET]
+     *
+     * Get event by user id from 7 days
+     *
+     * @method getEventById
+     * @param {String} userId
+     * @return {JSON} event data
+     * @example /api/event/upcoming/userid
+     */
+    app.route(&#x27;/api/event/upcoming/:userId&#x27;)
+        .get(function(req, res) {
+
+        	var tomorrow = new Date();
+        	tomorrow.setHours(23,59,59,999);
+        	tomorrow.setDate(tomorrow.getDate() + 1);
+        	var seven = new Date();
+        	seven.setHours(23,59,59,999);
+        	seven.setDate(seven.getDate() + 7);
+            EventHandler.getEventByUserRange(req.params.userId, &quot;yes&quot;, &quot;date&quot;, tomorrow.toJSON(), seven.toJSON(), function(data) {
+                return res.send(data);
+            });
+        });
+      /**
+     * [GET]
+     *
+     * Get event by other types of parameter
+     *
+     * @method getEventById
+     * @param {String} type of parameter
+     * @param {String} type keyword
+     * @return {JSON} event data
+     * @example /api/event/creater/createrid
+     */
+    app.route(&#x27;/api/event/:type/:keyword&#x27;)
+        .get(function(req, res) {
+            EventHandler.getEvent(req.params.type, req.params.keyword, function(data) {
+                return res.send(data);
+            });
+        });
+
+
+           /**
+     * [GET]
+     *
+     * Get event by other types of parameter
+     *
+     * @method getEventById
+     * @param {String} type of parameter
+     * @param {String} type keyword
+     * @return {JSON} event data
+     * @example /api/event/creater/createrid
+     */
+    app.route(&#x27;/api/event/upcoming/:userId&#x27;)
+        .get(function(req, res) {
+            EventHandler.getEvent(req.params.type, req.params.keyword, function(data) {
+                return res.send(data);
+            });
+        });
+
     /**
      * [POST]
      *
@@ -155,9 +236,9 @@ module.exports = function(app) {
      * @example /api/event
      * {
 	*	  &quot;name&quot;: &quot;test1&quot;,
-	*	  &quot;time&quot;: &quot;6:30&quot;,
-	*	  &quot;Date&quot;: &quot;11/11/2014&quot;,
-	*	  &quot;guest&quot;: [
+	*	  &quot;Date&quot;: &quot;2012-04-23T18:25:43.511Z&quot;,
+	*	  &quot;restaurant&quot;: &quot;booling crab&quot;, //optional, if decided and no voting
+	*      &quot;participants&quot;: [
 	*	    {
 	*	      &quot;id&quot;: &quot;a45612378&quot;
 	*	    },

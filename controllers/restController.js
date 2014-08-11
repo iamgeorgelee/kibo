@@ -108,4 +108,29 @@ module.exports = function(app) {
                 return res.send('Not valid input, unable to do JSON.parse. Please check your pre-encoded JSON format');
             }
         });
+
+    /**
+     * [GET]
+     *
+     * Search restaurants w/ filter. Can accept all lower case, will transform "all lower case" to "All Lower Case" to match restaurant name
+     *
+     * @method searchRestaurants
+     * @param {String} filter
+     * @return {JSON} restaurant info
+     * @example /api/searchRestaurants?filter=
+     */
+    app.route('/api/searchRestaurants')
+        .get(function(req, res) {
+            var filterStr = req.query.filter;
+
+            if(filterStr.length < 3){
+                return res.send({success: false, message: "Filter must input more than 2 character"});
+            } else{
+                //Make filter string become title case to match restaurant name
+                filterStr = filterStr.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+            }
+            rest.searchRestaurants(filterStr, function(data){
+                return res.send(data);
+            });
+        });
 };

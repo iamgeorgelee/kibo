@@ -175,6 +175,104 @@
         {
             "file": "controllers/eventController.js",
             "line": 49,
+            "description": "[GET]\n\nGet today's event by user id",
+            "itemtype": "method",
+            "name": "getEventById",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "keyword",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "event data",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/event/today/userid"
+            ],
+            "class": "eventContorller"
+        },
+        {
+            "file": "controllers/eventController.js",
+            "line": 70,
+            "description": "[GET]\n\nGet event by user id from 7 days",
+            "itemtype": "method",
+            "name": "getEventById",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "event data",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/event/upcoming/userid"
+            ],
+            "class": "eventContorller"
+        },
+        {
+            "file": "controllers/eventController.js",
+            "line": 93,
+            "description": "[GET]\n\nGet event by other types of parameter",
+            "itemtype": "method",
+            "name": "getEventById",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "of parameter",
+                    "type": "String"
+                },
+                {
+                    "name": "type",
+                    "description": "keyword",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "event data",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/event/creater/createrid"
+            ],
+            "class": "eventContorller"
+        },
+        {
+            "file": "controllers/eventController.js",
+            "line": 112,
+            "description": "[GET]\n\nGet event by other types of parameter",
+            "itemtype": "method",
+            "name": "getEventById",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "of parameter",
+                    "type": "String"
+                },
+                {
+                    "name": "type",
+                    "description": "keyword",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "event data",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/event/creater/createrid"
+            ],
+            "class": "eventContorller"
+        },
+        {
+            "file": "controllers/eventController.js",
+            "line": 130,
             "description": "[POST]\n\nCreate Event\n(should add send friend request later on)",
             "itemtype": "method",
             "name": "createEvent",
@@ -195,13 +293,13 @@
                 "type": "JSON"
             },
             "example": [
-                " /api/event\n{\n\t  \"name\": \"test1\",\n\t  \"time\": \"6:30\",\n\t  \"Date\": \"11/11/2014\",\n\t  \"guest\": [\n\t    {\n\t      \"id\": \"a45612378\"\n\t    },\n\t    {\n\t      \"id\": \"a445122378\"\n\t    }\n\t  ],\n\t  \"creater\": \"a123456789\"\n\t}\n"
+                " /api/event\n{\n\t  \"name\": \"test1\",\n\t  \"Date\": \"2012-04-23T18:25:43.511Z\",\n\t  \"restaurant\": \"booling crab\", //optional, if decided and no voting\n     \"participants\": [\n\t    {\n\t      \"id\": \"a45612378\"\n\t    },\n\t    {\n\t      \"id\": \"a445122378\"\n\t    }\n\t  ],\n\t  \"creater\": \"a123456789\"\n\t}\n"
             ],
             "class": "eventContorller"
         },
         {
             "file": "controllers/eventController.js",
-            "line": 83,
+            "line": 164,
             "description": "[PUT]\n\nguest RSVP",
             "itemtype": "method",
             "name": "RSVP",
@@ -311,6 +409,28 @@
             },
             "example": [
                 " /api/getRestaurantByIds?restIds=<uft-8 encoded participants arry>"
+            ],
+            "class": "restController"
+        },
+        {
+            "file": "controllers/restController.js",
+            "line": 112,
+            "description": "[GET]\n\nSearch restaurants w/ filter. Can accept all lower case, will transform \"all lower case\" to \"All Lower Case\" to match restaurant name",
+            "itemtype": "method",
+            "name": "searchRestaurants",
+            "params": [
+                {
+                    "name": "filter",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "restaurant info",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/searchRestaurants?filter="
             ],
             "class": "restController"
         },
