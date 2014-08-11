@@ -112,7 +112,7 @@ module.exports = function(app) {
     /**
      * [GET]
      *
-     * Search restaurants w/ filter
+     * Search restaurants w/ filter. Can accept all lower case, will transform "all lower case" to "All Lower Case" to match restaurant name
      *
      * @method searchRestaurants
      * @param {String} filter
@@ -121,7 +121,15 @@ module.exports = function(app) {
      */
     app.route('/api/searchRestaurants')
         .get(function(req, res) {
-            rest.searchRestaurants(req.query.filter, function(data){
+            var filterStr = req.query.filter;
+
+            if(filterStr.length < 3){
+                return res.send({success: false, message: "Filter must input more than 2 character"});
+            } else{
+                //Make filter string become title case to match restaurant name
+                filterStr = filterStr.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+            }
+            rest.searchRestaurants(filterStr, function(data){
                 return res.send(data);
             });
         });

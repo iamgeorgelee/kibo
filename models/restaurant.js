@@ -123,3 +123,14 @@ exports.getUserLocRecommendRest = function(userId, userLocation, callback){
     );
 };
 
+exports.searchRestaurants = function(filter, callback){
+    var queryString = "{\"name\":{\"$regex\":\"" + filter + "*\"}}";
+
+    db.getCollection("Restaurants", queryString, function(data){
+        if (data.length <= 0) {
+            callback({success:false, message: 'No such restaurant'});
+        } else {
+            callback({success:true, restaurantData:data});
+        }
+    });
+};
