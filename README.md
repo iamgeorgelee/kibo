@@ -42,6 +42,7 @@ Currently we do:
 
 ###Higher Priority
 
+* Search restaurant
 * Able to create user defined event: choose restaurant from recommendation, pick friends, send notification, user receive invite and accept/reject. No voting. [7/20]
 * middle check point + voting [8/3]
 * Error message should return with HTTP status code

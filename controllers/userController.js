@@ -278,7 +278,7 @@ module.exports = function(app, passport) {
                 return res.send(data);
             });
         });
-    
+
     /**
      * [POST]
      *
@@ -295,7 +295,7 @@ module.exports = function(app, passport) {
             user.getUserByFbProfileId(req.param('token'), req.param('profileId'), function(data) {
                 return res.send(data);
             });
-        });    
+        });
 
     /**
      * [GET]

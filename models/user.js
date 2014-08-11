@@ -12,17 +12,17 @@ var options = { // options needed for SDK
     }
 };
 var crypto = require('crypto');
-var salt = bcrypt.genSaltSync(8);
+// var salt = bcrypt.genSaltSync(8);
 
 function encrypt(toEncrypt){
-  var cipher = crypto.createCipher('aes-256-cbc',salt);
+  var cipher = crypto.createCipher('aes-256-cbc','someSalt_ChangeThisLater');
   var crypted = cipher.update(toEncrypt,'utf8','hex');
   crypted += cipher.final('hex');
   return crypted;
 }
 
 function decrypt(toDecrypt){
-  var decipher = crypto.createDecipher('aes-256-cbc',salt);
+  var decipher = crypto.createDecipher('aes-256-cbc','someSalt_ChangeThisLater');
   var dec = decipher.update(toDecrypt,'hex','utf8');
   dec += decipher.final('utf8');
   return dec;
@@ -71,7 +71,7 @@ exports.getUserByFbProfileId = function (token, profileId, callback) {
     async.waterfall([
         function (callback) {
             db.getCollection("User", queryString, function(data){
-                if (data.message === 'Document not found') {
+                if (data.length <= 0) {
                     callback({success:false, message: 'No such user'}, null);
                 } else {
                     callback(null, data[0]);
@@ -203,7 +203,8 @@ var addFriend = function (userId, friendId, callback) {
                     }
                     userNewFriendList.push({
                         "id": friendId,
-                        "name": friendData.name
+                        "name": friendData.name,
+                        "profilePic": friendData.facebook.profilePic
                     });
 
                     callback();
@@ -214,7 +215,8 @@ var addFriend = function (userId, friendId, callback) {
 
                     friendNewFriendList.push({
                         "id": userId,
-                        "name": userData.name
+                        "name": userData.name,
+                        "profilePic": userData.facebook.profilePic
                     });
 
                     callback();

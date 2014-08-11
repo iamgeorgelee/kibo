@@ -32,7 +32,7 @@ var getRestaurantByIds = function (restIds, callback) {
     db.getCollection("Restaurants", queryString, function(data){
         var response;
 
-        if (data.message === 'Document not found') {
+        if (data.length <= 0) {
             response = {success:false, message: 'No such restaurant'};
         } else {
             response = {success:true, restaurantData:data};
