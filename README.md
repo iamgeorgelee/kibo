@@ -42,9 +42,10 @@ Currently we do:
 
 ###Higher Priority
 
-* Search restaurant
-* Able to create user defined event: choose restaurant from recommendation, pick friends, send notification, user receive invite and accept/reject. No voting. [7/20]
-* middle check point + voting [8/3]
+* HTTP status code
+* User preference only yes or no, not -1, 0, 1
+* APN
+* Able to create user defined event: choose restaurant from recommendation, pick friends, send notification, user receive invite and accept/reject. Voting.
 * Error message should return with HTTP status code
 * Move facebook App secret to DB
 * [bug] Not handling facebook paging

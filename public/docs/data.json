@@ -6,6 +6,41 @@
         "url": ""
     },
     "files": {
+        "apn/lib/connection.js": {
+            "name": "apn/lib/connection.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "apn/lib/device.js": {
+            "name": "apn/lib/device.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "apn/lib/errors.js": {
+            "name": "apn/lib/errors.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "apn/lib/feedback.js": {
+            "name": "apn/lib/feedback.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "apn/lib/notification.js": {
+            "name": "apn/lib/notification.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "controllers/eventController.js": {
             "name": "controllers/eventController.js",
             "modules": {},
@@ -40,11 +75,20 @@
             "fors": {},
             "namespaces": {}
         },
+        "routes/apnRoutes.js": {
+            "name": "routes/apnRoutes.js",
+            "modules": {},
+            "classes": {
+                "apnRoutes": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "routes/dbRoutes.js": {
             "name": "routes/dbRoutes.js",
             "modules": {},
             "classes": {
-                "dbController": 1
+                "dbRoutes": 1
             },
             "fors": {},
             "namespaces": {}
@@ -67,7 +111,8 @@
                 "eventContorller": 1,
                 "restController": 1,
                 "UserController": 1,
-                "dbController": 1
+                "apnRoutes": 1,
+                "dbRoutes": 1
             },
             "fors": {},
             "namespaces": {},
@@ -119,9 +164,23 @@
             "description": "User API",
             "is_constructor": 1
         },
-        "dbController": {
-            "name": "dbController",
-            "shortname": "dbController",
+        "apnRoutes": {
+            "name": "apnRoutes",
+            "shortname": "apnRoutes",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Kibo",
+            "file": "routes/apnRoutes.js",
+            "line": 1,
+            "description": "Apple Push Notification Service",
+            "is_constructor": 1
+        },
+        "dbRoutes": {
+            "name": "dbRoutes",
+            "shortname": "dbRoutes",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -135,6 +194,707 @@
         }
     },
     "classitems": [
+        {
+            "file": "apn/lib/connection.js",
+            "line": 23,
+            "description": "Create a new connection to the APN service.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "itemtype": "config",
+            "name": "{Boolean} [legacy=false] Whether to use the old (pre-iOS 7) protocol format.",
+            "type": "Buffer|String",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 124,
+            "description": "You should never need to call this method, initialization and connection is handled by {@link Connection#sendNotification}",
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 137,
+            "description": "You should never need to call this method, initialisation and connection is handled by {@link Connection#pushNotification}",
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 184,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 220,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 230,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 281,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 308,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 318,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 341,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 352,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 363,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 381,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 393,
+            "description": "Use this method to modify the cache length after initialisation.",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 400,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 413,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 424,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 457,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 468,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 531,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 548,
+            "access": "private",
+            "tagname": "",
+            "return": {
+                "description": "Write completed, returns true if socketDrained should be called by the caller of this method.",
+                "type": "Boolean"
+            },
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 677,
+            "description": "Queue a notification for delivery to recipients",
+            "params": [
+                {
+                    "name": "notification",
+                    "description": "The Notification object to be sent",
+                    "type": "Notification"
+                },
+                {
+                    "name": "recipient",
+                    "description": "The token(s) for devices the notification should be delivered to.",
+                    "type": "Device|String|Buffer|Device[]|String[]|Buffer[]"
+                }
+            ],
+            "since": "v1.3.0",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 703,
+            "description": "Send a notification to the APN service",
+            "params": [
+                {
+                    "name": "notification",
+                    "description": "The notification object to be sent",
+                    "type": "Notification"
+                }
+            ],
+            "deprecated": true,
+            "deprecationMessage": "Since v1.3.0, use pushNotification instead",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 712,
+            "description": "End connections with APNS once we've finished sending all notifications",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/device.js",
+            "line": 1,
+            "description": "Creates a Device.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "token",
+                    "description": "Device token",
+                    "type": "String|Buffer"
+                }
+            ],
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/device.js",
+            "line": 24,
+            "return": {
+                "description": "Device token in hex string representation",
+                "type": "String"
+            },
+            "since": "v1.2.0",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/errors.js",
+            "line": 1,
+            "description": "Error codes used by Apple",
+            "see": [
+                "<a href=\"https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CommunicatingWIthAPS/CommunicatingWIthAPS.html#//apple_ref/doc/uid/TP40008194-CH101-SW4\">The Binary Interface and Notification Formats</a>"
+            ],
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/feedback.js",
+            "line": 20,
+            "description": "Create a new connection to the APN Feedback.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "itemtype": "config",
+            "name": "{Number} [interval=3600] Interval to automatically connect to the Feedback service.",
+            "type": "Buffer|String",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/feedback.js",
+            "line": 110,
+            "description": "You should never need to call this method, initialization and connection is handled by {@link Connection#sendNotification}",
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/feedback.js",
+            "line": 135,
+            "description": "You should call {@link Feedback#start} instead of this method",
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/feedback.js",
+            "line": 180,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/feedback.js",
+            "line": 218,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/feedback.js",
+            "line": 231,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/feedback.js",
+            "line": 252,
+            "description": "Connect to the feedback service, also initialise the timer if an interval is specified.",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/feedback.js",
+            "line": 265,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/feedback.js",
+            "line": 275,
+            "description": "Cancel the timer to stop the Feedback service periodically connecting.",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 1,
+            "description": "Create a notification",
+            "is_constructor": 1,
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 14,
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 20,
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 33,
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 37,
+            "description": "Clone a notification to send to multiple devices",
+            "params": [
+                {
+                    "name": "device",
+                    "description": "Device the notification will be sent to",
+                    "type": "Device",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "A notification containing the same properties as the receiver",
+                "type": "Notification"
+            },
+            "since": "v1.2.0",
+            "deprecated": true,
+            "deprecationMessage": "Since v1.3.0, notifications are not tied to a device so do not need cloning.",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 67,
+            "description": "Set the expiry value on the payload",
+            "params": [
+                {
+                    "name": "expiry",
+                    "description": "Timestamp when the notification should expire.",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
+            "since": "v1.3.5",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 77,
+            "description": "Set the priority",
+            "params": [
+                {
+                    "name": "priority",
+                    "description": "Priority value for the notification.",
+                    "type": "Number",
+                    "optional": true,
+                    "optdefault": "10"
+                }
+            ],
+            "since": "v1.3.9",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 87,
+            "description": "Set the \"badge\" value on the alert object",
+            "params": [
+                {
+                    "name": "badge",
+                    "description": "Badge Value",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
+            "since": "v1.3.5",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 97,
+            "description": "Set the \"sound\" value on the alert object",
+            "params": [
+                {
+                    "name": "sound",
+                    "description": "Sound file name",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "since": "v1.3.5",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 107,
+            "description": "Set the alert text for the notification",
+            "params": [
+                {
+                    "name": "alertText",
+                    "description": "The text of the alert message.",
+                    "type": "String"
+                }
+            ],
+            "see": [
+                "The <a href=\"https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW1\">Payload Documentation</a>"
+            ],
+            "since": "v1.2.0",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 124,
+            "description": "Set the alert title for the notification - used with Safari Push Notifications",
+            "params": [
+                {
+                    "name": "alertTitle",
+                    "description": "The title for the alert.",
+                    "type": "String"
+                }
+            ],
+            "see": [
+                "The <a href=\"https://developer.apple.com/library/mac/documentation/NetworkingInternet/Conceptual/NotificationProgrammingGuideForWebsites/PushNotifications/PushNotifications.html#//apple_ref/doc/uid/TP40013225-CH3-SW12\">Pushing Notifications</a> in the Notification Programming Guide for Websites"
+            ],
+            "since": "v1.5.0",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 136,
+            "description": "Set the alert action label for the notification - used with Safari Push Notifications",
+            "params": [
+                {
+                    "name": "alertLabel",
+                    "description": "The label for the alert action button.",
+                    "type": "String"
+                }
+            ],
+            "see": [
+                "The <a href=\"https://developer.apple.com/library/mac/documentation/NetworkingInternet/Conceptual/NotificationProgrammingGuideForWebsites/PushNotifications/PushNotifications.html#//apple_ref/doc/uid/TP40013225-CH3-SW12\">Pushing Notifications</a> in the Notification Programming Guide for Websites"
+            ],
+            "since": "v1.5.0",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 148,
+            "description": "Set the action-loc-key property on the alert object",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "If a string is specified, displays an alert with two buttons, whose behavior is described in Table 3-1. However, iOS uses the string as a key to get a localized string in the current localization to use for the right button’s title instead of “View”. If the value is null, the system displays an alert with a single OK button that simply dismisses the alert when tapped.",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "see": [
+                "The <a href=\"https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW1\">Payload Documentation</a>"
+            ],
+            "since": "v1.2.0",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 160,
+            "description": "Set the loc-key parameter on the alert object",
+            "params": [
+                {
+                    "name": "key",
+                    "description": "A key to an alert-message string in a Localizable.strings file for the current localization (which is set by the user’s language preference).",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "see": [
+                "The <a href=\"https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW1\">Payload Documentation</a>"
+            ],
+            "since": "v1.2.0",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 176,
+            "description": "Set the loc-args parameter on the alert object",
+            "params": [
+                {
+                    "name": "args",
+                    "description": "Variable string values to appear in place of the format specifiers in loc-key.",
+                    "type": "String[]",
+                    "optional": true
+                }
+            ],
+            "see": [
+                "The <a href=\"https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW1\">Payload Documentation</a>"
+            ],
+            "since": "v1.2.0",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 192,
+            "description": "Set the launch-image parameter on the alert object",
+            "params": [
+                {
+                    "name": "image",
+                    "description": "The filename of an image file in the application bundle; it may include the extension or omit it.",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "see": [
+                "The <a href=\"https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW1\">Payload Documentation</a>"
+            ],
+            "since": "v1.2.0",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 208,
+            "description": "Set the 'content-available' flag on the payload",
+            "params": [
+                {
+                    "name": "contentAvailable",
+                    "description": "Whether the content-available flag should be set or not.",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "since": "v1.3.5",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 218,
+            "description": "Set the 'content-available' flag on the payload",
+            "params": [
+                {
+                    "name": "newsstandAvailable",
+                    "description": "Whether the content-available flag should be set or not.",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "since": "v1.3.5",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 228,
+            "description": "Set the 'mdm' flag on the payload",
+            "params": [
+                {
+                    "name": "mdm",
+                    "description": "The mdm property for the payload.",
+                    "type": "Object",
+                    "optional": true
+                }
+            ],
+            "since": "v1.3.5",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 238,
+            "description": "Set the 'truncateAtWordEnd' flag for truncation logic",
+            "params": [
+                {
+                    "name": "truncateAtWordEnd",
+                    "description": "Whether the truncateAtWordEnd flag should be set or not.",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 247,
+            "description": "Set the urlArgs for the notification",
+            "params": [
+                {
+                    "name": "urlArgs",
+                    "description": "The url args for the endpoint",
+                    "type": "Array",
+                    "optional": true
+                }
+            ],
+            "see": [
+                "The <a href=\"https://developer.apple.com/library/prerelease/mac/documentation/NetworkingInternet/Conceptual/NotificationProgrammingGuideForWebsites/PushNotifications/PushNotifications.html#//apple_ref/doc/uid/TP40013225-CH3-SW12\">Web Payload Documentation</a>"
+            ],
+            "since": "v1.4.1",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 258,
+            "description": "Set the category for the notification",
+            "params": [
+                {
+                    "name": "category",
+                    "description": "The category for the push notification action",
+                    "type": "String",
+                    "optional": true
+                }
+            ],
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 267,
+            "description": "If an alert object doesn't already exist create it and transfer any existing message into the .body property",
+            "access": "private",
+            "tagname": "",
+            "since": "v1.2.0",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 282,
+            "return": {
+                "description": "Byte length of the notification payload",
+                "type": "Number"
+            },
+            "since": "v1.2.0",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 290,
+            "description": "If the notification payload is too long to send this method will attempt to trim the alert body text.",
+            "return": {
+                "description": "The number of characters removed from the body text. If a negative value is returned, the text is too short to be trimmed enough.",
+                "type": "Number"
+            },
+            "since": "v1.2.0",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 331,
+            "description": "Compile a notification down to its JSON format. Compilation is final, changes made to the notification after this method is called will not be reflected in further calls.",
+            "return": {
+                "description": "JSON payload for the notification.",
+                "type": "String"
+            },
+            "since": "v1.3.0",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 345,
+            "params": [
+                {
+                    "name": "string",
+                    "description": "Unicode string to be truncated",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "length",
+                    "description": "The maximum number of bytes permitted in the Unicode string",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "Truncated String",
+                "type": "String"
+            },
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/notification.js",
+            "line": 391,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
         {
             "file": "controllers/eventController.js",
             "line": 16,
@@ -916,36 +1676,63 @@
             "class": "UserController"
         },
         {
+            "file": "controllers/userController.js",
+            "line": 587,
+            "description": "[POST]\n\nAdd device token",
+            "itemtype": "method",
+            "name": "deviceToken",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "deviceToken",
+                    "description": "(in request content)",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Success",
+                "type": "JSON"
+            },
+            "example": [
+                " /api/user/:userId/deviceToken"
+            ],
+            "class": "UserController"
+        },
+        {
             "file": "public/javascripts/socket.io.js",
             "line": 8,
             "description": "Module dependencies.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 17,
             "description": "Module exports.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 23,
             "description": "Managers cache.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 29,
             "description": "Looks up an existing `Manager` for multiplexing.\nIf the user summons:\n\n  `io('http://localhost/a');`\n  `io('http://localhost/b');`\n\nWe reuse the existing instance based on same scheme/port/host,\nand we initialize sockets for each namespace.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 69,
             "description": "Protocol version.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -959,26 +1746,26 @@
                 }
             ],
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 86,
             "description": "Expose constructors for standalone build.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 97,
             "description": "Module dependencies.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 111,
             "description": "Module exports",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -997,20 +1784,20 @@
                 }
             ],
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 153,
             "description": "Propagate given event to sockets and emit on `this`",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 166,
             "description": "Mix in `Emitter`.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1028,7 +1815,7 @@
                 "type": "Manager"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1046,7 +1833,7 @@
                 "type": "Manager"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1064,7 +1851,7 @@
                 "type": "Manager"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1082,7 +1869,7 @@
                 "type": "Manager"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1093,14 +1880,14 @@
                 "type": "Manager"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 241,
             "description": "Starts trying to reconnect if reconnection is enabled and we have not\nstarted reconnecting yet",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1118,35 +1905,35 @@
                 "type": "Manager"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 324,
             "description": "Called upon transport open.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 348,
             "description": "Called with data.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 358,
             "description": "Called when parser fully decodes a packet.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 368,
             "description": "Called upon socket error.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1157,7 +1944,7 @@
                 "type": "Socket"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1170,7 +1957,7 @@
                     "type": "Socket"
                 }
             ],
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1184,55 +1971,55 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 435,
             "description": "If packet buffer is non-empty, begins encoding the\nnext packet in line.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 449,
             "description": "Clean up transport subscriptions and packet buffer.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 465,
             "description": "Close the current socket.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 477,
             "description": "Called upon engine close.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 493,
             "description": "Attempt a reconnection.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 540,
             "description": "Called upon successful reconnect.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 555,
             "description": "Module exports.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1256,59 +2043,59 @@
                 }
             ],
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 581,
             "description": "Module dependencies.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 594,
             "description": "Module exports.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 600,
             "description": "Internal events (blacklisted).\nThese events can't be emitted by the user.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 620,
             "description": "Shortcut to `Emitter#emit`.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 626,
             "description": "`Socket` constructor.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 646,
             "description": "Mix in `Emitter`.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 652,
             "description": "Subscribe to open, close and packet events",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 667,
             "description": "Called upon engine `open`.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1319,7 +2106,7 @@
                 "type": "Socket"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1337,7 +2124,7 @@
                 "type": "Socket"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1351,14 +2138,14 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 744,
             "description": "\"Opens\" the socket.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1372,7 +2159,7 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1386,7 +2173,7 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1400,14 +2187,14 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 837,
             "description": "Produces an ack callback to emit with an event.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1421,35 +2208,35 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 876,
             "description": "Called upon server connect.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 889,
             "description": "Emit buffered events (received and emitted).",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 908,
             "description": "Called upon server disconnect.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 920,
             "description": "Called upon forced client/server side disconnections,\nthis method ensures the manager stops tracking us and\nthat reconnections don't get triggered for this.",
             "api": "private.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1460,19 +2247,19 @@
                 "type": "Socket"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 961,
             "description": "Module dependencies.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 968,
             "description": "Module exports.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1491,13 +2278,13 @@
                 }
             ],
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1033,
             "description": "Slice reference.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1520,20 +2307,20 @@
                 "type": "Function"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1059,
             "description": "Expose `Emitter`.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1065,
             "description": "Initialize a new `Emitter`.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1551,7 +2338,7 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1574,7 +2361,7 @@
                 "type": "Emitter"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1597,7 +2384,7 @@
                 "type": "Emitter"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1620,7 +2407,7 @@
                 "type": "Emitter"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1642,7 +2429,7 @@
                 "description": "",
                 "type": "Emitter"
             },
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1660,7 +2447,7 @@
                 "type": "Array"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1678,13 +2465,13 @@
                 "type": "Boolean"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1225,
             "description": "Expose `debug()` as the module.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1702,13 +2489,13 @@
                 "type": "Type"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1262,
             "description": "The currently active debug mode names.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1722,14 +2509,14 @@
                 }
             ],
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1296,
             "description": "Disable debug output.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1747,7 +2534,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1765,32 +2552,32 @@
                 "type": "Boolean"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1347,
             "description": "Coerce `val`.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1364,
             "description": "Module dependencies.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1370,
             "description": "Expose `Emitter`.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1376,
             "description": "Initialize a new `Emitter`.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1808,7 +2595,7 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1831,7 +2618,7 @@
                 "type": "Emitter"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1854,7 +2641,7 @@
                 "type": "Emitter"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1877,7 +2664,7 @@
                 "type": "Emitter"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1899,7 +2686,7 @@
                 "description": "",
                 "type": "Emitter"
             },
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1917,7 +2704,7 @@
                 "type": "Array"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1935,27 +2722,27 @@
                 "type": "Boolean"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1534,
             "description": "Exports parser",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1556,
             "description": "Module exports.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1562,
             "description": "Noop function.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -1974,26 +2761,26 @@
                 }
             ],
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1632,
             "description": "Mix in `Emitter`.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1638,
             "description": "Protocol version.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1646,
             "description": "Expose deps for legacy compatibility\nand standalone browser access.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2011,21 +2798,21 @@
                 "type": "Transport"
             },
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1705,
             "description": "Initializes transport to use and starts probe.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1723,
             "description": "Sets the current transport. Disables the existing one (if any).",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2039,21 +2826,21 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1876,
             "description": "Called when connection is deemed open.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1899,
             "description": "Handles a packet.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2067,42 +2854,42 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1963,
             "description": "Resets ping timeout.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1978,
             "description": "Pings server every `this.pingInterval` and expects response\nwithin `this.pingTimeout` or closes connection.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 1995,
             "description": "Sends a ping packet.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2005,
             "description": "Called on `drain` event",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2033,
             "description": "Flush write buffers.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2125,7 +2912,7 @@
                 "type": "Socket"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2149,28 +2936,28 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2083,
             "description": "Closes the connection.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2099,
             "description": "Called upon transport error",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2112,
             "description": "Called upon transport close.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2184,19 +2971,19 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2172,
             "description": "Module dependencies.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2179,
             "description": "Module exports.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2210,19 +2997,19 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2205,
             "description": "Mix in `Emitter`.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2211,
             "description": "A counter used to prevent collisions in the timestamps used\nfor cache busting.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2240,21 +3027,21 @@
                 "type": "Transport"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2234,
             "description": "Opens the transport.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2249,
             "description": "Closes the transport.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2268,14 +3055,14 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2279,
             "description": "Called upon open",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2289,69 +3076,69 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2308,
             "description": "Called with a decoded packet.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2316,
             "description": "Called upon close.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2337,
             "description": "Export transports.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2344,
             "description": "Polling transport polymorphic constructor.\nDecides on xhr vs jsonp based on feature detection.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2379,
             "description": "Module requirements.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2386,
             "description": "Module exports.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2392,
             "description": "Cached regular expressions.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2399,
             "description": "Global JSONP callbacks.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2405,
             "description": "Callbacks count.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2411,
             "description": "Noop.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2365,27 +3152,27 @@
                 }
             ],
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2457,
             "description": "Inherits from Polling.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2469,
             "description": "Closes the socket.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2489,
             "description": "Starts a poll cycle.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2404,19 +3191,19 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2622,
             "description": "Module exports.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2629,
             "description": "Empty function",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2430,19 +3217,19 @@
                 }
             ],
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2659,
             "description": "Inherits from Polling.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2665,
             "description": "XHR supports binary",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2456,7 +3243,7 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2475,14 +3262,14 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2706,
             "description": "Starts a poll cycle.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2496,79 +3283,79 @@
                 }
             ],
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2742,
             "description": "Mix in `Emitter`.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2748,
             "description": "Creates the XHR object and sends the request.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2832,
             "description": "Called upon successful response.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2843,
             "description": "Called if we have data.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2854,
             "description": "Called upon error.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2865,
             "description": "Cleans up house.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2889,
             "description": "Aborts the request.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2899,
             "description": "Aborts pending requests when unloading the window. This is needed to prevent\nmemory leaks (e.g. when using IE) and to ensure that no spurious error is\nemitted.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2924,
             "description": "Module dependencies.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2934,
             "description": "Module exports.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2940,
             "description": "Is XHR2 supported?",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2582,26 +3369,26 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2965,
             "description": "Inherits from Transport.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2971,
             "description": "Transport name.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 2977,
             "description": "Opens the socket (triggers polling). We write a PING message to determine\nwhen the transport is open.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2615,28 +3402,28 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3032,
             "description": "Starts polling cycle.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3045,
             "description": "Overloads onData to detect payloads.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3087,
             "description": "For polling, send a close packet.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2655,73 +3442,73 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3134,
             "description": "Generates uri for connection.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3171,
             "description": "Module dependencies.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3181,
             "description": "`ws` exposes a WebSocket-compatible interface in\nNode, or the `WebSocket` or `MozWebSocket` globals\nin the browser.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3189,
             "description": "Module exports.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3195,
             "description": "WebSocket transport constructor.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3210,
             "description": "Inherits from Transport.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3216,
             "description": "Transport name.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3230,
             "description": "Opens socket.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3257,
             "description": "Adds event listeners to the socket",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3280,
             "description": "Override `onData` to use a timer on iOS.\nSee: https://gist.github.com/mloughran/2052006",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2735,28 +3522,28 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3331,
             "description": "Called upon close",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3341,
             "description": "Closes socket.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3353,
             "description": "Generates uri for connection.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2767,50 +3554,50 @@
                 "type": "Boolean"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3441,
             "description": "Check if we are running an android browser. That requires us to use\nArrayBuffer with polling transports...\n\nhttp://ghinda.net/jpeg-blob-ajax-android/",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3450,
             "description": "Current protocol version.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3456,
             "description": "Packet types.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3472,
             "description": "Premade error packet.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3478,
             "description": "Create a blob api even for blob builder when vendor prefixes exist",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3484,
             "description": "Encodes a packet.\n\n    <packet type id> [ <data> ]\n\nExample:\n\n    5hello world\n    3\n    4\n\nBinary is encoded in an identical principle",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3528,
             "description": "Encode packet helpers for binary types",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2827,7 +3614,7 @@
                 "description": "base64 encoded message",
                 "type": "String"
             },
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2838,7 +3625,7 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2855,7 +3642,7 @@
                 "description": "with `type` and `data` (if any)",
                 "type": "Object"
             },
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2869,13 +3656,13 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3720,
             "description": "Async array map using after",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2893,13 +3680,13 @@
                 "type": "ArrayBuffer"
             },
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 3882,
             "description": "Encode as Blob",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2910,26 +3697,26 @@
                 "type": "Array"
             },
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4027,
             "description": "An abstraction for slicing an arraybuffer even when\nArrayBuffer.prototype.slice is not supported",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4128,
             "description": "Check if Blob constructor is supported",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4141,
             "description": "Check if BlobBuilder is supported",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2943,7 +3730,7 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2957,25 +3744,25 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4484,
             "description": "Module dependencies.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4490,
             "description": "WebSocket constructor.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4496,
             "description": "Module exports.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -2998,13 +3785,13 @@
                 }
             ],
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4534,
             "description": "Module exports.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3018,31 +3805,31 @@
                 }
             ],
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4593,
             "description": "Module dependencies.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4599,
             "description": "Module exports.\n\nLogic borrowed from Modernizr:\n\n  - https://github.com/Modernizr/Modernizr/blob/master/feature-detects/cors.js",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4618,
             "description": "Returns `this`. Execute this without a \"context\" (i.e. without it being\nattached to an object of the left-hand side), and `this` points to the\n\"global\" scope of the current JS execution.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4639,
             "description": "HOP ref.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3060,7 +3847,7 @@
                 "type": "Array"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3078,7 +3865,7 @@
                 "type": "Array"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3101,7 +3888,7 @@
                 "type": "Object"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3119,7 +3906,7 @@
                 "type": "Number"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3137,7 +3924,7 @@
                 "type": "Boolean"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3145,7 +3932,7 @@
             "description": "Parses an URI",
             "author": "Steven Levithan <stevenlevithan.com> (MIT license)",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3163,7 +3950,7 @@
                 "type": "Object"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3186,7 +3973,7 @@
                 "type": "Object"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3205,90 +3992,90 @@
                 }
             ],
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4893,
             "description": "Returns true if obj is a buffer or an arraybuffer.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4905,
             "description": "Module dependencies.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4915,
             "description": "Protocol version.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4923,
             "description": "Packet types.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4939,
             "description": "Packet type `connect`.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4947,
             "description": "Packet type `disconnect`.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4955,
             "description": "Packet type `event`.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4963,
             "description": "Packet type `ack`.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4971,
             "description": "Packet type `error`.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4979,
             "description": "Packet type 'binary event'",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4987,
             "description": "Packet type `binary ack`. For acks with binary arguments.",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 4997,
             "description": "A socket.io Encoder instance",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3310,7 +4097,7 @@
                 "description": "Calls callback with Array of encodings"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3328,7 +4115,7 @@
                 "type": "String"
             },
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3346,7 +4133,7 @@
                 "type": "Buffer"
             },
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3357,13 +4144,13 @@
                 "type": "Object"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 5110,
             "description": "Mix in `Emitter` with Decoder.",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3381,7 +4168,7 @@
                 "type": "Object"
             },
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3399,14 +4186,14 @@
                 "type": "Object"
             },
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 5224,
             "description": "Deallocates a parser's resources",
             "api": "public",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3424,7 +4211,7 @@
                 "type": "BinaryReconstructor"
             },
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
@@ -3442,14 +4229,39 @@
                 "type": "Null | Object"
             },
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
         },
         {
             "file": "public/javascripts/socket.io.js",
             "line": 5271,
             "description": "Cleans up binary packet reconstruction variables.",
             "api": "private",
-            "class": "dbController"
+            "class": "apnRoutes"
+        },
+        {
+            "file": "routes/apnRoutes.js",
+            "line": 103,
+            "description": "Send notification to a single device",
+            "itemtype": "method",
+            "name": "pushSingleNotification",
+            "params": [
+                {
+                    "name": "deviceToken",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "alertText",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "payload",
+                    "description": "",
+                    "type": "JSON"
+                }
+            ],
+            "class": "apnRoutes"
         },
         {
             "file": "routes/dbRoutes.js",
@@ -3473,7 +4285,7 @@
                 "description": "userList",
                 "type": "JSON"
             },
-            "class": "dbController"
+            "class": "dbRoutes"
         },
         {
             "file": "routes/dbRoutes.js",
@@ -3497,7 +4309,7 @@
                 "description": "user",
                 "type": "JSON"
             },
-            "class": "dbController"
+            "class": "dbRoutes"
         },
         {
             "file": "routes/dbRoutes.js",
@@ -3521,7 +4333,7 @@
                 "description": "document (Depends)",
                 "type": "JSON"
             },
-            "class": "dbController"
+            "class": "dbRoutes"
         },
         {
             "file": "routes/dbRoutes.js",
@@ -3553,10 +4365,34 @@
             "example": [
                 " Example of input\n {\"$set\": {\n      username: username,\n      password: generateHash(password)\n }}"
             ],
-            "class": "dbController"
+            "class": "dbRoutes"
         }
     ],
     "warnings": [
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " apn/lib/device.js:24"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " apn/lib/notification.js:37"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " apn/lib/notification.js:282"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " apn/lib/notification.js:290"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " apn/lib/notification.js:331"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " apn/lib/notification.js:345"
+        },
         {
             "message": "unknown tag: api",
             "line": " public/javascripts/socket.io.js:29"
@@ -4240,6 +5076,254 @@
         {
             "message": "unknown tag: api",
             "line": " public/javascripts/socket.io.js:5271"
+        },
+        {
+            "message": "Missing item type\nYou should never need to call this method, initialization and connection is handled by {@link Connection#sendNotification}",
+            "line": " apn/lib/connection.js:124"
+        },
+        {
+            "message": "Missing item type\nYou should never need to call this method, initialisation and connection is handled by {@link Connection#pushNotification}",
+            "line": " apn/lib/connection.js:137"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:184"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:220"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:230"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:281"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:308"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:318"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:341"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:352"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:363"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:381"
+        },
+        {
+            "message": "Missing item type\nUse this method to modify the cache length after initialisation.",
+            "line": " apn/lib/connection.js:393"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:400"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:413"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:424"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:457"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:468"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:531"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:548"
+        },
+        {
+            "message": "Missing item type\nQueue a notification for delivery to recipients",
+            "line": " apn/lib/connection.js:677"
+        },
+        {
+            "message": "Missing item type\nSend a notification to the APN service",
+            "line": " apn/lib/connection.js:703"
+        },
+        {
+            "message": "Missing item type\nEnd connections with APNS once we've finished sending all notifications",
+            "line": " apn/lib/connection.js:712"
+        },
+        {
+            "message": "Missing item type\nCreates a Device.",
+            "line": " apn/lib/device.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/device.js:24"
+        },
+        {
+            "message": "Missing item type\nError codes used by Apple",
+            "line": " apn/lib/errors.js:1"
+        },
+        {
+            "message": "Missing item type\nYou should never need to call this method, initialization and connection is handled by {@link Connection#sendNotification}",
+            "line": " apn/lib/feedback.js:110"
+        },
+        {
+            "message": "Missing item type\nYou should call {@link Feedback#start} instead of this method",
+            "line": " apn/lib/feedback.js:135"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/feedback.js:180"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/feedback.js:218"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/feedback.js:231"
+        },
+        {
+            "message": "Missing item type\nConnect to the feedback service, also initialise the timer if an interval is specified.",
+            "line": " apn/lib/feedback.js:252"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/feedback.js:265"
+        },
+        {
+            "message": "Missing item type\nCancel the timer to stop the Feedback service periodically connecting.",
+            "line": " apn/lib/feedback.js:275"
+        },
+        {
+            "message": "Missing item type\nCreate a notification",
+            "line": " apn/lib/notification.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/notification.js:14"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/notification.js:20"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/notification.js:33"
+        },
+        {
+            "message": "Missing item type\nClone a notification to send to multiple devices",
+            "line": " apn/lib/notification.js:37"
+        },
+        {
+            "message": "Missing item type\nSet the expiry value on the payload",
+            "line": " apn/lib/notification.js:67"
+        },
+        {
+            "message": "Missing item type\nSet the priority",
+            "line": " apn/lib/notification.js:77"
+        },
+        {
+            "message": "Missing item type\nSet the \"badge\" value on the alert object",
+            "line": " apn/lib/notification.js:87"
+        },
+        {
+            "message": "Missing item type\nSet the \"sound\" value on the alert object",
+            "line": " apn/lib/notification.js:97"
+        },
+        {
+            "message": "Missing item type\nSet the alert text for the notification",
+            "line": " apn/lib/notification.js:107"
+        },
+        {
+            "message": "Missing item type\nSet the alert title for the notification - used with Safari Push Notifications",
+            "line": " apn/lib/notification.js:124"
+        },
+        {
+            "message": "Missing item type\nSet the alert action label for the notification - used with Safari Push Notifications",
+            "line": " apn/lib/notification.js:136"
+        },
+        {
+            "message": "Missing item type\nSet the action-loc-key property on the alert object",
+            "line": " apn/lib/notification.js:148"
+        },
+        {
+            "message": "Missing item type\nSet the loc-key parameter on the alert object",
+            "line": " apn/lib/notification.js:160"
+        },
+        {
+            "message": "Missing item type\nSet the loc-args parameter on the alert object",
+            "line": " apn/lib/notification.js:176"
+        },
+        {
+            "message": "Missing item type\nSet the launch-image parameter on the alert object",
+            "line": " apn/lib/notification.js:192"
+        },
+        {
+            "message": "Missing item type\nSet the 'content-available' flag on the payload",
+            "line": " apn/lib/notification.js:208"
+        },
+        {
+            "message": "Missing item type\nSet the 'content-available' flag on the payload",
+            "line": " apn/lib/notification.js:218"
+        },
+        {
+            "message": "Missing item type\nSet the 'mdm' flag on the payload",
+            "line": " apn/lib/notification.js:228"
+        },
+        {
+            "message": "Missing item type\nSet the 'truncateAtWordEnd' flag for truncation logic",
+            "line": " apn/lib/notification.js:238"
+        },
+        {
+            "message": "Missing item type\nSet the urlArgs for the notification",
+            "line": " apn/lib/notification.js:247"
+        },
+        {
+            "message": "Missing item type\nSet the category for the notification",
+            "line": " apn/lib/notification.js:258"
+        },
+        {
+            "message": "Missing item type\nIf an alert object doesn't already exist create it and transfer any existing message into the .body property",
+            "line": " apn/lib/notification.js:267"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/notification.js:282"
+        },
+        {
+            "message": "Missing item type\nIf the notification payload is too long to send this method will attempt to trim the alert body text.",
+            "line": " apn/lib/notification.js:290"
+        },
+        {
+            "message": "Missing item type\nCompile a notification down to its JSON format. Compilation is final, changes made to the notification after this method is called will not be reflected in further calls.",
+            "line": " apn/lib/notification.js:331"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/notification.js:345"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/notification.js:391"
         },
         {
             "message": "Missing item type\nModule dependencies.",
