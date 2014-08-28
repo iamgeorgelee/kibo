@@ -1,6 +1,7 @@
 var async = require('async');
 // var bcrypt = require('bcrypt-nodejs');
 var db = require('../routes/dbRoutes.js');
+var apn = require('../routes/apnRoutes.js');
 var graph = require('fbgraph'); // graph is a facebook SDK
 var options = { // options needed for SDK
     timeout: 3000,
@@ -88,7 +89,7 @@ exports.getUserByFbProfileId = function (token, profileId, callback) {
                     "facebook.token": encrypt(token)
                 }
             }, function (data) {
-                callback(null, data);
+                callback(null, {success:true, userId: data._id.$oid});
             });
         }
     ], function (err, result) {
@@ -103,18 +104,41 @@ exports.getUserById = function (userId, callback) {
 };
 
 var createUser = function (token, profileId, email, name, profilePic, callback) {
-    db.createDocument('User', {
-        facebook: {
-            id: profileId,
-            token: encrypt(token),
-            profilePic: profilePic // profile picture link
-        },
-        name: name,
-        email: email
-    }, function (data) {
-        callback({success:true, userId: data._id.$oid});
-    });
+    async.waterfall([
+        //check is the user already exist
+        function (callback) {
+            var queryString = "{\"email\":\"" + email + "\"}";
+            var userExist;
 
+            db.getCollection("User", queryString, function(data){
+                if (data.length <= 0) {
+                    userExist = false;
+                    callback(null, userExist);
+                } else {
+                    callback({success:false, message: 'User already exist'}, null);
+                }
+            });
+        },
+        function (userExist, callback) {
+            if(!userExist){
+                db.createDocument('User', {
+                    facebook: {
+                        id: profileId,
+                        token: encrypt(token),
+                        profilePic: profilePic // profile picture link
+                    },
+                    name: name,
+                    email: email
+                }, function (data) {
+                    callback(null, {success:true, userId: data._id.$oid});
+                });
+            } else{
+                callback({success:false, message: 'User already exist'}, null);
+            }
+        }
+    ], function (err, result) {
+        (err)? callback(err): callback(result);
+    });
 };
 module.exports.createUser = createUser;
 
@@ -135,6 +159,49 @@ var getFbFriends = function (userId, callback) {
     });
 };
 module.exports.getFbFriends = getFbFriends;
+
+exports.addDeviceToken = function(userId, deviceToken, callback){
+    async.waterfall([
+        function(callback){
+           isUserIdValid(userId, function(data){
+                if(!data.success){
+                    callback(data, null);
+                } else{
+                    callback(null, data);
+                }
+            });
+        },
+        function(userData, callback){
+            db.updateDocument('User', userId, {
+                "$set": {
+                    deviceToken: encrypt(deviceToken)
+                }
+            }, function (data) {
+                callback(null, {success:true});
+            });
+        }
+    ], function(err, result) {
+        (err)? callback(err): callback(result);
+    });
+};
+
+var getDeviceToken = function (userId, callback) {
+    isUserIdValid(userId, function(data){
+        if(!data.success){
+            callback(data);
+        } else{
+            if (data.userData.hasOwnProperty('deviceToken')) {
+                callback(decrypt(data.userData.deviceToken));
+            } else {
+                callback({
+                    success: false,
+                    message: 'No deviceToken'
+                });
+            }
+        }
+    });
+};
+module.exports.getDeviceToken = getDeviceToken;
 
 var getFriendList = function (userId, callback) {
     isUserIdValid(userId, function(data){
@@ -464,7 +531,7 @@ var getFbFriendCandidate = function (userId, callback) {
 module.exports.getFbFriendCandidate = getFbFriendCandidate;
 
 exports.addFriendReq = function(userId, toFriendId, callback){
-    var userData, toFriendData, newFriendReqList;
+    var userData, toFriendData, newFriendReqList, deviceToken;
 
     async.series([
         function(callback){
@@ -528,6 +595,17 @@ exports.addFriendReq = function(userId, toFriendId, callback){
             }, function (data) {
                 callback();
             });
+        },
+        function(callback){
+            //get to add friend's device token to send notification
+            getDeviceToken(toFriendId, function(data){
+                deviceToken = data;
+                callback();
+            });
+        },
+        function(callback){
+            apn.pushSingleNotification(deviceToken, "friendReq", {name: userData.name});
+            callback();
         }
     ], function(err) {
         (err)? callback(err): callback({success:true});

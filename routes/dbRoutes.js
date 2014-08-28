@@ -1,7 +1,7 @@
 /**
  * MongoLab API
  *
- * @class dbController
+ * @class dbRoutes
  * @constructor
  */
 

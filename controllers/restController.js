@@ -124,6 +124,7 @@ module.exports = function(app) {
             var filterStr = req.query.filter;
 
             if(filterStr.length < 3){
+                res.statusCode = 400;
                 return res.send({success: false, message: "Filter must input more than 2 character"});
             } else{
                 //Make filter string become title case to match restaurant name

@@ -583,4 +583,23 @@ module.exports = function(app, passport) {
                 return res.send(data);
             });
         });
+        
+    /**
+     * [POST]
+     *
+     * Add device token
+     *
+     * @method deviceToken
+     * @param {String} userId
+     * @param {String} deviceToken (in request content)
+     * @return {JSON} Success
+     * @example /api/user/:userId/deviceToken
+     */
+    app.route('/api/user/:userId/deviceToken')
+        .post(function(req, res) {
+            user.addDeviceToken(req.params.userId, req.param('deviceToken'), function(data) {
+                return res.send(data);
+            });
+        });
+    
 };
