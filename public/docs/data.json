@@ -196,7 +196,7 @@
     "classitems": [
         {
             "file": "apn/lib/connection.js",
-            "line": 23,
+            "line": 25,
             "description": "Create a new connection to the APN service.",
             "is_constructor": 1,
             "params": [
@@ -214,7 +214,7 @@
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 124,
+            "line": 136,
             "description": "You should never need to call this method, initialization and connection is handled by {@link Connection#sendNotification}",
             "access": "private",
             "tagname": "",
@@ -222,7 +222,7 @@
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 137,
+            "line": 149,
             "description": "You should never need to call this method, initialisation and connection is handled by {@link Connection#pushNotification}",
             "access": "private",
             "tagname": "",
@@ -230,104 +230,83 @@
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 184,
+            "line": 212,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 220,
+            "line": 263,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 230,
+            "line": 273,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 281,
+            "line": 334,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 308,
+            "line": 361,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 318,
+            "line": 371,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 341,
+            "line": 394,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 352,
+            "line": 405,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 363,
+            "line": 416,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 381,
+            "line": 434,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 393,
+            "line": 447,
             "description": "Use this method to modify the cache length after initialisation.",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 400,
-            "access": "private",
-            "tagname": "",
-            "class": "eventContorller"
-        },
-        {
-            "file": "apn/lib/connection.js",
-            "line": 413,
-            "access": "private",
-            "tagname": "",
-            "class": "eventContorller"
-        },
-        {
-            "file": "apn/lib/connection.js",
-            "line": 424,
-            "access": "private",
-            "tagname": "",
-            "class": "eventContorller"
-        },
-        {
-            "file": "apn/lib/connection.js",
-            "line": 457,
+            "line": 454,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
@@ -341,14 +320,35 @@
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 531,
+            "line": 479,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 548,
+            "line": 512,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 523,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 586,
+            "access": "private",
+            "tagname": "",
+            "class": "eventContorller"
+        },
+        {
+            "file": "apn/lib/connection.js",
+            "line": 603,
             "access": "private",
             "tagname": "",
             "return": {
@@ -359,7 +359,7 @@
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 677,
+            "line": 731,
             "description": "Queue a notification for delivery to recipients",
             "params": [
                 {
@@ -378,7 +378,7 @@
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 703,
+            "line": 757,
             "description": "Send a notification to the APN service",
             "params": [
                 {
@@ -393,7 +393,7 @@
         },
         {
             "file": "apn/lib/connection.js",
-            "line": 712,
+            "line": 766,
             "description": "End connections with APNS once we've finished sending all notifications",
             "class": "eventContorller"
         },
@@ -432,7 +432,7 @@
         },
         {
             "file": "apn/lib/feedback.js",
-            "line": 20,
+            "line": 22,
             "description": "Create a new connection to the APN Feedback.",
             "is_constructor": 1,
             "params": [
@@ -450,7 +450,7 @@
         },
         {
             "file": "apn/lib/feedback.js",
-            "line": 110,
+            "line": 112,
             "description": "You should never need to call this method, initialization and connection is handled by {@link Connection#sendNotification}",
             "access": "private",
             "tagname": "",
@@ -458,7 +458,7 @@
         },
         {
             "file": "apn/lib/feedback.js",
-            "line": 135,
+            "line": 125,
             "description": "You should call {@link Feedback#start} instead of this method",
             "access": "private",
             "tagname": "",
@@ -466,41 +466,41 @@
         },
         {
             "file": "apn/lib/feedback.js",
-            "line": 180,
+            "line": 169,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/feedback.js",
-            "line": 218,
+            "line": 207,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/feedback.js",
-            "line": 231,
+            "line": 220,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/feedback.js",
-            "line": 252,
+            "line": 241,
             "description": "Connect to the feedback service, also initialise the timer if an interval is specified.",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/feedback.js",
-            "line": 265,
+            "line": 254,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
         },
         {
             "file": "apn/lib/feedback.js",
-            "line": 275,
+            "line": 264,
             "description": "Cancel the timer to stop the Feedback service periodically connecting.",
             "class": "eventContorller"
         },
@@ -854,7 +854,7 @@
         },
         {
             "file": "apn/lib/notification.js",
-            "line": 331,
+            "line": 332,
             "description": "Compile a notification down to its JSON format. Compilation is final, changes made to the notification after this method is called will not be reflected in further calls.",
             "return": {
                 "description": "JSON payload for the notification.",
@@ -865,7 +865,7 @@
         },
         {
             "file": "apn/lib/notification.js",
-            "line": 345,
+            "line": 346,
             "params": [
                 {
                     "name": "string",
@@ -890,7 +890,7 @@
         },
         {
             "file": "apn/lib/notification.js",
-            "line": 391,
+            "line": 392,
             "access": "private",
             "tagname": "",
             "class": "eventContorller"
@@ -4240,18 +4240,13 @@
         },
         {
             "file": "routes/apnRoutes.js",
-            "line": 103,
+            "line": 105,
             "description": "Send notification to a single device",
             "itemtype": "method",
             "name": "pushSingleNotification",
             "params": [
                 {
-                    "name": "deviceToken",
-                    "description": "",
-                    "type": "String"
-                },
-                {
-                    "name": "alertText",
+                    "name": "userId",
                     "description": "",
                     "type": "String"
                 },
@@ -4387,11 +4382,11 @@
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " apn/lib/notification.js:331"
+            "line": " apn/lib/notification.js:332"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " apn/lib/notification.js:345"
+            "line": " apn/lib/notification.js:346"
         },
         {
             "message": "unknown tag: api",
@@ -5079,71 +5074,59 @@
         },
         {
             "message": "Missing item type\nYou should never need to call this method, initialization and connection is handled by {@link Connection#sendNotification}",
-            "line": " apn/lib/connection.js:124"
+            "line": " apn/lib/connection.js:136"
         },
         {
             "message": "Missing item type\nYou should never need to call this method, initialisation and connection is handled by {@link Connection#pushNotification}",
-            "line": " apn/lib/connection.js:137"
+            "line": " apn/lib/connection.js:149"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/connection.js:184"
+            "line": " apn/lib/connection.js:212"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/connection.js:220"
+            "line": " apn/lib/connection.js:263"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/connection.js:230"
+            "line": " apn/lib/connection.js:273"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/connection.js:281"
+            "line": " apn/lib/connection.js:334"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/connection.js:308"
+            "line": " apn/lib/connection.js:361"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/connection.js:318"
+            "line": " apn/lib/connection.js:371"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/connection.js:341"
+            "line": " apn/lib/connection.js:394"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/connection.js:352"
+            "line": " apn/lib/connection.js:405"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/connection.js:363"
+            "line": " apn/lib/connection.js:416"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/connection.js:381"
+            "line": " apn/lib/connection.js:434"
         },
         {
             "message": "Missing item type\nUse this method to modify the cache length after initialisation.",
-            "line": " apn/lib/connection.js:393"
+            "line": " apn/lib/connection.js:447"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/connection.js:400"
-        },
-        {
-            "message": "Missing item type",
-            "line": " apn/lib/connection.js:413"
-        },
-        {
-            "message": "Missing item type",
-            "line": " apn/lib/connection.js:424"
-        },
-        {
-            "message": "Missing item type",
-            "line": " apn/lib/connection.js:457"
+            "line": " apn/lib/connection.js:454"
         },
         {
             "message": "Missing item type",
@@ -5151,23 +5134,35 @@
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/connection.js:531"
+            "line": " apn/lib/connection.js:479"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/connection.js:548"
+            "line": " apn/lib/connection.js:512"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:523"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:586"
+        },
+        {
+            "message": "Missing item type",
+            "line": " apn/lib/connection.js:603"
         },
         {
             "message": "Missing item type\nQueue a notification for delivery to recipients",
-            "line": " apn/lib/connection.js:677"
+            "line": " apn/lib/connection.js:731"
         },
         {
             "message": "Missing item type\nSend a notification to the APN service",
-            "line": " apn/lib/connection.js:703"
+            "line": " apn/lib/connection.js:757"
         },
         {
             "message": "Missing item type\nEnd connections with APNS once we've finished sending all notifications",
-            "line": " apn/lib/connection.js:712"
+            "line": " apn/lib/connection.js:766"
         },
         {
             "message": "Missing item type\nCreates a Device.",
@@ -5183,35 +5178,35 @@
         },
         {
             "message": "Missing item type\nYou should never need to call this method, initialization and connection is handled by {@link Connection#sendNotification}",
-            "line": " apn/lib/feedback.js:110"
+            "line": " apn/lib/feedback.js:112"
         },
         {
             "message": "Missing item type\nYou should call {@link Feedback#start} instead of this method",
-            "line": " apn/lib/feedback.js:135"
+            "line": " apn/lib/feedback.js:125"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/feedback.js:180"
+            "line": " apn/lib/feedback.js:169"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/feedback.js:218"
+            "line": " apn/lib/feedback.js:207"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/feedback.js:231"
+            "line": " apn/lib/feedback.js:220"
         },
         {
             "message": "Missing item type\nConnect to the feedback service, also initialise the timer if an interval is specified.",
-            "line": " apn/lib/feedback.js:252"
+            "line": " apn/lib/feedback.js:241"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/feedback.js:265"
+            "line": " apn/lib/feedback.js:254"
         },
         {
             "message": "Missing item type\nCancel the timer to stop the Feedback service periodically connecting.",
-            "line": " apn/lib/feedback.js:275"
+            "line": " apn/lib/feedback.js:264"
         },
         {
             "message": "Missing item type\nCreate a notification",
@@ -5315,15 +5310,15 @@
         },
         {
             "message": "Missing item type\nCompile a notification down to its JSON format. Compilation is final, changes made to the notification after this method is called will not be reflected in further calls.",
-            "line": " apn/lib/notification.js:331"
+            "line": " apn/lib/notification.js:332"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/notification.js:345"
+            "line": " apn/lib/notification.js:346"
         },
         {
             "message": "Missing item type",
-            "line": " apn/lib/notification.js:391"
+            "line": " apn/lib/notification.js:392"
         },
         {
             "message": "Missing item type\nModule dependencies.",

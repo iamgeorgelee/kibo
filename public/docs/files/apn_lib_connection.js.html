@@ -108,9 +108,11 @@ var CredentialLoader = require(&#x27;./credentials&#x27;);
 
 var createSocket = require(&#x27;./socket&#x27;);
 var debug = function() {};
+var trace = function() {};
 if(process.env.DEBUG) {
 	try {
 		debug = require(&#x27;debug&#x27;)(&#x27;apn&#x27;);
+		trace = require(&#x27;debug&#x27;)(&#x27;apn:trace&#x27;);
 	}
 	catch (e) {
 		console.log(&quot;Notice: &#x27;debug&#x27; module is not available. This should be installed with &#x60;npm install debug&#x60; to enable debug messages&quot;, e);
@@ -132,7 +134,7 @@ if(process.env.DEBUG) {
  * @config {Boolean} [rejectUnauthorized=true] Reject Unauthorized property to be passed through to tls.connect()
  * @config {Boolean} [enhanced=true] Whether to use the enhanced notification format (recommended)
  * @config {Function} [errorCallback] A callback which accepts 2 parameters (err, notification). Use &#x60;transmissionError&#x60; event instead.
- * @config {Number} [cacheLength=100] Number of notifications to cache for error purposes (See doc/apn.markdown)
+ * @config {Number} [cacheLength=1000] Number of notifications to cache for error purposes (See doc/apn.markdown)
  * @config {Boolean} [autoAdjustCache=false] Whether the cache should grow in response to messages being lost after errors. (Will still emit a &#x27;cacheTooSmall&#x27; event)
  * @config {Number} [maxConnections=1] The maximum number of connections to create for sending messages.
  * @config {Number} [connectionTimeout=0] The duration the socket should stay alive with no activity in milliseconds. 0 = Disabled.
@@ -155,9 +157,10 @@ function Connection (options) {
 		port: 2195,
 		rejectUnauthorized: true,
 		enhanced: true,
-		cacheLength: 100,
+		cacheLength: 1000,
 		autoAdjustCache: true,
 		maxConnections: 1,
+		connectTimeout: 10000,
 		connectionTimeout: 0,
 		connectionRetryLimit: 10,
 		buffersNotifications: true,
@@ -199,6 +202,10 @@ function Connection (options) {
 		}
 	}
 
+	// Set cache length to 1 to ensure transmitted notifications can be sent.
+	this.options.cacheLength = Math.max(this.options.cacheLength, 1);
+	this.options.maxConnections = Math.max(this.options.maxConnections, 1);
+
 	this.initializationPromise = null;
 	this.deferredConnection = null;
 
@@ -208,9 +215,14 @@ function Connection (options) {
 	this.socketId = 0;
 
 	this.failureCount = 0;
+	this.connectionTimer = null;
 
 	// when true, we end all sockets after the pending notifications reach 0
 	this.shutdownPending = false;
+
+	// track when notifications are queued so transmitCompleted is only emitted one when 
+	// notifications are transmitted rather than after socket timeouts
+	this.notificationsQueued = false;
 
 	this.terminated = false;
 
@@ -265,7 +277,23 @@ Connection.prototype.connect = function () {
 				debug(&quot;Connection established&quot;);
 				this.emit(&#x27;connected&#x27;, this.sockets.length + 1);
 				this.deferredConnection.resolve();
+				
+				clearTimeout(this.connectionTimer);
+				this.connectionTimer = null;
 			}.bind(this));
+
+		this.socket.on(&quot;error&quot;,   this.errorOccurred.bind(this, this.socket));
+		this.socket.on(&quot;timeout&quot;, this.socketTimeout.bind(this, this.socket));
+		this.socket.on(&quot;data&quot;,    this.handleTransmissionError.bind(this, this.socket));
+		this.socket.on(&quot;drain&quot;,   this.socketDrained.bind(this, this.socket, true));
+		this.socket.once(&quot;close&quot;, this.socketClosed.bind(this, this.socket));
+
+		if (this.options.connectTimeout &gt; 0) {
+			this.connectionTimer = setTimeout(function () {
+				this.deferredConnection.reject(new Error(&quot;Connect timed out&quot;));
+				this.socket.end();
+			}.bind(this), this.options.connectTimeout);
+		}
 
 	}.bind(this)).fail(function (error) {
 		debug(&quot;Module initialisation error:&quot;, error);
@@ -283,17 +311,31 @@ Connection.prototype.connect = function () {
  * @private
  */
 Connection.prototype.createConnection = function() {
-	this.connect().then(function () {
+	if (this.initialisingConnection() || this.sockets.length &gt;= this.options.maxConnections) {
+		return;
+	}
+
+	// Delay here because Apple will successfully authenticate production certificates
+	// in sandbox, but will then immediately close the connection. Necessary to wait for a beat
+	// to see if the connection stays before sending anything because the connection will be closed
+	// without error and messages could be lost.
+	this.connect().delay(100).then(function () {
+		if (this.socket.apnRetired) {
+			throw new Error(&quot;Socket unusable after connection. Hint: You may be using a certificate for the wrong environment&quot;);
+		}
 		this.failureCount = 0;
 
-		this.socket.socketId = this.socketId++;
-		this.socket.currentId = 0;
-		this.socket.cachedNotifications = [];
+		this.socket.apnSocketId = this.socketId++;
+		this.socket.apnCurrentId = 0;
+		this.socket.apnCachedNotifications = [];
 
 		this.sockets.push(this.socket);
+		trace(&quot;connection established&quot;, this.socketId);
 	}.bind(this)).fail(function (error) {
 		// Exponential backoff when connections fail.
 		var delay = Math.pow(2, this.failureCount++) * 1000;
+
+		trace(&quot;connection failed&quot;, delay);
 
 		this.raiseError(error);
 		this.emit(&#x27;error&#x27;, error);
@@ -309,6 +351,7 @@ Connection.prototype.createConnection = function() {
 
 		return q.delay(delay);
 	}.bind(this)).finally(function () {
+		trace(&quot;create completed&quot;, this.sockets.length);
 		this.deferredConnection = null;
 		this.socket = undefined;
 		this.serviceBuffer();
@@ -332,55 +375,65 @@ Connection.prototype.initialisingConnection = function() {
 
 	var socket = null;
 	var repeat = false;
+	var socketsAvailable = 0;
 	if(this.options.fastMode) {
 		repeat = true;
 	}
 	do {
-		socket = null;
-		if (this.notificationBuffer.length === 0) break;
-		for (var i = this.sockets.length - 1; i &gt;= 0; i--) {
-			if(this.socketAvailable(this.sockets[i])) {
-				socket = this.sockets[i];
-				break;
+		socketsAvailable = 0;
+		for (var i = 0; i &lt; this.sockets.length; i++) {
+			socket = this.sockets[i];
+			if(!this.socketAvailable(socket)) {
+				continue;
 			}
-		}
-		if (socket !== null) {
-			debug(&quot;Transmitting notification from buffer&quot;);
-			if(this.transmitNotification(socket, this.notificationBuffer.shift())) {
+
+			if (this.notificationBuffer.length === 0) {
+				socketsAvailable += 1;
+				continue;
+			}
+
+			// If a socket is available then transmit. If true is returned then manually call socketDrained
+			if (this.transmitNotification(socket, this.notificationBuffer.shift())) {
+				// Only set socket available here because if transmit returns false then the socket
+				//  is blocked so shouldn&#x27;t be used in the next loop.
+				socketsAvailable += 1;
 				this.socketDrained(socket, !repeat);
 			}
 		}
-		else if (!this.initialisingConnection() &amp;&amp; this.sockets.length &lt; this.options.maxConnections) {
-			this.createConnection();
-			repeat = false;
-		}
-		else {
-			repeat = false;
-		}
-	} while(repeat);
-	debug(&quot;%d left to send&quot;, this.notificationBuffer.length);
+	} while(repeat &amp;&amp; socketsAvailable &gt; 0 &amp;&amp; this.notificationBuffer.length &gt; 0);
 
-	if (this.notificationBuffer.length === 0 &amp;&amp; this.shutdownPending) {
-		debug(&quot;closing connections&quot;);
+	if (this.notificationBuffer.length &gt; 0 &amp;&amp; socketsAvailable == 0) {
+		this.createConnection();
+	}
+	
+	if (this.notificationBuffer.length === 0 &amp;&amp; socketsAvailable == this.sockets.length){
+		if (this.notificationsQueued) {
+			this.emit(&#x27;completed&#x27;);
+			this.notificationsQueued = false;
+		}
+		if (this.shutdownPending) {
+			debug(&quot;closing connections&quot;);
 
-		for (var i = this.sockets.length - 1; i &gt;= 0; i--) {
-			var socket = this.sockets[i];
-			if (!socket.busy) {
+			for (var i = 0; i &lt; this.sockets.length; i++) {
+				var socket = this.sockets[i];
 				// We delay before closing connections to ensure we don&#x27;t miss any error packets from the service.
 				setTimeout(socket.end.bind(socket), 2500);
+				this.retireSocket(socket);
+			}
+			if (this.sockets.length == 0) {
+				this.shutdownPending = false;
 			}
 		}
-		if (this.sockets.length == 0) {
-			this.shutdownPending = false;
-		}
 	}
+
+	debug(&quot;%d left to send&quot;, this.notificationBuffer.length);
  };
 
 /**
  * @private
  */
 Connection.prototype.errorOccurred = function(socket, err) {
-	debug(&quot;Socket error occurred&quot;, socket.socketId, err);
+	debug(&quot;Socket error occurred&quot;, socket.apnSocketId, err);
 
 	if(socket.transmissionErrorOccurred &amp;&amp; err.code == &#x27;EPIPE&#x27;) {
 		debug(&quot;EPIPE occurred after a transmission error which we can ignore&quot;);
@@ -395,9 +448,9 @@ Connection.prototype.errorOccurred = function(socket, err) {
 		this.raiseError(err, null);
 	}
 
-	if(socket.busy &amp;&amp; socket.cachedNotifications.length &gt; 0) {
+	if(socket.apnBusy &amp;&amp; socket.apnCachedNotifications.length &gt; 0) {
 		// A notification was in flight. It should be buffered for resending.
-		this.bufferNotification(socket.cachedNotifications[socket.cachedNotifications.length - 1]);
+		this.bufferNotification(socket.apnCachedNotifications[socket.apnCachedNotifications.length - 1]);
 	}
 
 	this.destroyConnection(socket);
@@ -407,7 +460,7 @@ Connection.prototype.errorOccurred = function(socket, err) {
  * @private
  */
 Connection.prototype.socketAvailable = function(socket) {
-	if (!socket || !socket.writable || socket.busy || socket.transmissionErrorOccurred) {
+	if (!socket || !socket.writable || socket.apnRetired || socket.apnBusy || socket.transmissionErrorOccurred) {
 		return false;
 	}
 	return true;
@@ -417,10 +470,10 @@ Connection.prototype.socketAvailable = function(socket) {
  * @private
  */
 Connection.prototype.socketDrained = function(socket, serviceBuffer) {
-	debug(&quot;Socket drained&quot;, socket.socketId);
-	socket.busy = false;
-	if(this.options.enhanced) {
-		var notification = socket.cachedNotifications[socket.cachedNotifications.length - 1];
+	debug(&quot;Socket drained&quot;, socket.apnSocketId);
+	socket.apnBusy = false;
+	if((!this.options.legacy || this.options.enhanced) &amp;&amp; socket.apnCachedNotifications.length &gt; 0) {
+		var notification = socket.apnCachedNotifications[socket.apnCachedNotifications.length - 1];
 		this.emit(&#x27;transmitted&#x27;, notification.notification, notification.recipient);
 	}
 	if(serviceBuffer === true &amp;&amp; !this.runningOnNextTick) {
@@ -440,7 +493,7 @@ Connection.prototype.socketDrained = function(socket, serviceBuffer) {
  * @private
  */
  Connection.prototype.socketTimeout = function(socket) {
-	debug(&quot;Socket timeout&quot;, socket.socketId);
+	debug(&quot;Socket timeout&quot;, socket.apnSocketId);
 	this.emit(&#x27;timeout&#x27;);
 	this.destroyConnection(socket);
 
@@ -451,7 +504,7 @@ Connection.prototype.socketDrained = function(socket, serviceBuffer) {
  * @private
  */
 Connection.prototype.destroyConnection = function(socket) {
-	debug(&quot;Destroying connection&quot;, socket.socketId);
+	debug(&quot;Destroying connection&quot;, socket.apnSocketId);
 	if (socket) {
 		this.retireSocket(socket);
 		socket.destroy();
@@ -462,7 +515,7 @@ Connection.prototype.destroyConnection = function(socket) {
  * @private
  */
 Connection.prototype.socketClosed = function(socket) {
-	debug(&quot;Socket closed&quot;, socket.socketId);
+	debug(&quot;Socket closed&quot;, socket.apnSocketId);
 
 	if (socket === this.socket &amp;&amp; this.deferredConnection.promise.isPending()) {
 		debug(&quot;Connection error occurred before TLS Handshake&quot;);
@@ -480,8 +533,9 @@ Connection.prototype.socketClosed = function(socket) {
  * @private
  */
  Connection.prototype.retireSocket = function(socket) {
- 	debug(&quot;Removing socket from pool&quot;, socket.socketId);
+ 	debug(&quot;Removing socket from pool&quot;, socket.apnSocketId);
 
+ 	socket.apnRetired = true;
  	var index = this.sockets.indexOf(socket);
 	if (index &gt; -1) {
 		this.sockets.splice(index, 1);
@@ -506,6 +560,7 @@ Connection.prototype.bufferNotification = function (notification) {
 	}
 	notification.retryLimit -= 1;
 	this.notificationBuffer.push(notification);
+	this.notificationsQueued = true;
 };
 
 /**
@@ -556,10 +611,10 @@ Connection.prototype.prepareNotification = function (notification, device) {
  * @private
  */
 Connection.prototype.cacheNotification = function (socket, notification) {
-	socket.cachedNotifications.push(notification);
-	if (socket.cachedNotifications.length &gt; this.options.cacheLength) {
-		debug(&quot;Clearing notification %d from the cache&quot;, socket.cachedNotifications[0][&#x27;_uid&#x27;]);
-		socket.cachedNotifications.splice(0, socket.cachedNotifications.length - this.options.cacheLength);
+	socket.apnCachedNotifications.push(notification);
+	if (socket.apnCachedNotifications.length &gt; this.options.cacheLength) {
+		debug(&quot;Clearing notification %d from the cache&quot;, socket.apnCachedNotifications[0][&#x27;_uid&#x27;]);
+		socket.apnCachedNotifications.splice(0, socket.apnCachedNotifications.length - this.options.cacheLength);
 	}
 };
 
@@ -569,7 +624,7 @@ Connection.prototype.cacheNotification = function (socket, notification) {
 Connection.prototype.handleTransmissionError = function (socket, data) {
 	if (data[0] == 8) {
 		socket.transmissionErrorOccurred = true;
-		if (!this.options.enhanced) {
+		if (!this.options.enhanced &amp;&amp; this.options.legacy) {
 			return;
 		}
 
@@ -581,8 +636,8 @@ Connection.prototype.handleTransmissionError = function (socket, data) {
 
 		debug(&quot;Notification %d caused an error: %d&quot;, identifier, errorCode);
 
-		while (socket.cachedNotifications.length) {
-			notification = socket.cachedNotifications.shift();
+		while (socket.apnCachedNotifications.length) {
+			notification = socket.apnCachedNotifications.shift();
 			if (notification[&#x27;_uid&#x27;] == identifier) {
 				foundNotification = true;
 				break;
@@ -598,10 +653,10 @@ Connection.prototype.handleTransmissionError = function (socket, data) {
 			this.raiseError(errorCode, notification.notification, notification.recipient);
 		}
 		else {
-			socket.cachedNotifications = temporaryCache;
+			socket.apnCachedNotifications = temporaryCache;
 
-			if(socket.cachedNotifications.length &gt; 0) {
-				var differentialSize = socket.cachedNotifications[0][&#x27;_uid&#x27;] - identifier;
+			if(socket.apnCachedNotifications.length &gt; 0) {
+				var differentialSize = socket.apnCachedNotifications[0][&#x27;_uid&#x27;] - identifier;
 				this.emit(&#x27;cacheTooSmall&#x27;, differentialSize);
 				if(this.options.autoAdjustCache) {
 					this.options.cacheLength += differentialSize * 2;
@@ -612,11 +667,11 @@ Connection.prototype.handleTransmissionError = function (socket, data) {
 			this.raiseError(errorCode, null);
 		}
 
-		var count = socket.cachedNotifications.length;
+		var count = socket.apnCachedNotifications.length;
 		if(this.options.buffersNotifications) {
 			debug(&quot;Buffering %d notifications for resending&quot;, count);
 			for (var i = 0; i &lt; count; ++i) {
-				notification = socket.cachedNotifications.shift();
+				notification = socket.apnCachedNotifications.shift();
 				this.bufferNotification(notification);
 			}
 		}
@@ -660,9 +715,9 @@ Connection.prototype.transmitNotification = function(socket, notification) {
 	var position = 0;
 	var data;
 
-	notification._uid = socket.currentId++;
-	if (socket.currentId &gt; 0xffffffff) {
-		socket.currentId = 0;
+	notification._uid = socket.apnCurrentId++;
+	if (socket.apnCurrentId &gt; 0xffffffff) {
+		socket.apnCurrentId = 0;
 	}
 	if (this.options.legacy) {
 		if (this.options.enhanced) {
@@ -754,7 +809,7 @@ Connection.prototype.transmitNotification = function(socket, notification) {
 		this.cacheNotification(socket, notification);
 	}
 
-	socket.busy = true;
+	socket.apnBusy = true;
 	return socket.write(data);
 };
 
@@ -768,7 +823,6 @@ Connection.prototype.validNotification = function (notification, recipient) {
 		}.bind(this));
 		return false;
 	}
-	notification.compile();
 	return true;
 };
 

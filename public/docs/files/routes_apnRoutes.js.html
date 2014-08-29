@@ -104,6 +104,8 @@
  */
 
 var apn = require (&#x27;../apn/index.js&#x27;);
+var db = require (&#x27;./dbRoutes.js&#x27;);
+var user = require (&#x27;../models/user.js&#x27;);
 var options = {
     cert: __dirname + &#x27;/../config/cert.pem&#x27;,
     key: __dirname + &#x27;/../config/key.pem&#x27;
@@ -202,23 +204,34 @@ feedback.on(&#x27;feedbackError&#x27;, console.error);
  * Send notification to a single device
  *
  * @method pushSingleNotification
- * @param {String} deviceToken
- * @param {String} alertText
+ * @param {String} userId
  * @param {JSON} payload
  */
-exports.pushSingleNotification = function(deviceToken, alertText, payload) {
+exports.pushSingleNotification = function(userId, payload, callback) {
+    var userName;
     var note = new apn.notification();
-    note.setAlertText(alertText);
+    // note.setAlertText(alertText);
     note.sound = &quot;ping.aiff&quot;;
     note.payload = payload;
-
     // note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
     // note.badge = 3;
-    // note.sound = &quot;ping.aiff&quot;;
     // note.alert = &quot;\uD83D\uDCE7 \u2709 You have a new message&quot;;
     // note.payload = {&#x27;messageFrom&#x27;: &#x27;Caroline&#x27;};
-
-    service.pushNotification(note, deviceToken);
+    
+    user.isUserIdValid(userId, function(data){
+        userName = data.userData.name;
+        if(!data.success){
+            callback(data);
+        } else{
+            user.getDeviceToken(userId, function(deviceToken){
+                service.pushNotification(note, deviceToken);
+                callback({
+                    success: true,
+                    message: &quot;message sent to&quot; + userName
+                });
+            });
+        }
+    });
 };
 
 
