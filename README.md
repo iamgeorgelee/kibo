@@ -44,7 +44,6 @@ Currently we do:
 
 * HTTP status code
 * User preference only yes or no, not -1, 0, 1
-* APN
 * Able to create user defined event: choose restaurant from recommendation, pick friends, send notification, user receive invite and accept/reject. Voting.
 * Error message should return with HTTP status code
 * Move facebook App secret to DB

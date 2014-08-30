@@ -382,7 +382,7 @@ Notification.prototype.prepareAlert = function () {
  * @since v1.2.0
  */
 Notification.prototype.length = function () {
-	return Buffer.byteLength(JSON.stringify(this), this.encoding || &#x27;utf8&#x27;);
+	return Buffer.byteLength(this.compile(), this.encoding || &#x27;utf8&#x27;);
 };
 
 /**
@@ -395,6 +395,7 @@ Notification.prototype.trim = function(length) {
 	if(tooLong &lt;= 0) {
 		return 0;
 	}
+	this.compiled = false;
 	var length;
 	var encoding = this.encoding || &#x27;utf8&#x27;;
 	var escaped; // Working variable for trimming string

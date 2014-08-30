@@ -100,6 +100,8 @@ var CredentialLoader = require(&#x27;./credentials&#x27;);
 var Device = require(&#x27;./device&#x27;);
 var Errors = require(&#x27;./errors&#x27;);
 
+var createSocket = require(&#x27;./socket&#x27;);
+
 var q    = require(&#x27;q&#x27;);
 var tls  = require(&#x27;tls&#x27;);
 var sysu = require(&#x27;util&#x27;);
@@ -218,18 +220,6 @@ Feedback.prototype.initialize = function () {
 	return this.initializationPromise;
 };
 
-function checkPEMType(input, type) {
-	if(input == null) {
-		return false;
-	}
-	var matches = input.match(/\-\-\-\-\-BEGIN ([A-Z\s*]+)\-\-\-\-\-/);
-
-	if (matches != null) {
-		return matches[1].indexOf(type) &gt;= 0;
-	}
-	return false;
-}
-
 /**
  * You should call {@link Feedback#start} instead of this method
  * @private
@@ -244,6 +234,8 @@ Feedback.prototype.connect = function () {
 	this.initialize().spread(function(pfxData, certData, keyData, caData) {
 		var socketOptions = {};
 
+		socketOptions.port = this.options.port;
+		socketOptions.host = this.options.address;
 		socketOptions.pfx = pfxData;
 		socketOptions.cert = certData;
 		socketOptions.key = keyData;
@@ -251,10 +243,7 @@ Feedback.prototype.connect = function () {
 		socketOptions.passphrase = this.options.passphrase;
 		socketOptions.rejectUnauthorized = this.options.rejectUnauthorized;
 
-		this.socket = tls.connect(
-			this.options[&#x27;port&#x27;],
-			this.options[&#x27;address&#x27;],
-			socketOptions,
+		this.socket = createSocket(this, socketOptions,
 			function () {
 				debug(&quot;Connection established&quot;);
 				this.deferredConnection.resolve();

@@ -44,7 +44,7 @@ function isSuccess(data) {
 }
 
 //Check is userId in DB, if yes, also return user data
-function isUserIdValid(userId, callback) {
+var isUserIdValid = function (userId, callback) {
     var response;
     db.getDocument('User', userId, function (data) {
         if (data.message === 'Document not found') {
@@ -54,7 +54,8 @@ function isUserIdValid(userId, callback) {
         }
         callback(response);
     });
-}
+};
+module.exports.isUserIdValid = isUserIdValid;
 
 var getUsers = function (callback) {
     db.getCollection('User', function (data) {
@@ -531,7 +532,7 @@ var getFbFriendCandidate = function (userId, callback) {
 module.exports.getFbFriendCandidate = getFbFriendCandidate;
 
 exports.addFriendReq = function(userId, toFriendId, callback){
-    var userData, toFriendData, newFriendReqList, deviceToken;
+    var userData, toFriendData, newFriendReqList;
 
     async.series([
         function(callback){
@@ -559,32 +560,33 @@ exports.addFriendReq = function(userId, toFriendId, callback){
             ], callback);
         },
         function(callback){
+            var requestExist = false;
             if (toFriendData.hasOwnProperty('friendReq')) {
                 //check is the same friend request already exist
-                var requestExist = false;
                 for (var prop in toFriendData.friendReq) {
                     if(toFriendData.friendReq[prop].id === userId){
                         requestExist = true;
                         break;
                     }
                 }
-                if(requestExist){
-                    callback({
-                        success: false,
-                        message: 'Such friend request already exist'
-                    });
-                }
                 newFriendReqList = toFriendData.friendReq;
             }else{
                 newFriendReqList = [];
             }
 
-            newFriendReqList.push({
+            if(requestExist){
+                callback({
+                    success: false,
+                    message: 'Such friend request already exist'
+                });
+            } else{
+                newFriendReqList.push({
                 "id": userId,
                 "name": userData.name
-            });
+                });
 
-            callback();
+                callback();
+            }
         },
         function(callback){
             //Add user info to friend data
@@ -597,15 +599,17 @@ exports.addFriendReq = function(userId, toFriendId, callback){
             });
         },
         function(callback){
-            //get to add friend's device token to send notification
-            getDeviceToken(toFriendId, function(data){
-                deviceToken = data;
-                callback();
+            //send notification to friendee
+            apn.pushSingleNotification(toFriendId, {
+                from: userId,
+                to: toFriendId,
+                subject: "User",
+                content: {
+                    method: "friendRequest"
+                }
+            }, function(data){
+                (!data.success)? callback(data): callback();
             });
-        },
-        function(callback){
-            apn.pushSingleNotification(deviceToken, "friendReq", {name: userData.name});
-            callback();
         }
     ], function(err) {
         (err)? callback(err): callback({success:true});
