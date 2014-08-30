@@ -603,13 +603,12 @@ exports.addFriendReq = function(userId, toFriendId, callback){
             apn.pushSingleNotification(toFriendId, {
                 from: userId,
                 to: toFriendId,
-                subject: "friendRequest",
-                description: "Notify user for incoming friend request"
-            }, function(data){
-                if(!data.success){
-                    callback(data);
+                subject: "User",
+                content: {
+                    method: "friendRequest"
                 }
-                callback();
+            }, function(data){
+                (!data.success)? callback(data): callback();
             });
         }
     ], function(err) {

@@ -6,7 +6,6 @@
  */
 
 var apn = require ('../apn/index.js');
-var db = require ('./dbRoutes.js');
 var user = require ('../models/user.js');
 var options = {
     cert: __dirname + '/../config/cert.pem',
