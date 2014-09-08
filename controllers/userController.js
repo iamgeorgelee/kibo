@@ -6,6 +6,7 @@
  */
 
 var user = require('../models/user.js');
+var validator = require('validator');
 
 // to make sure a user is logged in
 function isLoggedIn(req, res, next) {
@@ -364,9 +365,13 @@ module.exports = function(app, passport) {
      * @example /api/user/:userId
      */
     app.route('/api/user/:userId')
-        .get(function(req, res) {
+        .get(function(req, res, next) {
             user.getUserById(req.params.userId, function(data) {
-                return res.send(data);
+                if(data instanceof Error){
+                    return res.send(data.http_code, data.arguments);
+                } else {
+                    return res.send(data);
+                }
             });
         });
 
@@ -583,7 +588,7 @@ module.exports = function(app, passport) {
                 return res.send(data);
             });
         });
-        
+
     /**
      * [POST]
      *
@@ -601,5 +606,5 @@ module.exports = function(app, passport) {
                 return res.send(data);
             });
         });
-    
+
 };

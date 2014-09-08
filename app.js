@@ -5,6 +5,7 @@
 //This is the application entry point
 //Module dependencies.
 var express = require('express');
+var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
 var connect = require('connect');
 var flash = require('connect-flash');
@@ -12,6 +13,7 @@ var logger = require('morgan');
 var passport = require('passport');
 var port = process.env.PORT || 8080;
 var app = express();
+app.use(favicon(__dirname + '/public/favicon.ico'));
 var server = require('http').Server(app);
 
 // =======================

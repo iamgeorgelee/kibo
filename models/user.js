@@ -33,6 +33,15 @@ function decrypt(toDecrypt){
     }
 }
 
+function errorMsg(msg, data, statusCode){
+    //msg is the response json which include flag and message
+    var error = new Error(msg);
+    error.http_code = statusCode;
+    error.arguments = data;
+    console.error(error);
+    return error;
+}
+
 function isSuccess(data) {
     if (data.hasOwnProperty('success')) {
         if (data.success === false) {
@@ -100,7 +109,7 @@ exports.getUserByFbProfileId = function (token, profileId, callback) {
 
 exports.getUserById = function (userId, callback) {
     isUserIdValid(userId, function(data){
-        (!data.success)? callback(data): callback(data.userData);
+        (!data.success)? callback(errorMsg(data.message, data, 400)): callback(data.userData);
     });
 };
 

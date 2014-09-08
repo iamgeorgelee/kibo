@@ -125,6 +125,7 @@ exports.pushSingleNotification = function(userId, payload, callback) {
             callback(data);
         } else{
             user.getDeviceToken(userId, function(deviceToken){
+                note.setAlertText("You've got friend request");
                 service.pushNotification(note, deviceToken);
                 callback({
                     success: true,
