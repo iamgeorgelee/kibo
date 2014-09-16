@@ -34,7 +34,7 @@ function decrypt(toDecrypt){
 }
 
 function errorMsg(msg, data, statusCode){
-    //msg is the response json which include flag and message
+    //arguments is the response json which include flag and message
     var error = new Error(msg);
     error.http_code = statusCode;
     error.arguments = data;
@@ -610,12 +610,8 @@ exports.addFriendReq = function(userId, toFriendId, callback){
         function(callback){
             //send notification to friendee
             apn.pushSingleNotification(toFriendId, {
-                from: userId,
-                to: toFriendId,
-                subject: "User",
-                content: {
-                    method: "friendRequest"
-                }
+                sender: userData.name,
+                method: "USER_FRIEND_REQUEST"
             }, function(data){
                 (!data.success)? callback(data): callback();
             });
@@ -698,11 +694,32 @@ exports.reviewFriendReq = function (userId, approve, reviewId, callback) {
         },
         function(callback){
             if(approve === true || approve === "true"){
-                addFriend(userId, reviewId, function(data){
-                    (isSuccess(data))? callback(): callback(data);
+                async.parallel([
+                    function (callback) {
+                        addFriend(userId, reviewId, function(data){
+                            (isSuccess(data))? callback(): callback(data);
+                        });
+                    },
+                    function (callback) {
+                        //send notification to friend requester
+                        apn.pushSingleNotification(reviewId, {
+                            sender: userData.name,
+                            method: "USER_ACCEPT_FRIEND_REQUEST"
+                        }, function(data){
+                            (!data.success)? callback(data): callback();
+                        });
+                    }
+                ], callback);
+            } else{
+                //reject friend request
+                apn.pushSingleNotification(reviewId, {
+                    sender: userData.name,
+                    method: "USER_REJECT_FRIEND_REQUEST"
+                }, function(data){
+                    (!data.success)? callback(data): callback();
                 });
             }
-            //if not approved do nothing
+
         }
     ], function(err) {
         (err)? callback(err): callback({success:true});
@@ -749,3 +766,81 @@ var getUserPreference = function (userId, callback) {
     });
 };
 module.exports.getUserPreference = getUserPreference;
+
+exports.getUserGrp = function (userId, callback) {
+    isUserIdValid(userId, function(data){
+        (!data.success)? callback(errorMsg(data.message, data, 400)): callback(data.userData.groups);
+    });
+};
+
+exports.setUserGrp = function (userId, grpId, callback) {
+    async.waterfall([
+        //check is the userId valid
+        function (callback) {
+            async.parallel([
+                function (callback) {
+                    isUserIdValid(userId, function(data){
+                        (!data.success)? callback(data, null): callback(null, data.userData);
+                    });
+                },
+                function (callback) {
+                    db.getDocument('Groups', grpId, function (data) {
+                        if (data.message === 'Document not found') {
+                            callback({success:false, message: 'No such group Id'}, null);
+                        } else {
+                            callback();
+                        }
+                    });
+                }
+            ], function (err, result) {
+                (err)? callback(err, null): callback(null, result);
+            });
+        },
+        function (userData, callback) {
+            //Push grpId into user document's "groups" array
+            db.updateDocument('User', userId, {
+                "$push": {
+                    groups: grpId
+                }
+            }, function (data) {
+                callback(null, {success:true});
+            });
+        }
+    ], function (err, result) {
+        (err)? callback(errorMsg(err.message, err, 400)): callback(result);
+    });
+};
+
+exports.getGrpById = function (grpId, callback) {
+    db.getDocument('Groups', grpId, function (data) {
+        if (data.message === 'Document not found') {
+            callback(errorMsg("No Group Found", {success:false, message: 'No such group Id'}, 400));
+        } else {
+            callback({success:true, groupData:data});
+        }
+    });
+};
+
+exports.newGrp = function (grpName, grpMembers, callback) {
+    async.series([
+        function (callback) {
+            async.each(grpMembers, function( member, callback) {
+                isUserIdValid(member, function(data){
+                    (!data.success)? callback({message: data.message + " - " + member}): callback();
+                });
+            }, function(err){
+                (err)? callback(err): callback();
+            });
+        },
+        function (callback) {
+            db.createDocument('Groups', {
+                name: grpName,
+                members: grpMembers
+            }, function (data) {
+                callback();
+            });
+        }
+    ], function (err) {
+        (err)? callback(errorMsg(err.message, err, 400)): callback({success:true});
+    });
+};

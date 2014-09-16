@@ -42,6 +42,7 @@ Currently we do:
 
 ###Higher Priority
 
+* use "$push" to re-write several places(restaurant, preference). 
 * Apply error handling to all call
 * HTTP status code
 * User preference only yes or no, not -1, 0, 1

@@ -29,7 +29,7 @@ service.on('connected', function() {
 });
 
 service.on('transmitted', function(notification, device) {
-    console.log("Notification transmitted to:" + device.token.toString('hex'));
+    console.log("Notification transmitted");
 });
 
 service.on('transmissionError', function(errCode, notification, device) {
@@ -118,14 +118,13 @@ exports.pushSingleNotification = function(userId, payload, callback) {
     // note.badge = 3;
     // note.alert = "\uD83D\uDCE7 \u2709 You have a new message";
     // note.payload = {'messageFrom': 'Caroline'};
-    
+
     user.isUserIdValid(userId, function(data){
         userName = data.userData.name;
         if(!data.success){
             callback(data);
         } else{
             user.getDeviceToken(userId, function(deviceToken){
-                note.setAlertText("You've got friend request");
                 service.pushNotification(note, deviceToken);
                 callback({
                     success: true,

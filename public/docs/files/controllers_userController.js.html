@@ -104,6 +104,7 @@
  */
 
 var user = require(&#x27;../models/user.js&#x27;);
+var validator = require(&#x27;validator&#x27;);
 
 // to make sure a user is logged in
 function isLoggedIn(req, res, next) {
@@ -372,9 +373,13 @@ module.exports = function(app, passport) {
      */
     app.route(&#x27;/api/createUser&#x27;)
         .post(function(req, res) {
-            user.createUser(req.param(&#x27;token&#x27;), req.param(&#x27;profileId&#x27;), req.param(&#x27;email&#x27;), req.param(&#x27;name&#x27;), req.param(&#x27;profilePic&#x27;), function(data) {
-                return res.send(data);
-            });
+            if(validator.isEmail(req.param(&#x27;email&#x27;))){
+                user.createUser(req.param(&#x27;token&#x27;), req.param(&#x27;profileId&#x27;), req.param(&#x27;email&#x27;), req.param(&#x27;name&#x27;), req.param(&#x27;profilePic&#x27;), function(data) {
+                    return res.send(data);
+                });
+            } else{
+                return res.send(400, &quot;Not valid email&quot;);
+            }
         });
 
     /**
@@ -462,9 +467,13 @@ module.exports = function(app, passport) {
      * @example /api/user/:userId
      */
     app.route(&#x27;/api/user/:userId&#x27;)
-        .get(function(req, res) {
+        .get(function(req, res, next) {
             user.getUserById(req.params.userId, function(data) {
-                return res.send(data);
+                if(data instanceof Error){
+                    return res.send(data.http_code, data.arguments);
+                } else {
+                    return res.send(data);
+                }
             });
         });
 
@@ -681,7 +690,7 @@ module.exports = function(app, passport) {
                 return res.send(data);
             });
         });
-        
+
     /**
      * [POST]
      *
@@ -699,7 +708,90 @@ module.exports = function(app, passport) {
                 return res.send(data);
             });
         });
-    
+
+    /**
+     * [POST]
+     *
+     * Set user&#x27;s group. Set which group this user is in.
+     *
+     * @method userGrp
+     * @param {String} userId
+     * @param {String} grpId (Request Content)
+     * @return {Boolean} Success
+     * @example /api/user/:userId/userGrp
+     */
+     /**
+     * [GET]
+     *
+     * Get user&#x27;s group list
+     *
+     * @method userGrp
+     * @param {String} userId
+     * @return {Json} user group list
+     * @example /api/user/:userId/userGrp
+     */
+    app.route(&#x27;/api/user/:userId/userGrp&#x27;)
+        .post(function(req, res) {
+            user.setUserGrp(req.params.userId, req.param(&#x27;grpId&#x27;), function(data) {
+                if(data instanceof Error){
+                    return res.send(data.http_code, data.arguments);
+                } else {
+                    return res.send(data);
+                }
+            });
+        })
+        .get(function(req, res) {
+            user.getUserGrp(req.params.userId, function(data) {
+                if(data instanceof Error){
+                    return res.send(data.http_code, data.arguments);
+                } else {
+                    return res.send(data);
+                }
+            });
+        });
+
+    /**
+     * [POST]
+     *
+     * Add document in collection &quot;group&quot;. New entry in &quot;group&quot;.
+     *
+     * @method newGrp
+     * @param {String} grpName
+     * @param {Array} grpMembers
+     * @return {Boolean} Success
+     * @example /api/group/newGrp
+     */
+    app.route(&#x27;/api/group/newGrp&#x27;)
+        .post(function(req, res) {
+            user.newGrp(req.param(&#x27;grpName&#x27;), req.param(&#x27;grpMembers&#x27;), function(data) {
+                if(data instanceof Error){
+                    return res.send(data.http_code, data.arguments);
+                } else {
+                    return res.send(data);
+                }
+            });
+        });
+
+    /**
+     * [GET]
+     *
+     * Get group by id
+     *
+     * @method getGroupById
+     * @param {String} grpId
+     * @return {Json} group detail
+     * @example /api/group/:grpId
+     */
+    app.route(&#x27;/api/group/:grpId&#x27;)
+        .get(function(req, res) {
+            user.getGrpById(req.params.grpId, function(data) {
+                if(data instanceof Error){
+                    return res.send(data.http_code, data.arguments);
+                } else {
+                    return res.send(data);
+                }
+            });
+        });
 };
     </pre>
 </div>

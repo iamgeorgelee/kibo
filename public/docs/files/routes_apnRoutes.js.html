@@ -104,7 +104,6 @@
  */
 
 var apn = require (&#x27;../apn/index.js&#x27;);
-var db = require (&#x27;./dbRoutes.js&#x27;);
 var user = require (&#x27;../models/user.js&#x27;);
 var options = {
     cert: __dirname + &#x27;/../config/cert.pem&#x27;,
@@ -128,7 +127,7 @@ service.on(&#x27;connected&#x27;, function() {
 });
 
 service.on(&#x27;transmitted&#x27;, function(notification, device) {
-    console.log(&quot;Notification transmitted to:&quot; + device.token.toString(&#x27;hex&#x27;));
+    console.log(&quot;Notification transmitted&quot;);
 });
 
 service.on(&#x27;transmissionError&#x27;, function(errCode, notification, device) {
@@ -217,7 +216,7 @@ exports.pushSingleNotification = function(userId, payload, callback) {
     // note.badge = 3;
     // note.alert = &quot;\uD83D\uDCE7 \u2709 You have a new message&quot;;
     // note.payload = {&#x27;messageFrom&#x27;: &#x27;Caroline&#x27;};
-    
+
     user.isUserIdValid(userId, function(data){
         userName = data.userData.name;
         if(!data.success){
