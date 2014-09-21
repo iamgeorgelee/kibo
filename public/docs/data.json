@@ -1108,7 +1108,7 @@
         },
         {
             "file": "controllers/restController.js",
-            "line": 52,
+            "line": 54,
             "description": "[GET]\n\nGet top 3 recommand restaurant bases on user location",
             "itemtype": "method",
             "name": "getUserLocRecommendRest",
@@ -1130,7 +1130,7 @@
         },
         {
             "file": "controllers/restController.js",
-            "line": 69,
+            "line": 71,
             "description": "[GET]\n\nGet restaurant by id",
             "itemtype": "method",
             "name": "getRestaurantById",
@@ -1152,7 +1152,7 @@
         },
         {
             "file": "controllers/restController.js",
-            "line": 86,
+            "line": 88,
             "description": "[GET]\n\nGet restaurant by an array of ids",
             "itemtype": "method",
             "name": "getRestaurantByIds",
@@ -1174,7 +1174,7 @@
         },
         {
             "file": "controllers/restController.js",
-            "line": 112,
+            "line": 114,
             "description": "[GET]\n\nSearch restaurants w/ filter. Can accept all lower case, will transform \"all lower case\" to \"All Lower Case\" to match restaurant name",
             "itemtype": "method",
             "name": "searchRestaurants",
@@ -1196,7 +1196,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 158,
+            "line": 159,
             "description": "Clearly a stupid way and obviously there will be a problem when web page user and mobile user do facebook auth the same time.\nSince we dont really need to care about web page right now, temporary ignore it. Need to fix later.",
             "itemtype": "attribute",
             "name": "",
@@ -1204,7 +1204,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 200,
+            "line": 201,
             "description": "Needs to verify later, since the callback changed due to support API.",
             "itemtype": "attribute",
             "name": "",
@@ -1212,7 +1212,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 229,
+            "line": 230,
             "description": "[POST]\n\nPerform sign up for local account",
             "itemtype": "method",
             "name": "localSignup",
@@ -1239,7 +1239,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 245,
+            "line": 246,
             "description": "[POST]\n\nPerform login for local account",
             "itemtype": "method",
             "name": "localLogin",
@@ -1266,7 +1266,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 261,
+            "line": 262,
             "description": "[POST]\n\nCreate new user via Facebook auth",
             "itemtype": "method",
             "name": "createUser",
@@ -1308,7 +1308,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 282,
+            "line": 287,
             "description": "[POST]\n\nCalled after do FB authentication to get pesponsive user",
             "itemtype": "method",
             "name": "fbLogin",
@@ -1335,7 +1335,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 300,
+            "line": 305,
             "description": "[GET]\n\nPerform facebook account authentication.\nScope defines what kind of data you want user to authorize you.\nAfter perform facebook account authentication, facebook will render to callback location.",
             "itemtype": "method",
             "name": "fbAuth",
@@ -1352,7 +1352,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 318,
+            "line": 323,
             "description": "After perform facebook account authentication, facebook will render back to this location.\nThis is for facebook itself.",
             "itemtype": "method",
             "name": "fbAuth/Callback",
@@ -1368,7 +1368,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 340,
+            "line": 345,
             "description": "[GET]\n\nGet app user list",
             "itemtype": "method",
             "name": "getUsers",
@@ -1383,7 +1383,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 356,
+            "line": 361,
             "description": "[GET]\n\nGet user by id",
             "itemtype": "method",
             "name": "getUserById",
@@ -1405,7 +1405,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 373,
+            "line": 382,
             "description": "[GET]\n\nGet facebook friends who also authorize this app.",
             "itemtype": "method",
             "name": "getFbFriends",
@@ -1427,7 +1427,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 390,
+            "line": 399,
             "description": "[GET]\n\nGet friend list",
             "itemtype": "method",
             "name": "getFriendList",
@@ -1449,7 +1449,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 407,
+            "line": 416,
             "description": "[POST]\n\nAdd friend\n\nAvoid use this function directly, should do review friend request instead",
             "itemtype": "method",
             "name": "addFriend",
@@ -1476,7 +1476,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 427,
+            "line": 436,
             "description": "[POST]\n\nUnfriend",
             "itemtype": "method",
             "name": "unfriend",
@@ -1503,7 +1503,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 445,
+            "line": 454,
             "description": "[GET]\n\nGet a list of app user you can add them as friend\nWhen this is useful? User wants to add friend via 'Search by name'",
             "itemtype": "method",
             "name": "getFriendCandidate",
@@ -1525,7 +1525,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 463,
+            "line": 472,
             "description": "[GET]\n\nGet a list of app user who is your facebook friend but not your friend in this app\nWhen this is useful? User wants to add friend via 'Find friends from facebook'",
             "itemtype": "method",
             "name": "getFbFriendCandidate",
@@ -1547,7 +1547,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 481,
+            "line": 490,
             "description": "[POST]\n\nSend a friend request.\n\nuserA send a friend request to userB, in user B's DB entry will record the request.",
             "itemtype": "method",
             "name": "friendReq",
@@ -1574,7 +1574,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 494,
+            "line": 503,
             "description": "[GET]\n\nGet friend requests",
             "itemtype": "method",
             "name": "friendReq",
@@ -1596,7 +1596,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 516,
+            "line": 525,
             "description": "[POST]\n\nReview friend request, also need to tell approve or deny\nFirst will remove the entry in friendReq and if it's approved it will do add friend",
             "itemtype": "method",
             "name": "reviewFriendReq",
@@ -1628,7 +1628,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 536,
+            "line": 545,
             "description": "[POST]\n\nSet user preference\n\nInput should be full user preference, that says, all new add or delete preference should manipulate in client slide\n\nweights = -1, 0, 1\n1 => Like it\n0 => soso\n-1 => definitely not\n\n\"preference\" : [\n   {\n     categories: \"pizza\",\n     weights: \"1\"\n   },\n   {\n     categories: \"salad\",\n     weights: \"-1\"\n   }\n]",
             "itemtype": "method",
             "name": "userPreference",
@@ -1655,7 +1655,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 565,
+            "line": 574,
             "description": "[GET]\n\nGet user preference",
             "itemtype": "method",
             "name": "userPreference",
@@ -1677,7 +1677,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 587,
+            "line": 596,
             "description": "[POST]\n\nAdd device token",
             "itemtype": "method",
             "name": "deviceToken",
@@ -1699,6 +1699,104 @@
             },
             "example": [
                 " /api/user/:userId/deviceToken"
+            ],
+            "class": "UserController"
+        },
+        {
+            "file": "controllers/userController.js",
+            "line": 614,
+            "description": "[POST]\n\nSet user's group. Set which group this user is in.",
+            "itemtype": "method",
+            "name": "userGrp",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "grpId",
+                    "description": "(Request Content)",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Success",
+                "type": "Boolean"
+            },
+            "example": [
+                " /api/user/:userId/userGrp"
+            ],
+            "class": "UserController"
+        },
+        {
+            "file": "controllers/userController.js",
+            "line": 625,
+            "description": "[GET]\n\nGet user's group list",
+            "itemtype": "method",
+            "name": "userGrp",
+            "params": [
+                {
+                    "name": "userId",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "user group list",
+                "type": "Json"
+            },
+            "example": [
+                " /api/user/:userId/userGrp"
+            ],
+            "class": "UserController"
+        },
+        {
+            "file": "controllers/userController.js",
+            "line": 655,
+            "description": "[POST]\n\nAdd document in collection \"group\". New entry in \"group\".",
+            "itemtype": "method",
+            "name": "newGrp",
+            "params": [
+                {
+                    "name": "grpName",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "grpMembers",
+                    "description": "",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Success",
+                "type": "Boolean"
+            },
+            "example": [
+                " /api/group/newGrp"
+            ],
+            "class": "UserController"
+        },
+        {
+            "file": "controllers/userController.js",
+            "line": 677,
+            "description": "[GET]\n\nGet group by id",
+            "itemtype": "method",
+            "name": "getGroupById",
+            "params": [
+                {
+                    "name": "grpId",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "group detail",
+                "type": "Json"
+            },
+            "example": [
+                " /api/group/:grpId"
             ],
             "class": "UserController"
         },
@@ -4240,7 +4338,7 @@
         },
         {
             "file": "routes/apnRoutes.js",
-            "line": 105,
+            "line": 104,
             "description": "Send notification to a single device",
             "itemtype": "method",
             "name": "pushSingleNotification",

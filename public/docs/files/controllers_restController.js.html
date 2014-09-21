@@ -134,6 +134,8 @@ module.exports = function(app) {
     app.route(&#x27;/api/getRecommendRest&#x27;)
         .get(function(req, res) {
             try {
+                //TODO: use module &quot;validator&quot; isBase64 to handle if req.query.participants is not base64 encoded.
+                
                 //decode base64 string
                 var decodedInput = new Buffer(req.query.participants, &#x27;base64&#x27;).toString(&quot;utf8&quot;);
                 var decodedQueryObj = JSON.parse(decodedInput);
