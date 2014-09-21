@@ -13,9 +13,11 @@
     "express": "~4.1.1",
     "fbgraph": "~0.2.10",
     "morgan": "~1.0.0",
+    "node-schedule": "^0.1.13",
     "passport": "~0.1.17",
     "passport-facebook": "~1.0.2",
     "passport-local": "~0.1.6",
+    "priorityqueuejs": "^0.2.0",
     "q": "^1.0.1",
     "socket.io": "^1.0.6"
   },
