@@ -744,7 +744,7 @@ var setUserPreference = function (userId, preference, callback) {
             });
         }
     ], function (err, result) {
-        (err)? callback(err): callback(result);
+        (err)? callback(errorMsg(err.message, err, 400)): callback(result);
     });
 };
 module.exports.setUserPreference = setUserPreference;

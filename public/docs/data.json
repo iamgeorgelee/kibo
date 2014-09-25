@@ -1629,7 +1629,7 @@
         {
             "file": "controllers/userController.js",
             "line": 545,
-            "description": "[POST]\n\nSet user preference\n\nInput should be full user preference, that says, all new add or delete preference should manipulate in client slide\n\nweights = -1, 0, 1\n1 => Like it\n0 => soso\n-1 => definitely not\n\n\"preference\" : [\n   {\n     categories: \"pizza\",\n     weights: \"1\"\n   },\n   {\n     categories: \"salad\",\n     weights: \"-1\"\n   }\n]",
+            "description": "[POST]\n\nSet user preference\n\nweights = -1, 0, 1\n1 => Yes\n0 => No preference\n-1 => No\n\n{\n  \"preference\": [\n    {\"pizza\": 1},\n    {\"salad\": -1}\n  ]\n}",
             "itemtype": "method",
             "name": "userPreference",
             "params": [
@@ -1655,7 +1655,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 574,
+            "line": 568,
             "description": "[GET]\n\nGet user preference",
             "itemtype": "method",
             "name": "userPreference",
@@ -1677,7 +1677,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 596,
+            "line": 594,
             "description": "[POST]\n\nAdd device token",
             "itemtype": "method",
             "name": "deviceToken",
@@ -1704,7 +1704,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 614,
+            "line": 612,
             "description": "[POST]\n\nSet user's group. Set which group this user is in.",
             "itemtype": "method",
             "name": "userGrp",
@@ -1731,7 +1731,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 625,
+            "line": 623,
             "description": "[GET]\n\nGet user's group list",
             "itemtype": "method",
             "name": "userGrp",
@@ -1753,7 +1753,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 655,
+            "line": 653,
             "description": "[POST]\n\nAdd document in collection \"group\". New entry in \"group\".",
             "itemtype": "method",
             "name": "newGrp",
@@ -1780,7 +1780,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 677,
+            "line": 675,
             "description": "[GET]\n\nGet group by id",
             "itemtype": "method",
             "name": "getGroupById",
