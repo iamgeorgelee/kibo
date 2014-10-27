@@ -1,4 +1,4 @@
-
+var apn = require('../../routes/apnRoutes.js');
 
 //constructor
 function Event(data) {
@@ -26,6 +26,47 @@ Event.prototype.rsvp = function(participant, decision) {
 	}
 
 	return false;
+};
+
+Event.prototype.sendMessage = function() {
+	
+	var method;
+	var creater = this.creater;
+	var eventId = this._id.$oid;
+	console.log(eventId);
+
+	if(this.stage === 2){
+
+		this.participants.forEach( function(g) {
+     		apn.pushSingleNotification(g.id, {"sender": creater, "cat" : "EVENT","method": "NEW_INVITE", "optional": {"id" : eventId}}, function(data) {
+
+     			console.log(data);
+     		});
+		});
+
+	} else if (this.stage === 4) {
+
+		this.participants.forEach( function(g) {
+     		
+			if(g.going === true){
+
+				apn.pushSingleNotification(g.id, {"sender": this.creater, "cat" : "EVENT","method": "DECIDED", "optional": {"id" : this._id}}, function(data) {
+
+     			console.log(data);
+     		});
+			}
+
+		});
+
+	} 
+
+	// this.participants.forEach( function(g) {
+ //     		apn.pushSingleNotification(g.id, {"sender": this.creater, "cat" : "EVENT","method": "NEW_INVITE", "optional": {"id" : this._id}}, function(data) {
+
+ //     			console.log(data);
+ //     		});
+	// 	});
+
 };
 
 Event.prototype.cancel = function() {
