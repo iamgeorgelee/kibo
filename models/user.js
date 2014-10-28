@@ -228,10 +228,10 @@ var getFriendList = function (userId, callback) {
             if (data.userData.hasOwnProperty('friends')) {
                 callback(data.userData.friends);
             } else {
-                callback({
+                callback([{
                     success: false,
                     message: 'No friend'
-                });
+                }]);
             }
         }
     });
