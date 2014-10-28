@@ -96,6 +96,8 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
+&quot;use strict&quot;;
+
 /**
  * User API
  *
@@ -651,15 +653,15 @@ module.exports = function(app, passport) {
      * -1 =&gt; No
      *
      * {
-     *   &quot;preference&quot;: [
-     *     {&quot;pizza&quot;: 1},
-     *     {&quot;salad&quot;: -1}
-     *   ]
+     *   &quot;preference&quot;: {
+     *     &quot;pizza&quot;: 1,
+     *     &quot;salad&quot;: -1
+     *   }
      * }
      *
      * @method userPreference
      * @param {String} userId
-     * @param {Array} preference
+     * @param {Obj} preference
      * @return {Boolean} Success
      * @example /api/user/:userId/userPreference
      */

@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * User API
  *
@@ -553,15 +555,15 @@ module.exports = function(app, passport) {
      * -1 => No
      *
      * {
-     *   "preference": [
-     *     {"pizza": 1},
-     *     {"salad": -1}
-     *   ]
+     *   "preference": {
+     *     "pizza": 1,
+     *     "salad": -1
+     *   }
      * }
      *
      * @method userPreference
      * @param {String} userId
-     * @param {Array} preference
+     * @param {Obj} preference
      * @return {Boolean} Success
      * @example /api/user/:userId/userPreference
      */

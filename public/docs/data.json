@@ -160,7 +160,7 @@
             "extension_for": [],
             "module": "Kibo",
             "file": "controllers/userController.js",
-            "line": 1,
+            "line": 3,
             "description": "User API",
             "is_constructor": 1
         },
@@ -1087,7 +1087,7 @@
         {
             "file": "controllers/restController.js",
             "line": 11,
-            "description": "[GET]\n\nGet recommand restaurant list\n\npayload should look like this\n{  \"participants\": [\n    {\n      \"userId\": \"123456\",\n      \"userPreference\": [\"chinese\", \"mexican\"],\n      \"userLocation\": [37.353596, -121.824393]\n    },\n    {\n      \"userId\": \"154345\",\n      \"userPreference\": [\"korean\", \"pizza\", \"italian\"],\n      \"userLocation\": [37.571382, -122.327199]\n    }]\n}\nPlease remember this should encode with base64 utf-8 format before it sent",
+            "description": "[GET]\n\nGet recommand restaurant list\n\npayload should look like this\n{\n \"participants\": [\n   \"541f8f16e4b0a6c8e23401a8\",\n   \"544dc0dce4b021c6189d02fe\"\n ]\n}\nPlease remember this should encode with base64 utf-8 format before it sent",
             "itemtype": "method",
             "name": "getRecommendRest",
             "params": [
@@ -1108,7 +1108,7 @@
         },
         {
             "file": "controllers/restController.js",
-            "line": 54,
+            "line": 48,
             "description": "[GET]\n\nGet top 3 recommand restaurant bases on user location",
             "itemtype": "method",
             "name": "getUserLocRecommendRest",
@@ -1130,7 +1130,7 @@
         },
         {
             "file": "controllers/restController.js",
-            "line": 71,
+            "line": 65,
             "description": "[GET]\n\nGet restaurant by id",
             "itemtype": "method",
             "name": "getRestaurantById",
@@ -1152,7 +1152,7 @@
         },
         {
             "file": "controllers/restController.js",
-            "line": 88,
+            "line": 82,
             "description": "[GET]\n\nGet restaurant by an array of ids",
             "itemtype": "method",
             "name": "getRestaurantByIds",
@@ -1174,7 +1174,7 @@
         },
         {
             "file": "controllers/restController.js",
-            "line": 114,
+            "line": 108,
             "description": "[GET]\n\nSearch restaurants w/ filter. Can accept all lower case, will transform \"all lower case\" to \"All Lower Case\" to match restaurant name",
             "itemtype": "method",
             "name": "searchRestaurants",
@@ -1196,7 +1196,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 159,
+            "line": 161,
             "description": "Clearly a stupid way and obviously there will be a problem when web page user and mobile user do facebook auth the same time.\nSince we dont really need to care about web page right now, temporary ignore it. Need to fix later.",
             "itemtype": "attribute",
             "name": "",
@@ -1204,7 +1204,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 201,
+            "line": 203,
             "description": "Needs to verify later, since the callback changed due to support API.",
             "itemtype": "attribute",
             "name": "",
@@ -1212,7 +1212,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 230,
+            "line": 232,
             "description": "[POST]\n\nPerform sign up for local account",
             "itemtype": "method",
             "name": "localSignup",
@@ -1239,7 +1239,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 246,
+            "line": 248,
             "description": "[POST]\n\nPerform login for local account",
             "itemtype": "method",
             "name": "localLogin",
@@ -1266,7 +1266,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 262,
+            "line": 264,
             "description": "[POST]\n\nCreate new user via Facebook auth",
             "itemtype": "method",
             "name": "createUser",
@@ -1308,7 +1308,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 287,
+            "line": 289,
             "description": "[POST]\n\nCalled after do FB authentication to get pesponsive user",
             "itemtype": "method",
             "name": "fbLogin",
@@ -1335,7 +1335,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 305,
+            "line": 307,
             "description": "[GET]\n\nPerform facebook account authentication.\nScope defines what kind of data you want user to authorize you.\nAfter perform facebook account authentication, facebook will render to callback location.",
             "itemtype": "method",
             "name": "fbAuth",
@@ -1352,7 +1352,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 323,
+            "line": 325,
             "description": "After perform facebook account authentication, facebook will render back to this location.\nThis is for facebook itself.",
             "itemtype": "method",
             "name": "fbAuth/Callback",
@@ -1368,7 +1368,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 345,
+            "line": 347,
             "description": "[GET]\n\nGet app user list",
             "itemtype": "method",
             "name": "getUsers",
@@ -1383,7 +1383,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 361,
+            "line": 363,
             "description": "[GET]\n\nGet user by id",
             "itemtype": "method",
             "name": "getUserById",
@@ -1405,7 +1405,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 382,
+            "line": 384,
             "description": "[GET]\n\nGet facebook friends who also authorize this app.",
             "itemtype": "method",
             "name": "getFbFriends",
@@ -1427,7 +1427,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 399,
+            "line": 401,
             "description": "[GET]\n\nGet friend list",
             "itemtype": "method",
             "name": "getFriendList",
@@ -1449,7 +1449,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 416,
+            "line": 418,
             "description": "[POST]\n\nAdd friend\n\nAvoid use this function directly, should do review friend request instead",
             "itemtype": "method",
             "name": "addFriend",
@@ -1476,7 +1476,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 436,
+            "line": 438,
             "description": "[POST]\n\nUnfriend",
             "itemtype": "method",
             "name": "unfriend",
@@ -1503,7 +1503,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 454,
+            "line": 456,
             "description": "[GET]\n\nGet a list of app user you can add them as friend\nWhen this is useful? User wants to add friend via 'Search by name'",
             "itemtype": "method",
             "name": "getFriendCandidate",
@@ -1525,7 +1525,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 472,
+            "line": 474,
             "description": "[GET]\n\nGet a list of app user who is your facebook friend but not your friend in this app\nWhen this is useful? User wants to add friend via 'Find friends from facebook'",
             "itemtype": "method",
             "name": "getFbFriendCandidate",
@@ -1547,7 +1547,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 490,
+            "line": 492,
             "description": "[POST]\n\nSend a friend request.\n\nuserA send a friend request to userB, in user B's DB entry will record the request.",
             "itemtype": "method",
             "name": "friendReq",
@@ -1574,7 +1574,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 503,
+            "line": 505,
             "description": "[GET]\n\nGet friend requests",
             "itemtype": "method",
             "name": "friendReq",
@@ -1596,7 +1596,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 525,
+            "line": 527,
             "description": "[POST]\n\nReview friend request, also need to tell approve or deny\nFirst will remove the entry in friendReq and if it's approved it will do add friend",
             "itemtype": "method",
             "name": "reviewFriendReq",
@@ -1628,8 +1628,8 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 545,
-            "description": "[POST]\n\nSet user preference\n\nweights = -1, 0, 1\n1 => Yes\n0 => No preference\n-1 => No\n\n{\n  \"preference\": [\n    {\"pizza\": 1},\n    {\"salad\": -1}\n  ]\n}",
+            "line": 547,
+            "description": "[POST]\n\nSet user preference\n\nweights = -1, 0, 1\n1 => Yes\n0 => No preference\n-1 => No\n\n{\n  \"preference\": {\n    \"pizza\": 1,\n    \"salad\": -1\n  }\n}",
             "itemtype": "method",
             "name": "userPreference",
             "params": [
@@ -1641,7 +1641,7 @@
                 {
                     "name": "preference",
                     "description": "",
-                    "type": "Array"
+                    "type": "Obj"
                 }
             ],
             "return": {
@@ -1655,7 +1655,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 568,
+            "line": 570,
             "description": "[GET]\n\nGet user preference",
             "itemtype": "method",
             "name": "userPreference",
@@ -1677,7 +1677,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 594,
+            "line": 596,
             "description": "[POST]\n\nAdd device token",
             "itemtype": "method",
             "name": "deviceToken",
@@ -1704,7 +1704,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 612,
+            "line": 614,
             "description": "[POST]\n\nSet user's group. Set which group this user is in.",
             "itemtype": "method",
             "name": "userGrp",
@@ -1731,7 +1731,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 623,
+            "line": 625,
             "description": "[GET]\n\nGet user's group list",
             "itemtype": "method",
             "name": "userGrp",
@@ -1753,7 +1753,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 653,
+            "line": 655,
             "description": "[POST]\n\nAdd document in collection \"group\". New entry in \"group\".",
             "itemtype": "method",
             "name": "newGrp",
@@ -1780,7 +1780,7 @@
         },
         {
             "file": "controllers/userController.js",
-            "line": 675,
+            "line": 677,
             "description": "[GET]\n\nGet group by id",
             "itemtype": "method",
             "name": "getGroupById",

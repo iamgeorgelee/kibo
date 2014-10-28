@@ -132,7 +132,7 @@ var performrequest = function(host, endpoint, method, data, success) {
     // do the GET request
     var req = https.request(options, function (res) {
         var responseString = &#x27;&#x27;;
-
+        
         res.setEncoding(&#x27;utf-8&#x27;);
 
         res.on(&#x27;data&#x27;, function (data) {

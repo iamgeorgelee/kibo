@@ -14,17 +14,11 @@ module.exports = function(app) {
      * Get recommand restaurant list
      *
      * payload should look like this
-     * {  "participants": [
-     *     {
-     *       "userId": "123456",
-     *       "userPreference": ["chinese", "mexican"],
-     *       "userLocation": [37.353596, -121.824393]
-     *     },
-     *     {
-     *       "userId": "154345",
-     *       "userPreference": ["korean", "pizza", "italian"],
-     *       "userLocation": [37.571382, -122.327199]
-     *     }]
+     * {
+     *  "participants": [
+     *    "541f8f16e4b0a6c8e23401a8",
+     *    "544dc0dce4b021c6189d02fe"
+     *  ]
      * }
      * Please remember this should encode with base64 utf-8 format before it sent
      *

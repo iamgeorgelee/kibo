@@ -45,23 +45,41 @@ module.exports.getRestaurantByIds = getRestaurantByIds;
 exports.getRecommendRest = function(participants, callback){
     async.waterfall([
         function(callback){
-            var i = 0, j = 0, locationString = '', preferenceString = '';
+            var preferenceString = "";
+            var locationString = "37.565810,-122.323178"; //Hard code location for now!!
 
-            function parseLocation(usrloc) {
-                locationString += (i === 0 ? usrloc : ',' + usrloc);
-                i++;
+            function callUserPreference(uId, callback){
+                user.getUserPreference(uId, function(data){
+                    var preferences = [];
+
+                    for(var prop in data){
+                        if(data[prop] === 1) { //category user likes
+                            preferences.push(prop);
+                        }
+                    }
+                    callback(null, preferences);
+                });
             }
 
-            function parsePreference(usrpref) {
-                preferenceString += (j === 0 ? usrpref.categories : ',' + usrpref.categories);
-                j++;
-            }
+            async.map(participants, callUserPreference, function(err, result){
+                if(err){
+                    callback(err, null, null);
+                } else{
+                    var baseArr = []; //used for concatnate
+                    for(var prop in result){
+                        baseArr = baseArr.concat(result[prop]);
+                    }
 
-            for (var prop in participants) {
-                participants[prop].userLocation.forEach(parseLocation);
-                participants[prop].userPreference.forEach(parsePreference);
-            }
-            callback(null, locationString, preferenceString);
+                    //Remove duplicate elements in the array
+                    //Why this work? pos will iterate through 'result' since indexOf always return the first found element
+                    //when the pos hit the duplicate elem it wont match
+                    var uniqueResult = baseArr.filter(function(elem, pos) {
+                        return baseArr.indexOf(elem) === pos;
+                    });
+                    preferenceString = uniqueResult.toString();
+                    callback(null, locationString, preferenceString);
+                }
+            });
         },
         function(locationString, preferenceString, callback){
             // Call recommend to get recommend restaurant IDs
@@ -72,15 +90,9 @@ exports.getRecommendRest = function(participants, callback){
                     callback(null, data.restaurant_ids);
                 }
             });
-        },
-        function(restIds, callback){
-            getRestaurantByIds(restIds, function(data){
-                callback(null, data);
-            });
         }], function (err, result) {
             (err)? callback(err): callback(result);
-        }
-    );
+        });
 };
 
 exports.getUserLocRecommendRest = function(userId, userLocation, callback){

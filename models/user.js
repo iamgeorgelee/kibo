@@ -1,3 +1,5 @@
+"use strict";
+
 var async = require('async');
 // var bcrypt = require('bcrypt-nodejs');
 var db = require('../routes/dbRoutes.js');
@@ -55,14 +57,19 @@ function isSuccess(data) {
 //Check is userId in DB, if yes, also return user data
 var isUserIdValid = function (userId, callback) {
     var response;
-    db.getDocument('User', userId, function (data) {
-        if (data.message === 'Document not found') {
-            response = {success:false, message: 'No such user'};
-        } else {
-            response = {success:true, userData:data};
-        }
-        callback(response);
-    });
+
+    if(!userId) {//if userId is null or undefined
+        callback({success:false, message: 'userId empty!'});
+    } else{
+        db.getDocument('User', userId, function (data) {
+            if (data.message === 'Document not found') {
+                response = {success:false, message: 'No such user'};
+            } else {
+                response = {success:true, userData:data};
+            }
+            callback(response);
+        });
+    }
 };
 module.exports.isUserIdValid = isUserIdValid;
 
@@ -611,7 +618,8 @@ exports.addFriendReq = function(userId, toFriendId, callback){
             //send notification to friendee
             apn.pushSingleNotification(toFriendId, {
                 sender: userData.name,
-                method: "USER_FRIEND_REQUEST"
+                cat: "USER",
+                method: "FRIEND_REQUEST"
             }, function(data){
                 (!data.success)? callback(data): callback();
             });
@@ -704,7 +712,8 @@ exports.reviewFriendReq = function (userId, approve, reviewId, callback) {
                         //send notification to friend requester
                         apn.pushSingleNotification(reviewId, {
                             sender: userData.name,
-                            method: "USER_ACCEPT_FRIEND_REQUEST"
+                            cat: "USER",
+                            method: "ACCEPT_FRIEND_REQUEST"
                         }, function(data){
                             (!data.success)? callback(data): callback();
                         });
@@ -714,7 +723,8 @@ exports.reviewFriendReq = function (userId, approve, reviewId, callback) {
                 //reject friend request
                 apn.pushSingleNotification(reviewId, {
                     sender: userData.name,
-                    method: "USER_REJECT_FRIEND_REQUEST"
+                    cat: "USER",
+                    method: "REJECT_FRIEND_REQUEST"
                 }, function(data){
                     (!data.success)? callback(data): callback();
                 });
