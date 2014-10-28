@@ -4,16 +4,29 @@ var restaurant = require('../../models/restaurant.js');
 var Event = require('./Event.js');
 var async = require('async');
 var Vote = require('./Vote.js');
+var apn = require('../../routes/apnRoutes.js');
+
+var Scheduler = require('../../util/scheduler.js');
+var scheduler = Scheduler.getScheduler();
 
 //var t = new event("53a513629df6cb8b503b753e");
-
-
+var ONE_HOUR = 60 * 60 * 1000; /* ms */
 
 exports.getEventById = function(id, callback){
 
 		db.getDocument('Event', id, function(data){
 	     //  console.log(data.creater);
 	       callback(data);
+
+	    });
+
+};
+
+exports.getEventObjectById = function(id){
+
+		db.getDocument('Event', id, function(data){
+
+	       return new Event(data);
 
 	    });
 
@@ -41,13 +54,12 @@ exports.getEventByUserRange = function( userId, going, type, from, to, callback)
 
 exports.createEvent = function(payload, callback){
 
-	// console.log(newEvent);
-
 	var newEvent = new Event(payload);
- //console.log(newEvent.creater);
+ 
 	var creater = { 
 	'id' : newEvent.creater,
-	'going' : 'yes'
+	'going' : true,
+	'stage' : 1
 	};
 	newEvent.participants.push(creater);
 
@@ -80,11 +92,20 @@ exports.createEvent = function(payload, callback){
 
             callback();
         },
-        //stage 2 send invite to friends including restaurant options
+        //stage 2 create event in DB
         function(callback) {
 
+        	newEvent.createTime = new Date();
+
         	newEvent.stage = 2;
-        	callback();
+
+			db.createDocument('Event', newEvent, function(data){
+
+	       		newEvent = new Event(data);
+	       		callback();
+			});
+
+        	
         },
 
     ], function(err) { //This function gets called after the two tasks have called their "task callbacks"
@@ -92,24 +113,25 @@ exports.createEvent = function(payload, callback){
 
         	callback(err);
         }
-        else{
+        else{ //send invite to friends including restaurant options
 
-        	newEvent.createTime = new Date();
+        	newEvent.sendMessage();
 
         	newEvent.stage = 3;
 
-			db.createDocument('Event', newEvent, function(data){
-	  
-	       	callback(data);
-
-			});
-
+        	scheduler.enQueue({"outTime": new Date(newEvent.createTime).addHours(1) , "type": "event", "id" : newEvent._id});
         }
+
+        callback(newEvent);
 
     });
 
 };
 
+Date.prototype.addHours= function(h){
+    this.setHours(this.getHours()+h);
+    return this;
+};
 
 exports.rsvp = function(payload, callback){
 
@@ -134,5 +156,15 @@ exports.rsvp = function(payload, callback){
 	    	}
 	   });
 
+
+};
+
+exports.decided = function(payload, callback){
+
+				db.updateDocument('Event', payload.eventId,
+	                {"stage": 4 }, function(data){
+
+		    			callback(data);
+				});
 
 };
