@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * User API
  *
@@ -547,27 +549,21 @@ module.exports = function(app, passport) {
      *
      * Set user preference
      *
-     * Input should be full user preference, that says, all new add or delete preference should manipulate in client slide
-     *
      * weights = -1, 0, 1
-     * 1 => Like it
-     * 0 => soso
-     * -1 => definitely not
+     * 1 => Yes
+     * 0 => No preference
+     * -1 => No
      *
-     * "preference" : [
-     *    {
-     *      categories: "pizza",
-     *      weights: "1"
-     *    },
-     *    {
-     *      categories: "salad",
-     *      weights: "-1"
-     *    }
-     * ]
+     * {
+     *   "preference": {
+     *     "pizza": 1,
+     *     "salad": -1
+     *   }
+     * }
      *
      * @method userPreference
      * @param {String} userId
-     * @param {Array} preference
+     * @param {Obj} preference
      * @return {Boolean} Success
      * @example /api/user/:userId/userPreference
      */
@@ -584,7 +580,11 @@ module.exports = function(app, passport) {
     app.route('/api/user/:userId/userPreference')
         .post(function(req, res) {
             user.setUserPreference(req.params.userId, req.param('preference'), function(data) {
-                return res.send(data);
+                if(data instanceof Error){
+                    return res.send(data.http_code, data.arguments);
+                } else {
+                    return res.send(data);
+                }
             });
         })
         .get(function(req, res) {

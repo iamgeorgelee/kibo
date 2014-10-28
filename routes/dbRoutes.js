@@ -34,7 +34,7 @@ var performrequest = function(host, endpoint, method, data, success) {
     // do the GET request
     var req = https.request(options, function (res) {
         var responseString = '';
-
+        
         res.setEncoding('utf-8');
 
         res.on('data', function (data) {

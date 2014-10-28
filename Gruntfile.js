@@ -15,6 +15,8 @@ module.exports = function(grunt) {
                 eqnull: true,
                 expr: true,
                 node: true,
+                strict: false,
+                globalstrict: true,
                 reporter: require('jshint-stylish')
             },
             // The paths tell JSHint which files to validate

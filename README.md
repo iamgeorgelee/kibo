@@ -42,7 +42,8 @@ Currently we do:
 
 ###Higher Priority
 
-* use "$push" to re-write several places(restaurant, preference). 
+* use "$push" to re-write several places(restaurant, preference).
+* getFriendList, getFriendCandidate if not found should all return empty array so that return type is consistent
 * Apply error handling to all call
 * HTTP status code
 * User preference only yes or no, not -1, 0, 1
