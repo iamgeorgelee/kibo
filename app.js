@@ -8,11 +8,11 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var connect = require('connect');
 var flash = require('connect-flash');
-var session = require('express-session');
 var logger = require('morgan');
 var passport = require('passport');
 var port = process.env.PORT || 8080;
 var app = express();
+var server = require('http').Server(app);
 
 // =======================
 // ==== CONFIGURATION ====
@@ -26,21 +26,25 @@ app.use(logger('dev'));
 app.use(connect.methodOverride());
 app.use(connect.cookieParser());
 app.use(bodyParser());
-app.use(session({
+app.use(connect.session({
 	secret: 'kibokibokibo'
 }));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 // ================
 // ==== ROUTES ====
 // ================
 
-// User Routes e.g. login, signup
-require('./routes/users.js')(app, passport);
+require('./controllers/userController.js')(app, passport);
+require('./controllers/restController.js')(app);
+require('./controllers/eventController.js')(app);
+
+// ===================
+// ==== SOCKET.IO ====
+// ===================
+require('./routes/socketRoutes.js')(server);
 
 // ========================
 // ==== MODE SELECTION ====
@@ -56,14 +60,6 @@ if ('development' === env) {
 		dumpExceptions: true,
 		showStack: true
 	}));
-} else if ('staging' === env) {
-	config = require('./config/env/staging.js');
-	require('./config/passport')(passport, config);
-
-	app.use(connect.errorHandler({
-		dumpExceptions: true,
-		showStack: true
-	}));
 } else { //production mode
 	config = require('./config/env/production.js');
 	require('./config/passport')(passport, config);
@@ -71,7 +67,13 @@ if ('development' === env) {
 	app.use(connect.errorHandler());
 }
 
+// ========================
+// ====== SCHEDULER ======
+// ========================
+var Scheduler = require('./util/scheduler.js');
+var scheduler = Scheduler.getScheduler();
+
+// server.listen(port);
 app.listen(port);
 console.log("Express server listening on port %d in %s mode", process.env.PORT, app.settings.env);
-console.log("Host IP is %s", process.env.IP);
 console.log("Server Up!");

@@ -4,21 +4,23 @@ module.exports = function(grunt) {
         // This line makes your node configurations available for use
         pkg: grunt.file.readJSON('package.json'),
         jshint: {
+            options: {
+                eqeqeq: true,
+                indent: true,
+                latedef: true,
+                newcap: true,
+                noempty: true,
+                nonbsp: true,
+                undef: true,
+                eqnull: true,
+                expr: true,
+                node: true,
+                strict: false,
+                globalstrict: true,
+                reporter: require('jshint-stylish')
+            },
             // The paths tell JSHint which files to validate
             myFiles: ['*.js', 'config/**/*.js', 'controllers/**/*.js', 'models/**/*.js', 'routes/**/*.js']
-        },
-        nodemon: {
-            dev: {
-                script: 'app.js',
-                // options: {
-                //     args: [],
-                //     ignore: ['public/**', 'node_modules/**'],
-                //     ext: 'js,html',
-                //     nodeArgs: ['--debug'],
-                //     delayTime: 1,
-                //     cwd: __dirname
-                // }
-            }
         },
         yuidoc: {
             compile: {
@@ -36,8 +38,9 @@ module.exports = function(grunt) {
     });
     // Each plugin must be loaded following this pattern
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-nodemon');
+    // grunt.loadNpmTasks('grunt-nodemon');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
-    
-    grunt.registerTask('default', ['jshint', 'yuidoc', 'nodemon']);
+
+    grunt.registerTask('heroku:production', ['jshint', 'yuidoc']);
+    grunt.registerTask('default', ['jshint', 'yuidoc']);
 };

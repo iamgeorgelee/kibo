@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>apn/lib/notification.js - kibo</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title="kibo"></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/apnRoutes.html">apnRoutes</a></li>
+            
+                <li><a href="../classes/dbRoutes.html">dbRoutes</a></li>
+            
+                <li><a href="../classes/eventContorller.html">eventContorller</a></li>
+            
+                <li><a href="../classes/restController.html">restController</a></li>
+            
+                <li><a href="../classes/UserController.html">UserController</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Kibo.html">Kibo</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: apn/lib/notification.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Create a notification
+ * @constructor
+ */
+function Notification (payload) {
+	this.encoding = &#x27;utf8&#x27;;
+
+	this.payload = payload || {};
+	this.expiry = 0;
+	this.priority = 10;
+
+	this.retryLimit = -1;
+
+	/** @deprecated since v1.3.0 used connection#pushNotification instead which accepts device token separately **/
+	this.device = undefined;
+
+	this.alert = undefined;
+	this.badge = undefined;
+	this.sound = undefined;
+	/** @since v1.2.0 */
+	this.newsstandAvailable = undefined;
+
+	this.contentAvailable = undefined;
+
+	this.mdm = undefined;
+
+	this.compiled = false;
+
+	this.truncateAtWordEnd = false;
+
+	this.urlArgs = undefined;
+
+	/** iOS 8 notification actions **/
+	this.category = undefined;
+}
+
+/**
+ * Clone a notification to send to multiple devices
+ * @param {Device} [device] Device the notification will be sent to
+ * @returns {Notification} A notification containing the same properties as the receiver
+ * @since v1.2.0
+ * @deprecated Since v1.3.0, notifications are not tied to a device so do not need cloning.
+ */
+Notification.prototype.clone = function (device) {
+	var notification = new Notification();
+
+	notification.encoding = this.encoding;
+	notification.payload = this.payload;
+	notification.expiry = this.expiry;
+	notification.priority = this.priority;
+	notification.device = device;
+
+	notification.alert = this.alert;
+	notification.badge = this.badge;
+	notification.sound = this.sound;
+	notification.newsstandAvailable = this.newsstandAvailable;
+	notification.contentAvailable = this.contentAvailable;
+	notification.mdm = this.mdm;
+	notification.truncateAtWordEnd = this.truncateAtWordEnd;
+	notification.urlArgs = this.urlArgs;
+
+	notification.category = this.category;
+
+	return notification;
+};
+
+/**
+ * Set the expiry value on the payload
+ * @param {Number} [expiry] Timestamp when the notification should expire.
+ * @since v1.3.5
+ */
+Notification.prototype.setExpiry = function (expiry) {
+	this.expiry = expiry;
+	return this;
+};
+
+/**
+ * Set the priority
+ * @param {Number} [priority=10] Priority value for the notification.
+ * @since v1.3.9
+ */
+ Notification.prototype.setPriority = function (priority) {
+ 	this.priority = priority;
+ 	return this;
+ }
+
+/**
+ * Set the &quot;badge&quot; value on the alert object
+ * @param {Number} [badge] Badge Value
+ * @since v1.3.5
+ */
+Notification.prototype.setBadge = function (badge) {
+	this.badge = badge;
+	return this;
+};
+
+/**
+ * Set the &quot;sound&quot; value on the alert object
+ * @param {String} [sound] Sound file name
+ * @since v1.3.5
+ */
+Notification.prototype.setSound = function (sound) {
+	this.sound = sound;
+	return this;
+};
+
+/**
+ * Set the alert text for the notification
+ * @param {String} alertText The text of the alert message.
+ * @see The &lt;a href=&quot;https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW1&quot;&gt;Payload Documentation&lt;/a&gt;
+ * @since v1.2.0
+ */
+Notification.prototype.setAlertText = function (text) {
+	if(typeof this.alert != &quot;object&quot;) {
+		this.alert = text;
+	}
+	else {
+		this.prepareAlert();
+		this.alert[&#x27;body&#x27;] = text;
+	}
+	return this;
+};
+
+/**
+ * Set the alert title for the notification - used with Safari Push Notifications
+ * @param {String} alertTitle The title for the alert.
+ * @see The &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/NetworkingInternet/Conceptual/NotificationProgrammingGuideForWebsites/PushNotifications/PushNotifications.html#//apple_ref/doc/uid/TP40013225-CH3-SW12&quot;&gt;Pushing Notifications&lt;/a&gt; in the Notification Programming Guide for Websites
+ * @since v1.5.0
+ */
+Notification.prototype.setAlertTitle = function(alertTitle) {
+	this.prepareAlert();
+	this.alert[&#x27;title&#x27;] = alertTitle;
+	return this;
+}
+
+/**
+ * Set the alert action label for the notification - used with Safari Push Notifications
+ * @param {String} alertLabel The label for the alert action button.
+ * @see The &lt;a href=&quot;https://developer.apple.com/library/mac/documentation/NetworkingInternet/Conceptual/NotificationProgrammingGuideForWebsites/PushNotifications/PushNotifications.html#//apple_ref/doc/uid/TP40013225-CH3-SW12&quot;&gt;Pushing Notifications&lt;/a&gt; in the Notification Programming Guide for Websites
+ * @since v1.5.0
+ */
+Notification.prototype.setAlertAction = function(alertAction) {
+	this.prepareAlert();
+	this.alert[&#x27;action&#x27;] = alertAction;
+	return this;
+}
+
+/**
+ * Set the action-loc-key property on the alert object
+ * @param {String} [key] If a string is specified, displays an alert with two buttons, whose behavior is described in Table 3-1. However, iOS uses the string as a key to get a localized string in the current localization to use for the right button’s title instead of “View”. If the value is null, the system displays an alert with a single OK button that simply dismisses the alert when tapped.
+ * @see The &lt;a href=&quot;https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW1&quot;&gt;Payload Documentation&lt;/a&gt;
+ * @since v1.2.0
+ */
+Notification.prototype.setActionLocKey = function (key) {
+	this.prepareAlert();
+	this.alert[&#x27;action-loc-key&#x27;] = key;
+	return this;
+};
+
+/**
+ * Set the loc-key parameter on the alert object
+ * @param {String} [key] A key to an alert-message string in a Localizable.strings file for the current localization (which is set by the user’s language preference).
+ * @see The &lt;a href=&quot;https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW1&quot;&gt;Payload Documentation&lt;/a&gt;
+ * @since v1.2.0
+ */
+Notification.prototype.setLocKey = function (key) {
+	this.prepareAlert();
+	if(!key) {
+		delete this.alert[&quot;loc-key&quot;];
+		return;
+	}
+	this.alert[&#x27;loc-key&#x27;] = key;
+	return this;
+};
+
+/**
+ * Set the loc-args parameter on the alert object
+ * @param {String[]} [args] Variable string values to appear in place of the format specifiers in loc-key.
+ * @see The &lt;a href=&quot;https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW1&quot;&gt;Payload Documentation&lt;/a&gt;
+ * @since v1.2.0
+ */
+Notification.prototype.setLocArgs = function (args) {
+	this.prepareAlert();
+	if(!args) {
+		delete this.alert[&quot;loc-args&quot;];
+		return;
+	}
+	this.alert[&#x27;loc-args&#x27;] = args;
+	return this;
+};
+
+/**
+ * Set the launch-image parameter on the alert object
+ * @param {String} [image] The filename of an image file in the application bundle; it may include the extension or omit it.
+ * @see The &lt;a href=&quot;https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW1&quot;&gt;Payload Documentation&lt;/a&gt;
+ * @since v1.2.0
+ */
+Notification.prototype.setLaunchImage = function (image) {
+	this.prepareAlert();
+	if(!image) {
+		delete this.alert[&quot;launch-image&quot;];
+		return;
+	}
+	this.alert[&quot;launch-image&quot;] = image;
+	return this;
+};
+
+/**
+ * Set the &#x27;content-available&#x27; flag on the payload
+ * @param {Boolean} [contentAvailable] Whether the content-available flag should be set or not.
+ * @since v1.3.5
+ */
+Notification.prototype.setContentAvailable = function (contentAvailable) {
+	this.contentAvailable = contentAvailable;
+	return this;
+};
+
+/**
+ * Set the &#x27;content-available&#x27; flag on the payload
+ * @param {Boolean} [newsstandAvailable] Whether the content-available flag should be set or not.
+ * @since v1.3.5
+ */
+Notification.prototype.setNewsstandAvailable = function (newsstandAvailable) {
+	this.newsstandAvailable = newsstandAvailable;
+	return this;
+};
+
+/**
+ * Set the &#x27;mdm&#x27; flag on the payload
+ * @param {Object} [mdm] The mdm property for the payload.
+ * @since v1.3.5
+ */
+Notification.prototype.setMDM = function (mdm) {
+	this.mdm = mdm;
+	return this;
+};
+
+/**
+ * Set the &#x27;truncateAtWordEnd&#x27; flag for truncation logic
+ * @param {Boolean} [truncateAtWordEnd] Whether the truncateAtWordEnd flag should be set or not.
+ */
+Notification.prototype.setTruncateAtWordEnd = function (truncateAtWordEnd) {
+	this.truncateAtWordEnd = truncateAtWordEnd;
+	return this;
+};
+
+/**
+ * Set the urlArgs for the notification
+ * @param {Array} [urlArgs] The url args for the endpoint
+ * @see The &lt;a href=&quot;https://developer.apple.com/library/prerelease/mac/documentation/NetworkingInternet/Conceptual/NotificationProgrammingGuideForWebsites/PushNotifications/PushNotifications.html#//apple_ref/doc/uid/TP40013225-CH3-SW12&quot;&gt;Web Payload Documentation&lt;/a&gt;
+ * @since v1.4.1
+ */
+Notification.prototype.setUrlArgs = function (urlArgs) {
+	this.urlArgs = urlArgs;
+	return this;
+};
+
+/**
+ * Set the category for the notification
+ * @param {String} [category] The category for the push notification action
+ */
+Notification.prototype.setCategory = function (category) {
+	this.category = category;
+	return this;
+};
+
+/**
+ * If an alert object doesn&#x27;t already exist create it and transfer any existing message into the .body property
+ * @private
+ * @since v1.2.0
+ */
+Notification.prototype.prepareAlert = function () {
+	var existingValue = this.alert;
+	if(typeof existingValue != &quot;object&quot;) {
+		this.alert = {};
+		if(typeof existingValue == &quot;string&quot;) {
+			this.alert.body = existingValue;
+		}
+	}
+};
+
+/**
+ * @returns {Number} Byte length of the notification payload
+ * @since v1.2.0
+ */
+Notification.prototype.length = function () {
+	return Buffer.byteLength(this.compile(), this.encoding || &#x27;utf8&#x27;);
+};
+
+/**
+ * If the notification payload is too long to send this method will attempt to trim the alert body text.
+ * @returns {Number} The number of characters removed from the body text. If a negative value is returned, the text is too short to be trimmed enough.
+ * @since v1.2.0
+ */
+Notification.prototype.trim = function(length) {
+	var tooLong = this.length() - (length || 256);
+	if(tooLong &lt;= 0) {
+		return 0;
+	}
+	this.compiled = false;
+	var length;
+	var encoding = this.encoding || &#x27;utf8&#x27;;
+	var escaped; // Working variable for trimming string
+	if(typeof this.alert == &quot;string&quot;) {
+		escaped = this.alert;
+	}
+	else if(typeof this.alert == &quot;object&quot; &amp;&amp; typeof this.alert.body == &quot;string&quot;) {
+		escaped = this.alert.body;
+	}
+	else {
+		return -tooLong;
+	}
+	
+	escaped = JSON.stringify(escaped).slice(1, -1); // trim quotes
+	length = Buffer.byteLength(escaped, encoding);
+	if (length &lt; tooLong) {
+		return length - tooLong;
+	}
+	escaped = this.truncateStringToLength(escaped, length - tooLong);
+	escaped = escaped.replace(/(\\|\\x\d{0,1}|\\u\d{0,3})$/, &#x27;&#x27;);
+	escaped = JSON.parse(&#x27;&quot;&#x27; + escaped + &#x27;&quot;&#x27;);
+
+	if (typeof this.alert == &quot;string&quot;) {
+		this.alert = escaped;
+	}
+	else {
+		this.alert.body = escaped;
+	}
+	return tooLong;
+};
+
+/**
+ * Compile a notification down to its JSON format. Compilation is final, changes made to the notification after this method is called will not be reflected in further calls.
+ * @returns {String} JSON payload for the notification.
+ * @since v1.3.0
+ */
+Notification.prototype.compile = function () {
+	if(this.compiled) {
+		return this.compiledPayload;
+	}
+	this.compiledPayload = JSON.stringify(this);
+	this.compiled = true;
+	return this.compiledPayload;
+};
+
+/**
+ * @param {String} [string] Unicode string to be truncated
+ * @param {Number} [length] The maximum number of bytes permitted in the Unicode string
+ * @returns {String} Truncated String
+ * @private
+ */
+Notification.prototype.truncateStringToLength = function (string, length) {
+	// Convert to a buffer and back to a string with the correct encoding to truncate the unicode series correctly.
+	var result = new Buffer(string, this.encoding || &#x27;utf8&#x27;).toString(this.encoding || &#x27;utf8&#x27;, 0, length);
+	if (this.truncateAtWordEnd === true) {
+		var lastSpaceIndexInResult = result.lastIndexOf(&#x27; &#x27;);
+
+		// Only truncate the string further if the remainder isn&#x27;t a whole word
+		// which we can tell by checking the *next* character in the original string
+		if(lastSpaceIndexInResult != -1 &amp;&amp; string.charAt(result.length + 1) != &#x27; &#x27;){
+			result=result.substr(0,lastSpaceIndexInResult);
+		}
+	}
+
+	// since we might have chopped off the end of a multi-byte sequence, remove any
+	// invalid characters (represented as U+FFFD &quot;REPLACEMENT CHARACTER&quot;) for UTF-8
+	// or orphaned lead surrogates for UTF-16 (UCS-2) - where only the tail surrogate
+	// has been removed.
+	var done = false;
+	var encoding = this.encoding || &#x27;utf8&#x27;;
+
+	if (encoding != &#x27;utf8&#x27; &amp;&amp; encoding != &#x27;utf16le&#x27; &amp;&amp; encoding != &#x27;ucs2&#x27;) {
+		return result;
+	}
+	while (! done) {
+		var lastIndex = result.length - 1;
+		var code = result.charCodeAt(lastIndex);
+		if (code != 0xFFFD &amp;&amp; encoding == &#x27;utf8&#x27;) {
+			done = true;
+		}
+		else if ((code &lt; 0xD800 || code &gt; 0xDBFF) &amp;&amp; (encoding == &#x27;utf16le&#x27; || encoding == &#x27;ucs2&#x27;)) {
+			done = true;
+		}
+		else {
+			result = result.substr(0, lastIndex);
+		}
+	}
+
+	return result;
+};
+
+/**
+ * @private
+ */
+Notification.prototype.toJSON = function () {
+	if (this.payload === undefined) {
+		this.payload = {};
+	}
+	if (typeof this.mdm == &#x27;string&#x27;) {
+		this.payload.mdm = this.mdm;
+		return this.payload;
+	}
+	var apsSet = true;
+	if (this.payload.aps === undefined) {
+		this.payload.aps = {};
+		apsSet = false;
+	}
+	if (typeof this.badge == &#x27;number&#x27;) {
+		this.payload.aps.badge = this.badge;
+		apsSet = true;
+	}
+	if (typeof this.sound == &#x27;string&#x27;) {
+		this.payload.aps.sound = this.sound;
+		apsSet = true;
+	}
+	if (typeof this.alert == &#x27;string&#x27; || typeof this.alert == &#x27;object&#x27;) {
+		this.payload.aps.alert = this.alert;
+		apsSet = true;
+	}
+	if (this.newsstandAvailable || this.contentAvailable) {
+		this.payload.aps[&#x27;content-available&#x27;] = 1;
+		apsSet = true;
+	}
+	if (Array.isArray(this.urlArgs)) {
+		this.payload.aps[&#x27;url-args&#x27;] = this.urlArgs;
+		apsSet = true;
+	}
+	if (typeof this.category == &#x27;string&#x27;) {
+		this.payload.aps.category = this.category;
+		apsSet = true;
+	}
+
+	if (!apsSet) {
+		delete this.payload.aps;
+	}
+
+	return this.payload;
+};
+
+module.exports = Notification;
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

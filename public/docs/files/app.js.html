@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>app.js - application-name</title>
+    <title>app.js - kibo</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -15,7 +15,7 @@
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
             
-                <h1><img src="../assets/css/logo.png" title="application-name"></h1>
+                <h1><img src="../assets/css/logo.png" title="kibo"></h1>
             
         </div>
         <div class="yui3-u-1-4 version">
@@ -41,9 +41,15 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="../classes/dbController.html">dbController</a></li>
+                <li><a href="../classes/apnRoutes.html">apnRoutes</a></li>
             
-                <li><a href="../classes/UserRoutes.html">UserRoutes</a></li>
+                <li><a href="../classes/dbRoutes.html">dbRoutes</a></li>
+            
+                <li><a href="../classes/eventContorller.html">eventContorller</a></li>
+            
+                <li><a href="../classes/restController.html">restController</a></li>
+            
+                <li><a href="../classes/UserController.html">UserController</a></li>
             
             </ul>
 
@@ -100,11 +106,11 @@ var express = require(&#x27;express&#x27;);
 var bodyParser = require(&#x27;body-parser&#x27;);
 var connect = require(&#x27;connect&#x27;);
 var flash = require(&#x27;connect-flash&#x27;);
-var session = require(&#x27;express-session&#x27;);
 var logger = require(&#x27;morgan&#x27;);
 var passport = require(&#x27;passport&#x27;);
 var port = process.env.PORT || 8080;
 var app = express();
+var server = require(&#x27;http&#x27;).Server(app);
 
 // =======================
 // ==== CONFIGURATION ====
@@ -118,21 +124,25 @@ app.use(logger(&#x27;dev&#x27;));
 app.use(connect.methodOverride());
 app.use(connect.cookieParser());
 app.use(bodyParser());
-app.use(session({
+app.use(connect.session({
 	secret: &#x27;kibokibokibo&#x27;
 }));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 // ================
 // ==== ROUTES ====
 // ================
 
-// User Routes e.g. login, signup
-require(&#x27;./routes/users.js&#x27;)(app, passport);
+require(&#x27;./controllers/userController.js&#x27;)(app, passport);
+require(&#x27;./controllers/restController.js&#x27;)(app);
+require(&#x27;./controllers/eventController.js&#x27;)(app);
+
+// ===================
+// ==== SOCKET.IO ====
+// ===================
+require(&#x27;./routes/socketRoutes.js&#x27;)(server);
 
 // ========================
 // ==== MODE SELECTION ====
@@ -148,14 +158,6 @@ if (&#x27;development&#x27; === env) {
 		dumpExceptions: true,
 		showStack: true
 	}));
-} else if (&#x27;staging&#x27; === env) {
-	config = require(&#x27;./config/env/staging.js&#x27;);
-	require(&#x27;./config/passport&#x27;)(passport, config);
-
-	app.use(connect.errorHandler({
-		dumpExceptions: true,
-		showStack: true
-	}));
 } else { //production mode
 	config = require(&#x27;./config/env/production.js&#x27;);
 	require(&#x27;./config/passport&#x27;)(passport, config);
@@ -163,9 +165,15 @@ if (&#x27;development&#x27; === env) {
 	app.use(connect.errorHandler());
 }
 
+// ========================
+// ====== SCHEDULER ======
+// ========================
+var Scheduler = require(&#x27;./util/scheduler.js&#x27;);
+var scheduler = Scheduler.getScheduler();
+
+// server.listen(port);
 app.listen(port);
 console.log(&quot;Express server listening on port %d in %s mode&quot;, process.env.PORT, app.settings.env);
-console.log(&quot;Host IP is %s&quot;, process.env.IP);
 console.log(&quot;Server Up!&quot;);
     </pre>
 </div>
